@@ -33,11 +33,11 @@ export function Navbar() {
           </Link>
         </nav>
 
-        <Button href="#start" size="default" className="hidden sm:inline-flex">
+        <Button href="/assessment" size="default" className="hidden sm:inline-flex">
           Start Analysis
         </Button>
 
-        <Button href="#start" size="default" className="sm:hidden text-xs px-4 h-9">
+        <Button href="/assessment" size="default" className="sm:hidden text-xs px-4 h-9">
           Start
         </Button>
       </div>

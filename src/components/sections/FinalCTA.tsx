@@ -22,7 +22,7 @@ export function FinalCTA() {
           </p>
 
           <div className="mt-10">
-            <Button href="#start" size="large">
+            <Button href="/assessment" size="large">
               Start Your Analysis
             </Button>
           </div>

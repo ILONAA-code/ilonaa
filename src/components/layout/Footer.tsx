@@ -20,7 +20,7 @@ export function Footer() {
           <Link href="#process" className="transition-colors hover:text-foreground">
             Process
           </Link>
-          <Link href="#start" className="transition-colors hover:text-foreground">
+          <Link href="/assessment" className="transition-colors hover:text-foreground">
             Get Started
           </Link>
         </div>

@@ -97,7 +97,7 @@ export function Hero() {
             </p>
 
             <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button href="#start" size="large">
+              <Button href="/assessment" size="large">
                 Start Analysis
               </Button>
               <p className="text-sm text-muted/80">

@@ -10,11 +10,45 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground;
   }
 
   ::selection {
     @apply bg-accent/20 text-foreground;
+  }
+
+  button {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  .assessment-card {
+    @apply relative overflow-hidden rounded-[2rem] border border-black/[0.06] bg-white/70 p-6 shadow-[0_8px_40px_-12px_rgba(31,41,55,0.12)] backdrop-blur-sm sm:p-10;
+  }
+
+  .choice-option {
+    @apply w-full cursor-pointer rounded-2xl border text-left font-sans transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99];
+  }
+
+  .slider-elegant {
+    @apply relative z-10 h-6 w-full cursor-pointer appearance-none bg-transparent;
+  }
+
+  .slider-elegant::-webkit-slider-runnable-track {
+    @apply h-1.5 rounded-full bg-transparent;
+  }
+
+  .slider-elegant::-webkit-slider-thumb {
+    @apply -mt-[7px] h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-white bg-accent shadow-[0_2px_10px_rgba(74,98,116,0.35)];
+  }
+
+  .slider-elegant::-moz-range-track {
+    @apply h-1.5 rounded-full bg-transparent;
+  }
+
+  .slider-elegant::-moz-range-thumb {
+    @apply h-5 w-5 cursor-pointer rounded-full border-2 border-white bg-accent shadow-[0_2px_10px_rgba(74,98,116,0.35)];
   }
 }
 

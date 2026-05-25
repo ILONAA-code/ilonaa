@@ -19,7 +19,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
         display: ["var(--font-instrument)", "Georgia", "serif"],
       },
       animation: {
@@ -27,6 +27,8 @@ const config: Config = {
         "fade-in-up": "fadeInUp 0.8s ease-out forwards",
         "fade-in-up-delay": "fadeInUp 0.8s ease-out 0.15s forwards",
         "fade-in-up-delay-2": "fadeInUp 0.8s ease-out 0.3s forwards",
+        "question-in": "questionIn 0.45s ease-out forwards",
+        "question-out": "questionOut 0.3s ease-in forwards",
       },
       keyframes: {
         fadeIn: {
@@ -36,6 +38,14 @@ const config: Config = {
         fadeInUp: {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        questionIn: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        questionOut: {
+          "0%": { opacity: "1", transform: "translateY(0)" },
+          "100%": { opacity: "0", transform: "translateY(-12px)" },
         },
       },
     },

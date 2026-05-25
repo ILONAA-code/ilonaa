@@ -1,16 +1,30 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type ButtonProps = {
-  href?: string;
+type ButtonBaseProps = {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "ghost";
   size?: "default" | "large";
   className?: string;
+  disabled?: boolean;
 };
 
+type LinkButtonProps = ButtonBaseProps & {
+  href: string;
+  onClick?: never;
+  type?: never;
+};
+
+type ActionButtonProps = ButtonBaseProps & {
+  href?: never;
+  onClick?: () => void;
+  type?: "button" | "submit";
+};
+
+export type ButtonProps = LinkButtonProps | ActionButtonProps;
+
 const baseStyles =
-  "inline-flex items-center justify-center font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex items-center justify-center font-sans font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-40";
 
 const variants = {
   primary:
@@ -26,17 +40,36 @@ const sizes = {
 };
 
 export function Button({
-  href = "#start",
   children,
   variant = "primary",
   size = "default",
   className,
+  disabled = false,
+  ...props
 }: ButtonProps) {
-  const classes = cn(baseStyles, variants[variant], sizes[size], className);
+  const classes = cn(
+    baseStyles,
+    variants[variant],
+    sizes[size],
+    className
+  );
+
+  if ("href" in props && props.href) {
+    return (
+      <Link href={props.href} className={classes}>
+        {children}
+      </Link>
+    );
+  }
 
   return (
-    <Link href={href} className={classes}>
+    <button
+      type={props.type ?? "button"}
+      onClick={props.onClick}
+      disabled={disabled}
+      className={classes}
+    >
       {children}
-    </Link>
+    </button>
   );
 }
