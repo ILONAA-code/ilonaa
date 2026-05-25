@@ -1,0 +1,116 @@
+import { Button } from "@/components/ui/Button";
+
+function ScorePreview() {
+  const scores = [
+    { label: "AI Exposure Score", value: 42, tone: "warm" },
+    { label: "Career Resilience", value: 78, tone: "calm" },
+  ];
+
+  return (
+    <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+      <div className="hero-glow absolute inset-0 rounded-3xl" />
+
+      <div className="relative overflow-hidden rounded-3xl border border-black/[0.06] bg-white/70 p-6 shadow-[0_8px_40px_-12px_rgba(31,41,55,0.12)] backdrop-blur-sm sm:p-8">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
+              Your Profile Preview
+            </p>
+            <p className="mt-1 font-display text-xl text-foreground">
+              Career Resilience Report
+            </p>
+          </div>
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-light">
+            <svg
+              className="h-4 w-4 text-accent"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div className="space-y-5">
+          {scores.map((score) => (
+            <div key={score.label}>
+              <div className="mb-2 flex items-baseline justify-between">
+                <span className="text-sm text-muted">{score.label}</span>
+                <span className="text-sm font-medium tabular-nums text-foreground">
+                  {score.value}
+                  <span className="text-muted/60">/100</span>
+                </span>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.04]">
+                <div
+                  className={`h-full rounded-full transition-all duration-1000 ${
+                    score.tone === "warm" ? "bg-[#9CA3AF]" : "bg-accent"
+                  }`}
+                  style={{ width: `${score.value}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-accent-light/60 p-4">
+          <p className="text-xs font-medium uppercase tracking-[0.12em] text-accent">
+            Recommended Focus
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-muted">
+            Strategic leadership, complex problem-solving, and cross-functional
+            collaboration.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Hero() {
+  return (
+    <section className="relative overflow-hidden pt-16">
+      <div className="gradient-soft absolute inset-0" />
+
+      <div className="section-padding relative">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="max-w-xl">
+            <p className="animate-fade-in mb-6 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+              Structured clarity for important decisions
+            </p>
+
+            <h1 className="animate-fade-in-up font-display text-[2.25rem] leading-[1.1] text-balance text-foreground sm:text-5xl lg:text-[3.25rem]">
+              Understand Your AI Career Risk
+              <span className="block text-muted/80">In Just 10 Questions.</span>
+            </h1>
+
+            <p className="animate-fade-in-up-delay mt-6 text-base leading-relaxed text-muted sm:text-lg">
+              AI-assisted analysis designed to help you understand how resilient
+              your career may be in the age of artificial intelligence.
+            </p>
+
+            <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Button href="#start" size="large">
+                Start Analysis
+              </Button>
+              <p className="text-sm text-muted/80">
+                Free · 10 questions · ~3 minutes
+              </p>
+            </div>
+          </div>
+
+          <div className="animate-fade-in-up-delay lg:justify-self-end">
+            <ScorePreview />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
