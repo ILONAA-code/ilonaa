@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -34,7 +35,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${instrumentSerif.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
