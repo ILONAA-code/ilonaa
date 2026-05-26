@@ -1,14 +1,26 @@
+import type { EventMetadataPayload } from "@/lib/analytics/types";
+import { getSessionTimestamps, touchSessionActivity } from "@/lib/analytics/session";
+
 export type DeviceType = "mobile" | "tablet" | "desktop";
 
-const ALLOWED_METADATA_KEYS = new Set([
+const ALLOWED_METADATA_KEYS = new Set<string>([
   "question_number",
   "question_id",
+  "time_spent_ms",
   "device_type",
+  "screen_width",
   "timestamp",
-  "ai_exposure_score",
-  "resilience_score",
+  "session_started_at",
+  "session_last_activity_at",
+  "scroll_depth_percent",
+  "time_on_page_ms",
   "cta_id",
   "location",
+  "section_id",
+  "ai_exposure_score",
+  "resilience_score",
+  "abandoned_at_question",
+  "engagement_type",
 ]);
 
 export function getDeviceType(): DeviceType {
@@ -21,12 +33,24 @@ export function getDeviceType(): DeviceType {
   return "desktop";
 }
 
+export function getScreenWidth(): number {
+  if (typeof window === "undefined") return 0;
+  return Math.round(window.innerWidth);
+}
+
 export function buildEventMetadata(
-  metadata?: Record<string, string | number | boolean | undefined>
+  metadata?: Partial<EventMetadataPayload>
 ): Record<string, string | number | boolean> {
+  touchSessionActivity();
+
+  const { startedAt, lastActivityAt } = getSessionTimestamps();
+
   const base: Record<string, string | number | boolean> = {
     device_type: getDeviceType(),
+    screen_width: getScreenWidth(),
     timestamp: new Date().toISOString(),
+    session_started_at: startedAt,
+    session_last_activity_at: lastActivityAt,
   };
 
   if (!metadata) {

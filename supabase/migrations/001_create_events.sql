@@ -1,6 +1,13 @@
 -- ILONAA anonymous product analytics
 -- Host your Supabase project in the EU for GDPR-conscious minimal data collection.
 -- Apply via Supabase SQL Editor or: supabase db push
+--
+-- Event names (stored in event_name):
+--   landing_view, assessment_started, question_completed, assessment_completed,
+--   results_viewed, back_button_used, assessment_abandoned, results_scroll_depth,
+--   cta_clicked, results_engagement, recommendation_engaged
+--
+-- All behavioral detail lives in metadata (jsonb) — no PII, no identity columns.
 
 create table if not exists public.events (
   id uuid primary key default gen_random_uuid(),
@@ -16,7 +23,6 @@ create index if not exists events_session_id_idx on public.events (session_id);
 
 alter table public.events enable row level security;
 
--- Anonymous inserts only — no reads, updates, or deletes for public clients
 drop policy if exists "Allow anonymous event inserts" on public.events;
 
 create policy "Allow anonymous event inserts"
@@ -25,10 +31,8 @@ create policy "Allow anonymous event inserts"
   to anon
   with check (true);
 
--- Required for PostgREST inserts using the anon/publishable key
 grant usage on schema public to anon;
 revoke all on public.events from anon;
 grant insert on public.events to anon;
 
--- If you disable RLS manually, keep the INSERT grant above.
 -- Do NOT grant SELECT to anon — the client must insert without .select().

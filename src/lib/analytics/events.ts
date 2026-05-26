@@ -2,6 +2,7 @@
 
 import { track } from "@vercel/analytics";
 import { trackProductEvent } from "@/lib/analytics/track";
+import { PRODUCT_EVENTS } from "@/lib/analytics/types";
 
 export type AnalyticsEvent =
   | "landing_page_viewed"
@@ -16,12 +17,7 @@ export type AnalyticsProperties = Record<
   string | number | boolean | undefined
 >;
 
-/**
- * Privacy-first behavioral analytics.
- * Product funnel events → Supabase (anonymous, EU-hosted).
- * Lightweight Vercel events retained for deployment-level signals.
- */
-export function trackEvent(
+function trackVercelEvent(
   event: AnalyticsEvent,
   properties?: AnalyticsProperties
 ): void {
@@ -54,42 +50,69 @@ function sanitizeProperties(
 
 export const analytics = {
   landingPageViewed: () => {
-    trackProductEvent("landing_view");
-    trackEvent("landing_page_viewed");
+    trackProductEvent(PRODUCT_EVENTS.LANDING_VIEW);
+    trackVercelEvent("landing_page_viewed");
   },
 
   assessmentStarted: () => {
-    trackProductEvent("assessment_started");
-    trackEvent("assessment_started");
+    trackProductEvent(PRODUCT_EVENTS.ASSESSMENT_STARTED);
+    trackVercelEvent("assessment_started");
   },
 
-  questionCompleted: (questionId: string, questionNumber: number) => {
-    trackProductEvent("question_completed", {
+  questionCompleted: (
+    questionId: string,
+    questionNumber: number,
+    timeSpentMs: number
+  ) => {
+    trackProductEvent(PRODUCT_EVENTS.QUESTION_COMPLETED, {
       question_id: questionId,
       question_number: questionNumber,
+      time_spent_ms: timeSpentMs,
     });
-    trackEvent("question_completed", { questionId, questionNumber });
+    trackVercelEvent("question_completed", { questionId, questionNumber });
   },
 
   assessmentCompleted: (aiExposureScore: number, resilienceScore: number) => {
-    trackProductEvent("assessment_completed", {
+    trackProductEvent(PRODUCT_EVENTS.ASSESSMENT_COMPLETED, {
       ai_exposure_score: aiExposureScore,
       resilience_score: resilienceScore,
     });
-    trackEvent("assessment_completed", {
+    trackVercelEvent("assessment_completed", {
       aiExposureScore,
       resilienceScore,
     });
   },
 
   resultsViewed: (aiExposureScore: number, resilienceScore: number) => {
-    trackProductEvent("results_viewed", {
+    trackProductEvent(PRODUCT_EVENTS.RESULTS_VIEWED, {
       ai_exposure_score: aiExposureScore,
       resilience_score: resilienceScore,
     });
-    trackEvent("results_viewed", { aiExposureScore, resilienceScore });
+    trackVercelEvent("results_viewed", { aiExposureScore, resilienceScore });
   },
 
-  ctaInteraction: (ctaId: string, location: string) =>
-    trackEvent("cta_interaction", { ctaId, location }),
+  backButtonUsed: (questionNumber: number) => {
+    trackProductEvent(PRODUCT_EVENTS.BACK_BUTTON_USED, {
+      question_number: questionNumber,
+    });
+  },
+
+  assessmentAbandoned: (questionNumber: number) => {
+    trackProductEvent(PRODUCT_EVENTS.ASSESSMENT_ABANDONED, {
+      abandoned_at_question: questionNumber,
+    });
+  },
+
+  ctaClicked: (ctaId: string, location: string) => {
+    trackProductEvent(PRODUCT_EVENTS.CTA_CLICKED, {
+      cta_id: ctaId,
+      location,
+    });
+    trackVercelEvent("cta_interaction", { ctaId, location });
+  },
+
+  /** @deprecated Use ctaClicked — kept for internal compatibility */
+  ctaInteraction: (ctaId: string, location: string) => {
+    analytics.ctaClicked(ctaId, location);
+  },
 };

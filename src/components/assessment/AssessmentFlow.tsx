@@ -20,6 +20,9 @@ export function AssessmentFlow() {
   const [animating, setAnimating] = useState(false);
   const [completing, setCompleting] = useState(false);
   const startedTracked = useRef(false);
+  const questionShownAt = useRef(Date.now());
+  const completedRef = useRef(false);
+  const abandonedSent = useRef(false);
 
   const question = QUESTIONS[currentIndex];
   const currentValue = answers[question.id] ?? null;
@@ -30,6 +33,10 @@ export function AssessmentFlow() {
     analytics.assessmentStarted();
     startedTracked.current = true;
   }, []);
+
+  useEffect(() => {
+    questionShownAt.current = Date.now();
+  }, [question.id]);
 
   useEffect(() => {
     if (question.type !== "slider") return;
@@ -46,6 +53,18 @@ export function AssessmentFlow() {
     });
   }, [question.id, question.type, question.sliderSteps]);
 
+  const reportAbandonment = useCallback(() => {
+    if (completedRef.current || abandonedSent.current || completing) return;
+    abandonedSent.current = true;
+    analytics.assessmentAbandoned(currentIndex + 1);
+  }, [currentIndex, completing]);
+
+  useEffect(() => {
+    const handlePageHide = () => reportAbandonment();
+    window.addEventListener("pagehide", handlePageHide);
+    return () => window.removeEventListener("pagehide", handlePageHide);
+  }, [reportAbandonment]);
+
   const transitionTo = useCallback((nextIndex: number) => {
     setAnimating(true);
     window.setTimeout(() => {
@@ -60,6 +79,7 @@ export function AssessmentFlow() {
 
   const handleBack = () => {
     if (currentIndex > 0) {
+      analytics.backButtonUsed(currentIndex + 1);
       transitionTo(currentIndex - 1);
     }
   };
@@ -67,10 +87,12 @@ export function AssessmentFlow() {
   const handleContinue = () => {
     if (currentValue === null) return;
 
-    analytics.questionCompleted(question.id, currentIndex + 1);
+    const timeSpentMs = Date.now() - questionShownAt.current;
+    analytics.questionCompleted(question.id, currentIndex + 1, timeSpentMs);
 
     if (isLastQuestion) {
       setCompleting(true);
+      completedRef.current = true;
       const finalAnswers = { ...answers, [question.id]: currentValue };
       const result = calculateResults(finalAnswers);
 
@@ -112,6 +134,7 @@ export function AssessmentFlow() {
           </Link>
           <Link
             href="/"
+            onClick={reportAbandonment}
             className="text-sm text-muted transition-colors hover:text-foreground"
           >
             Exit

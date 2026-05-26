@@ -78,12 +78,14 @@ type NarrativeCardsProps = {
   label: string;
   items: NarrativeCard[];
   tone?: "strength" | "exposure" | "recommendation";
+  sectionId?: string;
 };
 
 export function NarrativeCardsSection({
   label,
   items,
   tone = "strength",
+  sectionId,
 }: NarrativeCardsProps) {
   const accentClass = {
     strength: "border-black/[0.05] bg-white/65",
@@ -92,7 +94,10 @@ export function NarrativeCardsSection({
   }[tone];
 
   return (
-    <section className="animate-fade-in-up">
+    <section
+      className="animate-fade-in-up"
+      {...(sectionId ? { "data-analytics-section": sectionId } : {})}
+    >
       <p className="section-label">{label}</p>
       <div className="mt-5 space-y-3 sm:space-y-4">
         {items.map((item, index) => (
@@ -120,7 +125,7 @@ type BenchmarkNarrativeProps = {
 
 export function BenchmarkNarrative({ narrative }: BenchmarkNarrativeProps) {
   return (
-    <section className="animate-fade-in-up">
+    <section className="animate-fade-in-up" data-analytics-section="benchmark">
       <p className="section-label">What This Means</p>
       <blockquote className="premium-card mt-5 border-l-2 border-l-accent/30 p-6 sm:p-8">
         <p className="font-display text-[1.25rem] leading-[1.55] text-foreground sm:text-xl sm:leading-[1.6]">

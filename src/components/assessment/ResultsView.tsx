@@ -14,6 +14,7 @@ import {
 import { PremiumReportTeaser } from "@/components/trust/PremiumReportTeaser";
 import { TrustSection } from "@/components/trust/TrustSection";
 import { analytics } from "@/lib/analytics/events";
+import { useResultsEngagement } from "@/lib/analytics/useResultsEngagement";
 import { loadResults } from "@/lib/assessment/scoring";
 import type { AssessmentResult } from "@/lib/assessment/types";
 
@@ -47,6 +48,12 @@ export function ResultsView() {
     );
     tracked.current = true;
   }, [result]);
+
+  useResultsEngagement({
+    enabled: ready && result !== null,
+    aiExposureScore: result?.aiExposureScore ?? 0,
+    resilienceScore: result?.careerResilienceScore ?? 0,
+  });
 
   if (!ready || !result) {
     return <LoadingState message="Crafting your personalized insights…" />;
@@ -83,7 +90,10 @@ export function ResultsView() {
             narrative={result.heroNarrative}
           />
 
-          <div className="animate-fade-in-up-delay">
+          <div
+            className="animate-fade-in-up-delay"
+            data-analytics-section="scores"
+          >
             <ScoreOverview
               aiExposureScore={result.aiExposureScore}
               careerResilienceScore={result.careerResilienceScore}
@@ -94,18 +104,21 @@ export function ResultsView() {
             label="Key Strengths"
             items={result.keyStrengths}
             tone="strength"
+            sectionId="key_strengths"
           />
 
           <NarrativeCardsSection
             label="AI Exposure Areas"
             items={result.exposureAreas}
             tone="exposure"
+            sectionId="exposure_areas"
           />
 
           <NarrativeCardsSection
             label="Future Resilience Recommendations"
             items={result.resilienceRecommendations}
             tone="recommendation"
+            sectionId="recommendations"
           />
 
           <BenchmarkNarrative narrative={result.benchmarkNarrative} />

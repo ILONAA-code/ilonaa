@@ -2,16 +2,8 @@
 
 import { buildEventMetadata } from "@/lib/analytics/metadata";
 import { getAnonymousSessionId } from "@/lib/analytics/session";
+import type { EventMetadataPayload, ProductEventName } from "@/lib/analytics/types";
 import { getSupabaseClient } from "@/lib/supabase/client";
-
-export type ProductEventName =
-  | "landing_view"
-  | "assessment_started"
-  | "question_completed"
-  | "assessment_completed"
-  | "results_viewed";
-
-type EventMetadata = Record<string, string | number | boolean | undefined>;
 
 let warnedInsertFailure = false;
 
@@ -21,7 +13,7 @@ let warnedInsertFailure = false;
  */
 export function trackProductEvent(
   eventName: ProductEventName,
-  metadata?: EventMetadata
+  metadata?: Partial<EventMetadataPayload>
 ): void {
   if (typeof window === "undefined") return;
 
@@ -30,7 +22,7 @@ export function trackProductEvent(
 
 async function sendEvent(
   eventName: ProductEventName,
-  metadata?: EventMetadata
+  metadata?: Partial<EventMetadataPayload>
 ): Promise<void> {
   try {
     const client = getSupabaseClient();
@@ -42,7 +34,6 @@ async function sendEvent(
 
     const payload = buildEventMetadata(metadata);
 
-    // Important: do not chain .select() — anon role has insert-only grants.
     const { error, status } = await client.from("events").insert({
       session_id: sessionId,
       event_name: eventName,
