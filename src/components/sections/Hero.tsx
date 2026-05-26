@@ -99,11 +99,12 @@ export function Hero() {
             <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Button
                 href="/assessment"
-                size="large"
+                size="default"
+                className="w-[11.5rem] justify-center shadow-sm hover:shadow-sm"
                 trackCta="start_analysis"
                 trackLocation="hero"
               >
-                Start Analysis
+                Start Assessment
               </Button>
               <p className="body-text text-muted/80">
                 Free · 10 questions · ~3 minutes

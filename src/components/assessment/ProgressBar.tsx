@@ -11,13 +11,6 @@ export function ProgressBar({ current, total, className }: ProgressBarProps) {
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="mb-3 flex items-center justify-between gap-4">
-        <p className="section-label">
-          Question {current} of {total}
-        </p>
-        <p className="text-xs tabular-nums text-muted">{Math.round(progress)}%</p>
-      </div>
-
       <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.05]">
         <div
           className="score-bar-fill h-full rounded-full bg-accent"
@@ -29,6 +22,10 @@ export function ProgressBar({ current, total, className }: ProgressBarProps) {
           aria-label={`Assessment progress: question ${current} of ${total}`}
         />
       </div>
+
+      <p className="mt-3 text-center text-sm leading-none text-muted/80">
+        Question {current} of {total}
+      </p>
     </div>
   );
 }

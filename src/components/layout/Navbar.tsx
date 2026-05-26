@@ -36,21 +36,11 @@ export function Navbar() {
         <Button
           href="/assessment"
           size="default"
-          className="hidden sm:inline-flex"
+          className="px-4 sm:px-6 shadow-sm hover:shadow-sm"
           trackCta="start_analysis"
           trackLocation="navbar"
         >
-          Start Analysis
-        </Button>
-
-        <Button
-          href="/assessment"
-          size="default"
-          className="sm:hidden px-4 h-9 text-[0.9375rem]"
-          trackCta="start_analysis"
-          trackLocation="navbar_mobile"
-        >
-          Start
+          Start Assessment
         </Button>
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-black/[0.06] to-transparent" />

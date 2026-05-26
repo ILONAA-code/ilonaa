@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ProgressBar } from "@/components/assessment/ProgressBar";
 import { QuestionScreen } from "@/components/assessment/QuestionScreen";
-import { TrustSection } from "@/components/trust/TrustSection";
 import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { analytics } from "@/lib/analytics/events";
@@ -165,36 +164,35 @@ export function AssessmentFlow() {
               <QuestionScreen
                 key={question.id}
                 question={question}
-                questionNumber={currentIndex + 1}
                 value={currentValue}
                 onChange={handleChange}
                 animating={animating}
               />
             </div>
 
-            <div className="mt-8 flex items-center gap-3 border-t border-black/[0.05] pt-6 sm:mt-10 sm:pt-8">
-              <Button
-                variant="secondary"
-                onClick={handleBack}
-                disabled={currentIndex === 0}
-                className="shrink-0 px-5"
-              >
-                Back
-              </Button>
+            <div className="mt-10 flex justify-center border-t border-black/[0.05] pt-8 sm:mt-12 sm:pt-10">
+              <div className="flex items-center justify-center gap-3">
+                <Button
+                  variant="secondary"
+                  onClick={handleBack}
+                  disabled={currentIndex === 0}
+                  className="w-[5.75rem] shrink-0 justify-center px-5 shadow-none hover:shadow-sm"
+                >
+                  Back
+                </Button>
 
-              <Button
-                onClick={handleContinue}
-                disabled={currentValue === null}
-                className="min-w-0 flex-1"
-                trackCta={isLastQuestion ? "view_results" : "continue"}
-                trackLocation="assessment"
-              >
-                {isLastQuestion ? "View Results" : "Continue"}
-              </Button>
+                <Button
+                  onClick={handleContinue}
+                  disabled={currentValue === null}
+                  className="w-[11.5rem] shrink-0 justify-center px-6 shadow-sm hover:shadow-sm"
+                  trackCta={isLastQuestion ? "view_results" : "continue"}
+                  trackLocation="assessment"
+                >
+                  {isLastQuestion ? "View Results" : "Continue"}
+                </Button>
+              </div>
             </div>
           </div>
-
-          <TrustSection variant="compact" className="mt-5 sm:mt-6" />
         </div>
       </main>
     </div>

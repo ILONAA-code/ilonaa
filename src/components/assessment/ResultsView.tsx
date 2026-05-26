@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { FooterCopyright } from "@/components/layout/FooterCopyright";
 import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import {
@@ -129,7 +130,7 @@ export function ResultsView() {
 
           <TrustSection className="animate-fade-in-up-delay" />
 
-          <div className="animate-fade-in-up-delay-2 flex flex-col items-center gap-3 pb-6 sm:flex-row sm:justify-center sm:pb-8">
+          <div className="animate-fade-in-up-delay-2 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button
               href="/assessment"
               variant="primary"
@@ -149,6 +150,8 @@ export function ResultsView() {
               Back to Home
             </Button>
           </div>
+
+          <FooterCopyright className="pb-8 sm:pb-10" />
         </div>
       </main>
     </div>

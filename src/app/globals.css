@@ -62,7 +62,7 @@
   }
 
   .choice-option {
-    @apply w-full cursor-pointer rounded-2xl border text-left text-base leading-[1.65] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99];
+    @apply w-full cursor-pointer rounded-2xl border text-center text-base leading-[1.65] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99];
     font-weight: 500;
   }
 

@@ -19,14 +19,15 @@ export function FinalCTA() {
             career can grow stronger.
           </p>
 
-          <div className="mt-10">
+          <div className="mt-10 flex justify-center">
             <Button
               href="/assessment"
-              size="large"
+              size="default"
+              className="w-[11.5rem] justify-center shadow-sm hover:shadow-sm"
               trackCta="start_analysis"
               trackLocation="final_cta"
             >
-              Start Your Analysis
+              Start Assessment
             </Button>
           </div>
         </div>

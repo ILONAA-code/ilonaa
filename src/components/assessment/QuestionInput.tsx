@@ -143,7 +143,7 @@ export function ButtonChoices({ options, value, onChange }: ButtonChoicesProps) 
             type="button"
             onClick={() => onChange(option.value)}
             className={cn(
-              "choice-option px-5 py-4 text-center text-[15px] font-medium sm:text-left",
+              "choice-option px-5 py-4 text-[15px] font-medium",
               selected ? choiceSelectedClass : choiceUnselectedClass
             )}
           >

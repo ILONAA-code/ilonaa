@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterCopyright } from "@/components/layout/FooterCopyright";
 import { TrustSection } from "@/components/trust/TrustSection";
 
 export function Footer() {
@@ -23,7 +24,7 @@ export function Footer() {
               Process
             </Link>
             <Link href="/assessment" className="transition-colors hover:text-foreground">
-              Get Started
+              Start Assessment
             </Link>
           </div>
         </div>
@@ -32,9 +33,7 @@ export function Footer() {
           <TrustSection variant="compact" />
         </div>
 
-        <p className="mt-8 text-center text-xs text-muted/70 sm:text-left">
-          © {new Date().getFullYear()} ILONAA. All rights reserved.
-        </p>
+        <FooterCopyright />
       </div>
     </footer>
   );

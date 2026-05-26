@@ -9,7 +9,6 @@ import {
 
 type QuestionScreenProps = {
   question: Question;
-  questionNumber: number;
   value: number | null;
   onChange: (value: number) => void;
   animating: boolean;
@@ -17,7 +16,6 @@ type QuestionScreenProps = {
 
 export function QuestionScreen({
   question,
-  questionNumber,
   value,
   onChange,
   animating,
@@ -28,11 +26,7 @@ export function QuestionScreen({
         animating ? "animate-question-out" : "animate-question-in"
       }`}
     >
-      <p className="section-label">
-        Question {String(questionNumber).padStart(2, "0")}
-      </p>
-
-      <h1 className="display-subhead mt-4 text-balance">
+      <h1 className="display-subhead text-balance">
         {question.text}
       </h1>
 
@@ -42,7 +36,7 @@ export function QuestionScreen({
         </p>
       )}
 
-      <div className="mt-8 sm:mt-10">
+      <div className="mt-8 pb-2 sm:mt-10 sm:pb-4">
         {question.type === "slider" && question.sliderLabels && (
           <SliderInput
             value={value}
