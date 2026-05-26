@@ -24,7 +24,7 @@ export function Footer() {
               Process
             </Link>
             <Link href="/assessment" className="transition-colors hover:text-foreground">
-              Start Assessment
+              Start
             </Link>
           </div>
         </div>

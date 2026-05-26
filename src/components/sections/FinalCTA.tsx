@@ -23,11 +23,11 @@ export function FinalCTA() {
             <Button
               href="/assessment"
               size="default"
-              className="w-[11.5rem] justify-center shadow-sm hover:shadow-sm"
+              className="w-[7rem] shrink-0 justify-center whitespace-nowrap px-5 shadow-sm hover:shadow-sm"
               trackCta="start_analysis"
               trackLocation="final_cta"
             >
-              Start Assessment
+              Start
             </Button>
           </div>
         </div>

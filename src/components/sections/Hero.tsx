@@ -96,15 +96,15 @@ export function Hero() {
               your career may be in the age of artificial intelligence.
             </p>
 
-            <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col items-center gap-3 text-center">
               <Button
                 href="/assessment"
                 size="default"
-                className="w-[11.5rem] justify-center shadow-sm hover:shadow-sm"
+                className="w-[7rem] shrink-0 justify-center whitespace-nowrap px-5 shadow-sm hover:shadow-sm"
                 trackCta="start_analysis"
                 trackLocation="hero"
               >
-                Start Assessment
+                Start
               </Button>
               <p className="body-text text-muted/80">
                 Free · 10 questions · ~3 minutes
