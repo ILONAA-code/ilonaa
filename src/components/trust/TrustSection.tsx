@@ -5,9 +5,10 @@ type TrustSectionProps = {
 
 const trustPoints = [
   "No accounts required.",
-  "Designed with privacy-first architecture.",
+  "Designed with privacy-first architecture and European data hosting.",
   "Assessments are intentionally separated from personal identity.",
   "Your session stays local — nothing persists beyond this visit.",
+  "Minimal anonymous product intelligence — no identity linkage.",
 ];
 
 export function TrustSection({
@@ -21,7 +22,7 @@ export function TrustSection({
       >
         <p className="section-label">Privacy by design</p>
         <p className="body-text mt-2">
-          No accounts. No identity linkage. Your assessment stays with you.
+          No accounts. European-hosted analytics. Your assessment stays with you.
         </p>
       </div>
     );
@@ -37,10 +38,7 @@ export function TrustSection({
       </h2>
       <ul className="mt-6 space-y-3.5">
         {trustPoints.map((point) => (
-          <li
-            key={point}
-            className="flex items-start gap-3 body-text"
-          >
+          <li key={point} className="flex items-start gap-3 body-text">
             <span
               className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent"
               aria-hidden="true"

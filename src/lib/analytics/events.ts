@@ -1,6 +1,7 @@
 "use client";
 
 import { track } from "@vercel/analytics";
+import { trackProductEvent } from "@/lib/analytics/track";
 
 export type AnalyticsEvent =
   | "landing_page_viewed"
@@ -16,8 +17,9 @@ export type AnalyticsProperties = Record<
 >;
 
 /**
- * Privacy-first behavioral analytics layer.
- * Sends anonymous funnel events via Vercel Analytics — no personal data collected.
+ * Privacy-first behavioral analytics.
+ * Product funnel events → Supabase (anonymous, EU-hosted).
+ * Lightweight Vercel events retained for deployment-level signals.
  */
 export function trackEvent(
   event: AnalyticsEvent,
@@ -51,21 +53,42 @@ function sanitizeProperties(
 }
 
 export const analytics = {
-  landingPageViewed: () => trackEvent("landing_page_viewed"),
+  landingPageViewed: () => {
+    trackProductEvent("landing_view");
+    trackEvent("landing_page_viewed");
+  },
 
-  assessmentStarted: () => trackEvent("assessment_started"),
+  assessmentStarted: () => {
+    trackProductEvent("assessment_started");
+    trackEvent("assessment_started");
+  },
 
-  questionCompleted: (questionId: string, questionNumber: number) =>
-    trackEvent("question_completed", { questionId, questionNumber }),
+  questionCompleted: (questionId: string, questionNumber: number) => {
+    trackProductEvent("question_completed", {
+      question_id: questionId,
+      question_number: questionNumber,
+    });
+    trackEvent("question_completed", { questionId, questionNumber });
+  },
 
-  assessmentCompleted: (aiExposureScore: number, resilienceScore: number) =>
+  assessmentCompleted: (aiExposureScore: number, resilienceScore: number) => {
+    trackProductEvent("assessment_completed", {
+      ai_exposure_score: aiExposureScore,
+      resilience_score: resilienceScore,
+    });
     trackEvent("assessment_completed", {
       aiExposureScore,
       resilienceScore,
-    }),
+    });
+  },
 
-  resultsViewed: (aiExposureScore: number, resilienceScore: number) =>
-    trackEvent("results_viewed", { aiExposureScore, resilienceScore }),
+  resultsViewed: (aiExposureScore: number, resilienceScore: number) => {
+    trackProductEvent("results_viewed", {
+      ai_exposure_score: aiExposureScore,
+      resilience_score: resilienceScore,
+    });
+    trackEvent("results_viewed", { aiExposureScore, resilienceScore });
+  },
 
   ctaInteraction: (ctaId: string, location: string) =>
     trackEvent("cta_interaction", { ctaId, location }),
