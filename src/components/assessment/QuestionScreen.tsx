@@ -32,12 +32,12 @@ export function QuestionScreen({
         Question {String(questionNumber).padStart(2, "0")}
       </p>
 
-      <h1 className="font-display text-[1.875rem] leading-[1.12] text-balance text-foreground sm:text-[2.25rem]">
+      <h1 className="display-subhead mt-4 text-balance">
         {question.text}
       </h1>
 
       {question.subtitle && (
-        <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted sm:text-base">
+        <p className="body-text mt-4 max-w-lg">
           {question.subtitle}
         </p>
       )}

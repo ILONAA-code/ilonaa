@@ -17,10 +17,10 @@ function ScoreBar({
   return (
     <div className="premium-card p-6 sm:p-7">
       <div className="mb-4 flex items-end justify-between gap-4">
-        <h3 className="text-sm font-medium leading-snug text-muted">{label}</h3>
-        <p className="font-display text-3xl tabular-nums leading-none text-foreground sm:text-4xl">
+        <h3 className="body-text-emphasis">{label}</h3>
+        <p className="font-display text-[2rem] tabular-nums leading-none text-foreground sm:text-4xl">
           {score}
-          <span className="ml-1 text-sm text-muted/60 sm:text-base">/100</span>
+          <span className="ml-1 text-base text-muted/60">/100</span>
         </p>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.05]">
@@ -64,10 +64,10 @@ export function ResultsHero({ headline, narrative }: ResultsHeroProps) {
   return (
     <header className="animate-fade-in-up">
       <p className="section-label">Your Career Resilience Profile</p>
-      <h1 className="mt-4 font-display text-[1.875rem] leading-[1.12] text-balance text-foreground sm:text-4xl md:text-[2.75rem]">
+      <h1 className="display-subhead mt-4 text-balance md:text-[2.75rem] md:leading-[1.14]">
         {headline}
       </h1>
-      <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+      <p className="body-text mt-5 max-w-2xl sm:text-lg">
         {narrative}
       </p>
     </header>
@@ -100,15 +100,13 @@ export function NarrativeCardsSection({
             key={item.title}
             className={`premium-card p-5 transition-shadow duration-300 hover:shadow-[0_6px_28px_-10px_rgba(31,41,55,0.1)] sm:p-6 ${accentClass}`}
           >
-            <span className="text-xs font-medium tabular-nums tracking-widest text-accent/60">
+            <span className="text-[0.8125rem] font-semibold tabular-nums tracking-widest text-accent/60">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3 className="mt-2 font-display text-xl text-foreground">
+            <h3 className="mt-2 font-display text-[1.375rem] leading-snug text-foreground sm:text-xl">
               {item.title}
             </h3>
-            <p className="mt-2.5 text-sm leading-relaxed text-muted sm:text-[15px]">
-              {item.description}
-            </p>
+            <p className="body-text mt-3">{item.description}</p>
           </article>
         ))}
       </div>
@@ -125,7 +123,7 @@ export function BenchmarkNarrative({ narrative }: BenchmarkNarrativeProps) {
     <section className="animate-fade-in-up">
       <p className="section-label">What This Means</p>
       <blockquote className="premium-card mt-5 border-l-2 border-l-accent/30 p-6 sm:p-8">
-        <p className="font-display text-lg leading-relaxed text-foreground sm:text-xl">
+        <p className="font-display text-[1.25rem] leading-[1.55] text-foreground sm:text-xl sm:leading-[1.6]">
           {narrative}
         </p>
       </blockquote>
@@ -146,7 +144,7 @@ export function ResultsClosing({ summary }: ResultsClosingProps) {
       />
       <div className="relative">
         <p className="section-label">Closing Reflection</p>
-        <p className="mt-4 font-display text-xl text-balance leading-snug text-foreground sm:text-2xl">
+        <p className="display-subhead mt-4 text-balance sm:text-2xl">
           {summary}
         </p>
       </div>

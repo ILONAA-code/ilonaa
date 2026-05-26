@@ -158,6 +158,8 @@ export function AssessmentFlow() {
                 onClick={handleContinue}
                 disabled={currentValue === null}
                 className="min-w-0 flex-1"
+                trackCta={isLastQuestion ? "view_results" : "continue"}
+                trackLocation="assessment"
               >
                 {isLastQuestion ? "View Results" : "Continue"}
               </Button>

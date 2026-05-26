@@ -11,6 +11,7 @@ import {
   ResultsHero,
   ScoreOverview,
 } from "@/components/assessment/results/ResultsSections";
+import { PremiumReportTeaser } from "@/components/trust/PremiumReportTeaser";
 import { TrustSection } from "@/components/trust/TrustSection";
 import { analytics } from "@/lib/analytics/events";
 import { loadResults } from "@/lib/assessment/scoring";
@@ -48,7 +49,7 @@ export function ResultsView() {
   }, [result]);
 
   if (!ready || !result) {
-    return <LoadingState message="Crafting your resilience profile…" />;
+    return <LoadingState message="Crafting your personalized insights…" />;
   }
 
   return (
@@ -62,13 +63,13 @@ export function ResultsView() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8 lg:px-12">
           <Link
             href="/"
-            className="text-lg font-medium tracking-[0.08em] text-foreground transition-opacity hover:opacity-70"
+            className="text-lg font-semibold tracking-[0.08em] text-foreground transition-opacity hover:opacity-70"
           >
             ILONAA
           </Link>
           <Link
             href="/assessment"
-            className="text-sm text-muted transition-colors hover:text-foreground"
+            className="body-text text-muted transition-colors hover:text-foreground"
           >
             Retake
           </Link>
@@ -76,7 +77,7 @@ export function ResultsView() {
       </header>
 
       <main className="relative z-10 mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14 lg:py-16">
-        <div className="space-y-12 sm:space-y-16">
+        <div className="space-y-14 sm:space-y-16">
           <ResultsHero
             headline={result.heroHeadline}
             narrative={result.heroNarrative}
@@ -111,13 +112,27 @@ export function ResultsView() {
 
           <ResultsClosing summary={result.summary} />
 
+          <PremiumReportTeaser className="animate-fade-in-up-delay" />
+
           <TrustSection className="animate-fade-in-up-delay" />
 
           <div className="animate-fade-in-up-delay-2 flex flex-col items-center gap-3 pb-6 sm:flex-row sm:justify-center sm:pb-8">
-            <Button href="/assessment" variant="primary" size="large">
+            <Button
+              href="/assessment"
+              variant="primary"
+              size="large"
+              trackCta="retake_assessment"
+              trackLocation="results"
+            >
               Retake Assessment
             </Button>
-            <Button href="/" variant="secondary" size="large">
+            <Button
+              href="/"
+              variant="secondary"
+              size="large"
+              trackCta="back_to_home"
+              trackLocation="results"
+            >
               Back to Home
             </Button>
           </div>

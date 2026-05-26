@@ -17,7 +17,7 @@ const steps = [
     number: "03",
     title: "Receive your personalized career resilience profile",
     description:
-      "Get your scores, insights, and skill recommendations in a clear, readable report.",
+      "Receive your scores and personalized insights — clear, calm, and thoughtfully structured.",
   },
 ];
 
@@ -55,7 +55,7 @@ export function Process() {
                 <h3 className="mt-2 font-display text-2xl text-foreground">
                   {step.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+                <p className="body-text mt-3">
                   {step.description}
                 </p>
               </div>

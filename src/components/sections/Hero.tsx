@@ -16,8 +16,8 @@ function ScorePreview() {
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
               Your Profile Preview
             </p>
-            <p className="mt-1 font-display text-xl text-foreground">
-              Career Resilience Report
+            <p className="mt-1 font-display text-[1.375rem] leading-snug text-foreground sm:text-2xl">
+              Personalized Insights
             </p>
           </div>
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-light">
@@ -42,8 +42,8 @@ function ScorePreview() {
           {scores.map((score) => (
             <div key={score.label}>
               <div className="mb-2 flex items-baseline justify-between">
-                <span className="text-sm text-muted">{score.label}</span>
-                <span className="text-sm font-medium tabular-nums text-foreground">
+                <span className="body-text">{score.label}</span>
+                <span className="body-text-emphasis tabular-nums">
                   {score.value}
                   <span className="text-muted/60">/100</span>
                 </span>
@@ -64,7 +64,7 @@ function ScorePreview() {
           <p className="text-xs font-medium uppercase tracking-[0.12em] text-accent">
             Recommended Focus
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
+          <p className="mt-2 body-text">
             Strategic leadership, complex problem-solving, and cross-functional
             collaboration.
           </p>
@@ -86,21 +86,26 @@ export function Hero() {
               Structured clarity for important decisions
             </p>
 
-            <h1 className="animate-fade-in-up font-display text-[2.25rem] leading-[1.1] text-balance text-foreground sm:text-5xl lg:text-[3.25rem]">
+            <h1 className="animate-fade-in-up display-headline">
               Understand Your AI Career Risk
               <span className="block text-muted/80">In Just 10 Questions.</span>
             </h1>
 
-            <p className="animate-fade-in-up-delay mt-6 text-base leading-relaxed text-muted sm:text-lg">
+            <p className="animate-fade-in-up-delay body-text mt-6 sm:text-lg">
               AI-assisted analysis designed to help you understand how resilient
               your career may be in the age of artificial intelligence.
             </p>
 
             <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button href="/assessment" size="large">
+              <Button
+                href="/assessment"
+                size="large"
+                trackCta="start_analysis"
+                trackLocation="hero"
+              >
                 Start Analysis
               </Button>
-              <p className="text-sm text-muted/80">
+              <p className="body-text text-muted/80">
                 Free · 10 questions · ~3 minutes
               </p>
             </div>

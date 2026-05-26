@@ -8,21 +8,24 @@ export function FinalCTA() {
         <div className="gradient-soft absolute inset-0 opacity-60" />
 
         <div className="relative mx-auto max-w-2xl">
-          <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-accent">
-            Begin Today
-          </p>
+          <p className="section-label mb-4">Begin Today</p>
 
-          <h2 className="font-display text-3xl text-balance text-foreground sm:text-4xl md:text-5xl md:leading-[1.15]">
+          <h2 className="display-subhead text-balance sm:text-4xl md:text-5xl md:leading-[1.14]">
             Clarity begins with understanding.
           </h2>
 
-          <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-muted sm:text-lg">
+          <p className="body-text mx-auto mt-5 max-w-md sm:text-lg">
             Take ten minutes to understand where you stand — and where your
             career can grow stronger.
           </p>
 
           <div className="mt-10">
-            <Button href="/assessment" size="large">
+            <Button
+              href="/assessment"
+              size="large"
+              trackCta="start_analysis"
+              trackLocation="final_cta"
+            >
               Start Your Analysis
             </Button>
           </div>

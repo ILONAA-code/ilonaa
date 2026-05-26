@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { analytics } from "@/lib/analytics/events";
 
 type ButtonBaseProps = {
   children: React.ReactNode;
@@ -7,6 +10,8 @@ type ButtonBaseProps = {
   size?: "default" | "large";
   className?: string;
   disabled?: boolean;
+  trackCta?: string;
+  trackLocation?: string;
 };
 
 type LinkButtonProps = ButtonBaseProps & {
@@ -24,7 +29,7 @@ type ActionButtonProps = ButtonBaseProps & {
 export type ButtonProps = LinkButtonProps | ActionButtonProps;
 
 const baseStyles =
-  "inline-flex items-center justify-center font-sans font-medium transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-40";
+  "inline-flex items-center justify-center font-sans font-semibold transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-40";
 
 const variants = {
   primary:
@@ -35,9 +40,15 @@ const variants = {
 };
 
 const sizes = {
-  default: "h-11 px-6 text-sm rounded-full",
-  large: "h-12 px-8 text-[15px] rounded-full",
+  default: "h-11 px-6 text-base rounded-full sm:text-[0.9375rem]",
+  large: "h-12 px-8 text-base rounded-full sm:text-[1.0625rem]",
 };
+
+function trackCtaClick(trackCta?: string, trackLocation?: string) {
+  if (trackCta && trackLocation) {
+    analytics.ctaInteraction(trackCta, trackLocation);
+  }
+}
 
 export function Button({
   children,
@@ -45,6 +56,8 @@ export function Button({
   size = "default",
   className,
   disabled = false,
+  trackCta,
+  trackLocation,
   ...props
 }: ButtonProps) {
   const classes = cn(
@@ -56,7 +69,11 @@ export function Button({
 
   if ("href" in props && props.href) {
     return (
-      <Link href={props.href} className={classes}>
+      <Link
+        href={props.href}
+        className={classes}
+        onClick={() => trackCtaClick(trackCta, trackLocation)}
+      >
         {children}
       </Link>
     );
@@ -65,7 +82,10 @@ export function Button({
   return (
     <button
       type={props.type ?? "button"}
-      onClick={props.onClick}
+      onClick={() => {
+        trackCtaClick(trackCta, trackLocation);
+        props.onClick?.();
+      }}
       disabled={disabled}
       className={classes}
     >

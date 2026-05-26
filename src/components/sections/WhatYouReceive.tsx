@@ -56,10 +56,10 @@ export function WhatYouReceive() {
             <span className="text-xs font-medium tabular-nums text-muted/50">
               0{index + 1}
             </span>
-            <h3 className="mt-2 font-display text-xl text-foreground">
+            <h3 className="mt-2 font-display text-[1.375rem] leading-snug text-foreground sm:text-xl">
               {item.title}
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted">
+            <p className="body-text mt-3">
               {item.description}
             </p>
           </article>

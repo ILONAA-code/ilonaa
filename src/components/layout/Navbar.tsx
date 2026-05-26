@@ -33,11 +33,23 @@ export function Navbar() {
           </Link>
         </nav>
 
-        <Button href="/assessment" size="default" className="hidden sm:inline-flex">
+        <Button
+          href="/assessment"
+          size="default"
+          className="hidden sm:inline-flex"
+          trackCta="start_analysis"
+          trackLocation="navbar"
+        >
           Start Analysis
         </Button>
 
-        <Button href="/assessment" size="default" className="sm:hidden text-xs px-4 h-9">
+        <Button
+          href="/assessment"
+          size="default"
+          className="sm:hidden px-4 h-9 text-[0.9375rem]"
+          trackCta="start_analysis"
+          trackLocation="navbar_mobile"
+        >
           Start
         </Button>
       </div>

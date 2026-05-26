@@ -15,12 +15,7 @@ export function Section({
 }: SectionProps) {
   return (
     <section id={id} className={cn("section-padding", className)}>
-      <div
-        className={cn(
-          "mx-auto w-full max-w-6xl",
-          containerClassName
-        )}
-      >
+      <div className={cn("mx-auto w-full max-w-6xl", containerClassName)}>
         {children}
       </div>
     </section>
@@ -50,16 +45,12 @@ export function SectionHeader({
         className
       )}
     >
-      {label && (
-        <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-accent">
-          {label}
-        </p>
-      )}
-      <h2 className="font-display text-3xl text-balance text-foreground sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
+      {label && <p className="section-label mb-4">{label}</p>}
+      <h2 className="display-subhead text-balance sm:text-4xl md:text-[2.75rem] md:leading-[1.14]">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">
+        <p className="body-text mt-5 sm:text-lg sm:leading-[1.75]">
           {description}
         </p>
       )}
