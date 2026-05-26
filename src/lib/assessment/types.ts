@@ -18,12 +18,20 @@ export type Question = {
 
 export type Answers = Record<string, number>;
 
+export type NarrativeCard = {
+  title: string;
+  description: string;
+};
+
 export type AssessmentResult = {
   aiExposureScore: number;
   careerResilienceScore: number;
-  insights: string[];
-  protectionFactors: string[];
-  futureProofSkills: string[];
+  heroHeadline: string;
+  heroNarrative: string;
+  keyStrengths: NarrativeCard[];
+  exposureAreas: NarrativeCard[];
+  resilienceRecommendations: NarrativeCard[];
+  benchmarkNarrative: string;
   summary: string;
   answers: Answers;
   completedAt: string;

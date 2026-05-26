@@ -1,11 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ProgressBar } from "@/components/assessment/ProgressBar";
 import { QuestionScreen } from "@/components/assessment/QuestionScreen";
+import { TrustSection } from "@/components/trust/TrustSection";
 import { Button } from "@/components/ui/Button";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { analytics } from "@/lib/analytics/events";
 import { QUESTIONS, sliderValueFromStep } from "@/lib/assessment/questions";
 import { calculateResults, saveResults } from "@/lib/assessment/scoring";
 import type { Answers } from "@/lib/assessment/types";
@@ -15,10 +18,18 @@ export function AssessmentFlow() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [animating, setAnimating] = useState(false);
+  const [completing, setCompleting] = useState(false);
+  const startedTracked = useRef(false);
 
   const question = QUESTIONS[currentIndex];
   const currentValue = answers[question.id] ?? null;
   const isLastQuestion = currentIndex === QUESTIONS.length - 1;
+
+  useEffect(() => {
+    if (startedTracked.current) return;
+    analytics.assessmentStarted();
+    startedTracked.current = true;
+  }, []);
 
   useEffect(() => {
     if (question.type !== "slider") return;
@@ -56,20 +67,40 @@ export function AssessmentFlow() {
   const handleContinue = () => {
     if (currentValue === null) return;
 
+    analytics.questionCompleted(question.id, currentIndex + 1);
+
     if (isLastQuestion) {
+      setCompleting(true);
       const finalAnswers = { ...answers, [question.id]: currentValue };
       const result = calculateResults(finalAnswers);
+
+      analytics.assessmentCompleted(
+        result.aiExposureScore,
+        result.careerResilienceScore
+      );
+
       saveResults(result);
-      router.push("/assessment/results");
+
+      window.setTimeout(() => {
+        router.push("/assessment/results");
+      }, 500);
+
       return;
     }
 
     transitionTo(currentIndex + 1);
   };
 
+  if (completing) {
+    return <LoadingState message="Analyzing your responses…" />;
+  }
+
   return (
     <div className="relative flex min-h-screen flex-col bg-background">
-      <div className="gradient-soft pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div
+        className="gradient-soft pointer-events-none absolute inset-0"
+        aria-hidden="true"
+      />
 
       <header className="relative z-50 border-b border-black/[0.04] bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8 lg:px-12">
@@ -88,7 +119,7 @@ export function AssessmentFlow() {
         </div>
       </header>
 
-      <main className="relative z-10 flex flex-1 items-center justify-center px-5 py-8 sm:px-8 sm:py-12">
+      <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 py-8 sm:px-8 sm:py-12">
         <div className="relative w-full max-w-xl">
           <div
             className="hero-glow pointer-events-none absolute inset-0 rounded-[2rem]"
@@ -102,7 +133,7 @@ export function AssessmentFlow() {
               className="mb-8 sm:mb-10"
             />
 
-            <div className="min-h-[300px] sm:min-h-[340px]">
+            <div className="min-h-[280px] sm:min-h-[320px]">
               <QuestionScreen
                 key={question.id}
                 question={question}
@@ -132,6 +163,8 @@ export function AssessmentFlow() {
               </Button>
             </div>
           </div>
+
+          <TrustSection variant="compact" className="mt-5 sm:mt-6" />
         </div>
       </main>
     </div>

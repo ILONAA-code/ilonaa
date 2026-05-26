@@ -28,7 +28,7 @@ export function QuestionScreen({
         animating ? "animate-question-out" : "animate-question-in"
       }`}
     >
-      <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-accent">
+      <p className="section-label">
         Question {String(questionNumber).padStart(2, "0")}
       </p>
 

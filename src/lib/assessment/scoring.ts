@@ -1,4 +1,4 @@
-import type { Answers, AssessmentResult } from "./types";
+import type { Answers, AssessmentResult, NarrativeCard } from "./types";
 import { STORAGE_KEY } from "./types";
 
 function clamp(value: number, min = 0, max = 100): number {
@@ -51,127 +51,242 @@ function calculateCareerResilienceScore(answers: Answers): number {
   return clamp(average);
 }
 
-function exposureLabel(score: number): string {
-  if (score >= 70) return "elevated";
-  if (score >= 45) return "moderate";
-  return "lower";
-}
-
-function resilienceLabel(score: number): string {
-  if (score >= 70) return "strong";
-  if (score >= 45) return "developing";
-  return "emerging";
-}
-
-function generateInsights(
+function generateHeroHeadline(
   answers: Answers,
   aiExposure: number,
   resilience: number
-): string[] {
-  const insights: string[] = [];
+): string {
+  const strategic = getAnswer(answers, "strategic-decision");
+  const human = getAnswer(answers, "human-interaction");
+  const judgment = getAnswer(answers, "personal-judgment");
 
-  if (getAnswer(answers, "repetitive-tasks") >= 65) {
-    insights.push(
-      "A meaningful portion of your work follows predictable patterns — an area where automation tends to advance first."
-    );
-  } else {
-    insights.push(
-      "Your work includes meaningful variation, which naturally creates distance from fully automated workflows."
-    );
+  if (resilience >= 70 && human >= 65) {
+    return "Your profile suggests strong resilience in strategic and relationship-driven environments.";
   }
 
-  if (getAnswer(answers, "human-interaction") >= 65) {
-    insights.push(
-      "Human connection is central to your role — a durable advantage that technology complements rather than replaces."
-    );
-  } else if (getAnswer(answers, "personal-judgment") >= 65) {
-    insights.push(
-      "Your role relies on nuanced judgment — the kind of contextual decision-making that remains distinctly human."
-    );
-  } else {
-    insights.push(
-      "Building stronger interpersonal and judgment-based dimensions could meaningfully strengthen your professional position."
-    );
+  if (resilience >= 70 && strategic >= 65) {
+    return "Your profile reflects thoughtful strength in complexity, judgment, and long-range thinking.";
   }
 
-  if (aiExposure >= 60 && resilience >= 60) {
-    insights.push(
-      "You operate in a changing landscape with solid foundations — awareness and intentional growth will serve you well."
-    );
-  } else if (aiExposure >= 60) {
-    insights.push(
-      `Your AI exposure is ${exposureLabel(aiExposure)}, but your resilience is still ${resilienceLabel(resilience)} — a clear signal to invest in adaptive strengths.`
-    );
-  } else {
-    insights.push(
-      `Your profile suggests ${exposureLabel(aiExposure)} AI exposure alongside ${resilienceLabel(resilience)} career resilience — a balanced starting point for thoughtful planning.`
-    );
+  if (resilience >= 55 && aiExposure <= 50) {
+    return "Your profile suggests a balanced foundation with room to deepen your most human advantages.";
   }
 
-  return insights.slice(0, 3);
+  if (aiExposure >= 60 && resilience >= 55) {
+    return "Your profile sits at an active intersection of change and capability — a thoughtful place to begin.";
+  }
+
+  return "Your profile reveals a clear starting point for building clarity and intentional career direction.";
 }
 
-function generateProtectionFactors(answers: Answers): string[] {
-  const factors: { score: number; text: string }[] = [
+function generateHeroNarrative(
+  answers: Answers,
+  aiExposure: number,
+  resilience: number
+): string {
+  const adaptability = getAnswer(answers, "adaptability");
+  const expertise = getAnswer(answers, "specialized-expertise");
+
+  if (resilience >= 70) {
+    return "Your responses point to durable professional qualities — the kind that tend to compound over time rather than fade with technological shifts.";
+  }
+
+  if (adaptability >= 65 && expertise >= 55) {
+    return "You combine developing depth with openness to change — a pairing that often translates well as industries evolve.";
+  }
+
+  if (aiExposure >= 60) {
+    return "Some aspects of your work may face increasing automation pressure, but this is context for planning — not a verdict on your future.";
+  }
+
+  return "These patterns are meant to inform your thinking with calm precision — offering direction without reducing your career to a single score.";
+}
+
+function generateKeyStrengths(answers: Answers): NarrativeCard[] {
+  const candidates: (NarrativeCard & { score: number })[] = [
     {
-      score: getAnswer(answers, "human-interaction"),
-      text: "Interpersonal depth and collaborative relationships in your work",
+      score: getAnswer(answers, "strategic-decision"),
+      title: "Strategic Thinking",
+      description:
+        "Your work involves meaningful direction-setting — weighing trade-offs, anticipating consequences, and shaping outcomes beyond immediate tasks.",
     },
     {
-      score: getAnswer(answers, "specialized-expertise"),
-      text: "Specialized knowledge that develops over time",
+      score:
+        (getAnswer(answers, "human-interaction") +
+          getAnswer(answers, "trust-relationships")) /
+        2,
+      title: "Human-Centered Skills",
+      description:
+        "Interpersonal depth and trust-building appear central to how you create value — qualities that technology tends to amplify rather than replace.",
+    },
+    {
+      score: getAnswer(answers, "adaptability"),
+      title: "Adaptability",
+      description:
+        "Your openness to learning and evolving how you work suggests a capacity to integrate new tools without losing your professional identity.",
     },
     {
       score: getAnswer(answers, "personal-judgment"),
-      text: "Contextual judgment and decision-making under ambiguity",
-    },
-    {
-      score: getAnswer(answers, "trust-relationships"),
-      text: "Trust-building and long-term professional relationships",
+      title: "Contextual Judgment",
+      description:
+        "Nuanced decision-making under ambiguity is a recurring theme in your profile — a distinctly human capability in complex environments.",
     },
     {
       score: getAnswer(answers, "creativity"),
-      text: "Creative thinking and original problem-solving",
+      title: "Creative Problem-Solving",
+      description:
+        "Original thinking and ideation play a meaningful role in your work — creating space between routine execution and full automation.",
     },
     {
-      score: getAnswer(answers, "strategic-decision"),
-      text: "Strategic perspective and long-range decision-making",
+      score: getAnswer(answers, "specialized-expertise"),
+      title: "Specialized Expertise",
+      description:
+        "Depth of knowledge in your domain provides a foundation that develops over years — not overnight.",
     },
   ];
 
-  return factors
+  return candidates
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
-    .map((factor) => factor.text);
+    .map(({ title, description }) => ({ title, description }));
 }
 
-function generateFutureProofSkills(
+function generateExposureAreas(answers: Answers): NarrativeCard[] {
+  const areas: (NarrativeCard & { pressure: number })[] = [
+    {
+      pressure: getAnswer(answers, "repetitive-tasks"),
+      title: "Routine Task Patterns",
+      description:
+        "Predictable workflows may gradually become candidates for automation — not as a threat, but as a signal to elevate the more variable aspects of your role.",
+    },
+    {
+      pressure: getAnswer(answers, "ai-capable-today"),
+      title: "Partial Task Automation",
+      description:
+        "Some elements of your work could already be assisted by AI tools today. This reflects industry momentum — not a judgment on your overall value.",
+    },
+    {
+      pressure: getAnswer(answers, "industry-change"),
+      title: "Industry Transformation Pace",
+      description:
+        "Your field appears to be evolving at a noticeable pace. Awareness of this rhythm helps you stay ahead of change rather than react to it.",
+    },
+    {
+      pressure: 100 - getAnswer(answers, "creativity"),
+      title: "Limited Creative Differentiation",
+      description:
+        "Roles with less emphasis on original thinking may face narrower margins over time — an invitation to cultivate more distinctive contributions.",
+    },
+    {
+      pressure: 100 - getAnswer(answers, "human-interaction"),
+      title: "Reduced Interpersonal Dependency",
+      description:
+        "Work that relies less on human connection may see faster tool-based substitution — making relationship skills an increasingly valuable counterbalance.",
+    },
+  ];
+
+  const selected = areas
+    .filter((area) => area.pressure >= 45)
+    .sort((a, b) => b.pressure - a.pressure)
+    .slice(0, 3);
+
+  if (selected.length >= 2) {
+    return selected.map(({ title, description }) => ({ title, description }));
+  }
+
+  return [
+    {
+      title: "Moderate Structural Shift",
+      description:
+        "Your exposure profile suggests gradual rather than sudden change — space to observe, adapt, and strengthen your most durable professional qualities.",
+    },
+    {
+      title: "Tool-Assisted Workflows",
+      description:
+        "AI may increasingly support portions of your workflow. The opportunity lies in directing these tools with judgment rather than competing with them.",
+    },
+  ];
+}
+
+function generateResilienceRecommendations(
   answers: Answers,
   aiExposure: number
-): string[] {
-  const skills: string[] = [];
+): NarrativeCard[] {
+  const recommendations: NarrativeCard[] = [];
+
+  if (
+    getAnswer(answers, "strategic-decision") < 65 ||
+    aiExposure >= 55
+  ) {
+    recommendations.push({
+      title: "Interdisciplinary Thinking",
+      description:
+        "Connecting insights across domains helps you see opportunities others miss — especially valuable as boundaries between roles continue to blur.",
+    });
+  }
+
+  if (getAnswer(answers, "human-interaction") < 65) {
+    recommendations.push({
+      title: "Strategic Communication",
+      description:
+        "The ability to translate complexity into clarity — for colleagues, clients, or stakeholders — becomes more valuable as automated outputs proliferate.",
+    });
+  } else {
+    recommendations.push({
+      title: "Strategic Communication",
+      description:
+        "Deepen your ability to articulate judgment and perspective — turning your existing relational strengths into visible leadership signals.",
+    });
+  }
 
   if (getAnswer(answers, "adaptability") < 60) {
-    skills.push("Digital fluency and comfort adopting new AI-assisted workflows");
+    recommendations.push({
+      title: "AI-Assisted Decision Making",
+      description:
+        "Learning to collaborate with AI tools — setting intent, evaluating outputs, maintaining quality standards — is an increasingly essential professional skill.",
+    });
   } else {
-    skills.push("Advanced AI collaboration — directing tools with clear intent and quality standards");
+    recommendations.push({
+      title: "AI-Assisted Decision Making",
+      description:
+        "Build on your adaptability by developing a deliberate practice of directing AI tools — combining speed with the judgment only you can provide.",
+    });
   }
 
-  if (getAnswer(answers, "strategic-decision") < 60 || aiExposure >= 55) {
-    skills.push("Strategic thinking and prioritization in evolving environments");
-  } else {
-    skills.push("Cross-functional leadership and influence without formal authority");
+  if (recommendations.length < 3) {
+    recommendations.push({
+      title: "Complex Problem-Solving",
+      description:
+        "Focus on problems that require synthesis, empathy, and context — the kind that resist simple automation and reward human depth.",
+    });
   }
 
-  if (getAnswer(answers, "human-interaction") < 60) {
-    skills.push("Relationship intelligence and stakeholder communication");
-  } else if (getAnswer(answers, "creativity") < 60) {
-    skills.push("Creative synthesis — connecting ideas across domains");
-  } else {
-    skills.push("Complex problem-solving with human-centered outcomes");
+  return recommendations.slice(0, 3);
+}
+
+function generateBenchmarkNarrative(
+  answers: Answers,
+  aiExposure: number,
+  resilience: number
+): string {
+  const human =
+    (getAnswer(answers, "human-interaction") +
+      getAnswer(answers, "trust-relationships")) /
+    2;
+
+  if (resilience >= 70 && human >= 60) {
+    return "Profiles similar to yours often thrive in transformation-oriented environments — where empathy, judgment, and strategic perspective carry disproportionate value.";
   }
 
-  return skills.slice(0, 3);
+  if (resilience >= 60 && aiExposure <= 55) {
+    return "Profiles similar to yours tend to navigate industry shifts with measured confidence — balancing awareness of change with grounded professional strengths.";
+  }
+
+  if (getAnswer(answers, "adaptability") >= 65) {
+    return "Profiles similar to yours frequently excel when learning curves steepen — turning uncertainty into a catalyst for growth rather than a source of anxiety.";
+  }
+
+  return "Profiles similar to yours often find clarity through intentional skill development — small, consistent investments that compound into lasting professional resilience.";
 }
 
 function generateSummary(
@@ -179,18 +294,18 @@ function generateSummary(
   resilience: number
 ): string {
   if (resilience >= 70 && aiExposure <= 45) {
-    return "Your profile reflects a thoughtful balance of human strengths and manageable exposure. Continue nurturing the capabilities that make your work distinctly yours — clarity is your advantage.";
+    return "You hold a thoughtful balance of human strengths and manageable exposure. Continue nurturing what makes your work distinctly yours.";
   }
 
   if (resilience >= 70) {
-    return "You bring meaningful strengths to a shifting landscape. Your resilience is a genuine asset — paired with intentional learning, you are well positioned to navigate what comes next with confidence.";
+    return "Your resilience is a genuine asset in a shifting landscape. Paired with intentional learning, you are well positioned to move forward with confidence.";
   }
 
   if (aiExposure >= 65 && resilience < 55) {
-    return "Change is present in your professional landscape, and that is not a cause for alarm — it is an invitation. Small, deliberate steps toward adaptability and human-centered skills can shift your trajectory meaningfully.";
+    return "Change is present in your professional landscape — and that is an invitation, not an alarm. Deliberate steps toward adaptability can shift your trajectory meaningfully.";
   }
 
-  return "Understanding where you stand is the first step toward intentional growth. Your results highlight both opportunity and strength — use them as a calm, practical guide for the decisions ahead.";
+  return "Understanding where you stand is the beginning of intentional growth. Use these insights as a calm, practical guide for the decisions ahead.";
 }
 
 export function calculateResults(answers: Answers): AssessmentResult {
@@ -200,9 +315,27 @@ export function calculateResults(answers: Answers): AssessmentResult {
   return {
     aiExposureScore,
     careerResilienceScore,
-    insights: generateInsights(answers, aiExposureScore, careerResilienceScore),
-    protectionFactors: generateProtectionFactors(answers),
-    futureProofSkills: generateFutureProofSkills(answers, aiExposureScore),
+    heroHeadline: generateHeroHeadline(
+      answers,
+      aiExposureScore,
+      careerResilienceScore
+    ),
+    heroNarrative: generateHeroNarrative(
+      answers,
+      aiExposureScore,
+      careerResilienceScore
+    ),
+    keyStrengths: generateKeyStrengths(answers),
+    exposureAreas: generateExposureAreas(answers),
+    resilienceRecommendations: generateResilienceRecommendations(
+      answers,
+      aiExposureScore
+    ),
+    benchmarkNarrative: generateBenchmarkNarrative(
+      answers,
+      aiExposureScore,
+      careerResilienceScore
+    ),
     summary: generateSummary(aiExposureScore, careerResilienceScore),
     answers,
     completedAt: new Date().toISOString(),
@@ -220,7 +353,17 @@ export function loadResults(): AssessmentResult | null {
   if (!raw) return null;
 
   try {
-    return JSON.parse(raw) as AssessmentResult;
+    const parsed = JSON.parse(raw) as Partial<AssessmentResult> & {
+      answers?: Answers;
+    };
+
+    if (!parsed.answers) return null;
+
+    if (parsed.heroHeadline && parsed.keyStrengths) {
+      return parsed as AssessmentResult;
+    }
+
+    return calculateResults(parsed.answers);
   } catch {
     return null;
   }
