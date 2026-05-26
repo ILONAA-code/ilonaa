@@ -67,23 +67,39 @@
   }
 
   .slider-elegant {
-    @apply relative z-10 h-6 w-full cursor-pointer appearance-none bg-transparent;
+    --slider-track-height: 6px;
+    --slider-thumb-size: 20px;
+    @apply relative z-10 w-full cursor-pointer appearance-none bg-transparent;
+    height: var(--slider-thumb-size);
+    min-height: var(--slider-thumb-size);
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .slider-elegant::-webkit-slider-runnable-track {
-    @apply h-1.5 rounded-full bg-transparent;
+    height: var(--slider-track-height);
+    @apply rounded-full bg-transparent;
   }
 
   .slider-elegant::-webkit-slider-thumb {
-    @apply -mt-[7px] h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-white bg-accent shadow-[0_2px_10px_rgba(74,98,116,0.35)] transition-transform duration-150 active:scale-110;
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    margin-top: calc((var(--slider-track-height) - var(--slider-thumb-size)) / 2);
+    @apply cursor-pointer rounded-full border-2 border-white bg-accent shadow-[0_2px_10px_rgba(74,98,116,0.35)] transition-transform duration-150 active:scale-110;
   }
 
   .slider-elegant::-moz-range-track {
-    @apply h-1.5 rounded-full bg-transparent;
+    height: var(--slider-track-height);
+    @apply rounded-full bg-transparent;
   }
 
   .slider-elegant::-moz-range-thumb {
-    @apply h-5 w-5 cursor-pointer rounded-full border-2 border-white bg-accent shadow-[0_2px_10px_rgba(74,98,116,0.35)] transition-transform duration-150 active:scale-110;
+    box-sizing: border-box;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    @apply cursor-pointer rounded-full border-2 border-white bg-accent shadow-[0_2px_10px_rgba(74,98,116,0.35)] transition-transform duration-150 active:scale-110;
   }
 
   .score-bar-fill {

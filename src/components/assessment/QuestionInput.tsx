@@ -6,6 +6,12 @@ import {
   stepFromSliderValue,
 } from "@/lib/assessment/questions";
 
+const choiceSelectedClass =
+  "border-accent bg-accent text-white shadow-[0_4px_16px_-4px_rgba(74,98,116,0.35)]";
+
+const choiceUnselectedClass =
+  "border-black/[0.06] bg-white/70 text-foreground hover:border-accent/15 hover:bg-white";
+
 type SliderInputProps = {
   value: number | null;
   onChange: (value: number) => void;
@@ -28,7 +34,7 @@ export function SliderInput({
   return (
     <div className="space-y-8">
       <div className="rounded-2xl bg-accent-light/40 px-5 py-6 sm:px-6">
-        <div className="relative px-1 py-2">
+        <div className="relative flex h-5 items-center px-1">
           <div
             className="pointer-events-none absolute inset-x-1 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-black/[0.06]"
             aria-hidden="true"
@@ -91,41 +97,27 @@ export function ChoiceCards({ options, value, onChange }: ChoiceCardsProps) {
             onClick={() => onChange(option.value)}
             className={cn(
               "choice-option px-5 py-4",
-              selected
-                ? "border-accent/25 bg-white shadow-[0_4px_24px_-8px_rgba(74,98,116,0.18)]"
-                : "border-black/[0.06] bg-white/60 hover:border-accent/15 hover:bg-white/90"
+              selected ? choiceSelectedClass : choiceUnselectedClass
             )}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p
-                  className={cn(
-                    "text-[15px] font-medium leading-snug",
-                    selected ? "text-foreground" : "text-foreground/90"
-                  )}
-                >
-                  {option.label}
-                </p>
-                {option.description && (
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">
-                    {option.description}
-                  </p>
-                )}
-              </div>
-              <span
+            <p
+              className={cn(
+                "text-[15px] font-medium leading-snug",
+                selected ? "text-white" : "text-foreground/90"
+              )}
+            >
+              {option.label}
+            </p>
+            {option.description && (
+              <p
                 className={cn(
-                  "mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border transition-colors",
-                  selected
-                    ? "border-accent bg-accent"
-                    : "border-black/10 bg-white"
+                  "mt-1.5 text-sm leading-relaxed",
+                  selected ? "text-white/75" : "text-muted"
                 )}
-                aria-hidden="true"
               >
-                {selected && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                )}
-              </span>
-            </div>
+                {option.description}
+              </p>
+            )}
           </button>
         );
       })}
@@ -152,9 +144,7 @@ export function ButtonChoices({ options, value, onChange }: ButtonChoicesProps) 
             onClick={() => onChange(option.value)}
             className={cn(
               "choice-option px-5 py-4 text-center text-[15px] font-medium sm:text-left",
-              selected
-                ? "border-accent bg-accent text-white shadow-[0_4px_16px_-4px_rgba(74,98,116,0.35)]"
-                : "border-black/[0.06] bg-white/70 text-foreground hover:border-accent/15 hover:bg-white"
+              selected ? choiceSelectedClass : choiceUnselectedClass
             )}
           >
             {option.label}
