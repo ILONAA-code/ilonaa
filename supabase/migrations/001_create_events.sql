@@ -8,6 +8,7 @@
 --   cta_clicked, results_engagement, recommendation_engaged
 --
 -- All behavioral detail lives in metadata (jsonb) — no PII, no identity columns.
+-- question_completed may include: selected_option, selected_option_index, slider_value
 
 create table if not exists public.events (
   id uuid primary key default gen_random_uuid(),

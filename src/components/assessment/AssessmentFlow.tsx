@@ -88,7 +88,12 @@ export function AssessmentFlow() {
     if (currentValue === null) return;
 
     const timeSpentMs = Date.now() - questionShownAt.current;
-    analytics.questionCompleted(question.id, currentIndex + 1, timeSpentMs);
+    analytics.questionCompleted(
+      question,
+      currentIndex + 1,
+      timeSpentMs,
+      currentValue
+    );
 
     if (isLastQuestion) {
       setCompleting(true);

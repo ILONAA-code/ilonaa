@@ -4,6 +4,7 @@ import { track } from "@vercel/analytics";
 import { buildQuestionCompletedMetadata } from "@/lib/analytics/metadata";
 import { trackProductEvent } from "@/lib/analytics/track";
 import { PRODUCT_EVENTS } from "@/lib/analytics/types";
+import type { Question } from "@/lib/assessment/types";
 
 export type AnalyticsEvent =
   | "landing_page_viewed"
@@ -61,16 +62,22 @@ export const analytics = {
   },
 
   questionCompleted: (
-    questionId: string,
+    question: Question,
     questionNumber: number,
-    timeSpentMs: number
+    timeSpentMs: number,
+    selectedValue: number
   ) => {
     trackProductEvent(
       PRODUCT_EVENTS.QUESTION_COMPLETED,
-      buildQuestionCompletedMetadata(questionId, questionNumber, timeSpentMs)
+      buildQuestionCompletedMetadata(
+        question,
+        questionNumber,
+        timeSpentMs,
+        selectedValue
+      )
     );
     trackVercelEvent("question_completed", {
-      questionId,
+      questionId: question.id,
       questionNumber,
       timeSpentMs,
     });

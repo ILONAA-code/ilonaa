@@ -37,12 +37,16 @@ export type EventMetadataPayload = {
   resilience_score?: number;
   abandoned_at_question?: number;
   engagement_type?: string;
+  selected_option?: string;
+  selected_option_index?: number;
+  slider_value?: number;
 };
 
 export type QuestionCompletedPayload = {
   questionId: string;
   questionNumber: number;
   timeSpentMs: number;
+  selectedValue: number;
 };
 
 export type ResultsEngagementPayload = {
