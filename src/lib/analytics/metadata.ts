@@ -38,6 +38,20 @@ export function getScreenWidth(): number {
   return Math.round(window.innerWidth);
 }
 
+/** Required anonymous fields for question_completed events (no answers, no identity). */
+export function buildQuestionCompletedMetadata(
+  questionId: string,
+  questionNumber: number,
+  timeSpentMs: number
+): Partial<EventMetadataPayload> {
+  return {
+    question_id: questionId,
+    question_number: questionNumber,
+    time_spent_ms: Math.max(0, Math.round(timeSpentMs)),
+    device_type: getDeviceType(),
+  };
+}
+
 export function buildEventMetadata(
   metadata?: Partial<EventMetadataPayload>
 ): Record<string, string | number | boolean> {

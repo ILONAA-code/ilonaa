@@ -1,6 +1,7 @@
 "use client";
 
 import { track } from "@vercel/analytics";
+import { buildQuestionCompletedMetadata } from "@/lib/analytics/metadata";
 import { trackProductEvent } from "@/lib/analytics/track";
 import { PRODUCT_EVENTS } from "@/lib/analytics/types";
 
@@ -64,12 +65,15 @@ export const analytics = {
     questionNumber: number,
     timeSpentMs: number
   ) => {
-    trackProductEvent(PRODUCT_EVENTS.QUESTION_COMPLETED, {
-      question_id: questionId,
-      question_number: questionNumber,
-      time_spent_ms: timeSpentMs,
+    trackProductEvent(
+      PRODUCT_EVENTS.QUESTION_COMPLETED,
+      buildQuestionCompletedMetadata(questionId, questionNumber, timeSpentMs)
+    );
+    trackVercelEvent("question_completed", {
+      questionId,
+      questionNumber,
+      timeSpentMs,
     });
-    trackVercelEvent("question_completed", { questionId, questionNumber });
   },
 
   assessmentCompleted: (aiExposureScore: number, resilienceScore: number) => {
