@@ -6,6 +6,7 @@ import { WhyItMatters } from "@/components/sections/WhyItMatters";
 import { WhatYouReceive } from "@/components/sections/WhatYouReceive";
 import { Process } from "@/components/sections/Process";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { WhyFeelsDifferent } from "@/components/sections/WhyFeelsDifferent";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <WhyItMatters />
         <WhatYouReceive />
         <Process />
+        <WhyFeelsDifferent />
         <FinalCTA />
       </main>
       <Footer />

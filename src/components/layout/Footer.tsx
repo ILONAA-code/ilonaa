@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FooterCopyright } from "@/components/layout/FooterCopyright";
-import { TrustSection } from "@/components/trust/TrustSection";
 
 export function Footer() {
   return (
@@ -20,6 +19,9 @@ export function Footer() {
             <Link href="#why" className="transition-colors hover:text-foreground">
               About
             </Link>
+            <Link href="#different" className="transition-colors hover:text-foreground">
+              Trust
+            </Link>
             <Link href="#process" className="transition-colors hover:text-foreground">
               Process
             </Link>
@@ -27,10 +29,6 @@ export function Footer() {
               Start
             </Link>
           </div>
-        </div>
-
-        <div className="mt-8 sm:mt-10">
-          <TrustSection variant="compact" />
         </div>
 
         <FooterCopyright />
