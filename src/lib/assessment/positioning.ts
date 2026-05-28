@@ -13,38 +13,38 @@ function getAnswer(answers: Answers, key: string, fallback = 50): number {
 
 function capabilityInsight(label: string, value: number): string {
   if (value >= 70) {
-    return `Your responses suggest ${label} is a present-day advantage you can lean into deliberately.`;
+    return `${label} reads as a present-day advantage—worth leaning into deliberately.`;
   }
 
   if (value >= 55) {
-    return `Your ${label} appears solid—an area to protect as your role continues to evolve.`;
+    return `${label} looks solid; protect it as your role evolves.`;
   }
 
-  return `Your ${label} may benefit from intentional attention as AI reshapes tasks around you.`;
+  return `${label} may deserve intentional attention as tasks shift around you.`;
 }
 
 function exposureInsight(value: number): string {
   if (value >= 65) {
-    return "You may feel AI pressure in parts of your current work—useful context for where to adapt first.";
+    return "Some of your work may feel AI pressure soon—useful signal for where to adapt first.";
   }
 
   if (value >= 45) {
-    return "You carry moderate exposure in your profile—not alarming, but worth monitoring in how you spend your time.";
+    return "Moderate exposure in your profile—worth watching, not alarming.";
   }
 
-  return "Your current exposure appears contained—giving you room to invest in strengths rather than react to risk.";
+  return "Exposure appears contained—room to invest in strengths over reaction.";
 }
 
 function resilienceInsight(value: number): string {
   if (value >= 70) {
-    return "You are likely to remain strongest where judgment, relationships, and context still decide outcomes.";
+    return "You likely stay strongest where judgment, relationships, and context still decide.";
   }
 
   if (value >= 55) {
-    return "You hold a workable foundation—enough resilience to navigate change with intention.";
+    return "A workable foundation—enough resilience to navigate change with intention.";
   }
 
-  return "Building resilience in your most human capabilities could meaningfully shift your positioning.";
+  return "Deepening your most human capabilities could meaningfully shift your positioning.";
 }
 
 export function derivePositioningSummary(
@@ -52,18 +52,18 @@ export function derivePositioningSummary(
   resilience: number
 ): string {
   if (resilience >= 68 && aiExposure <= 48) {
-    return "Your profile suggests you are well positioned today—meaningful human leverage with manageable automation pressure in your current work.";
+    return "Well positioned today—human leverage with manageable automation pressure.";
   }
 
   if (resilience >= 60 && aiExposure >= 55) {
-    return "You appear capable and exposed at once—strength to use, pressure to read honestly, and direction to choose.";
+    return "Capable and exposed at once—strength to use, pressure to read honestly.";
   }
 
   if (aiExposure >= 62) {
-    return "Your profile points to real exposure in parts of how you work today—clarity now can prevent drift later.";
+    return "Real exposure in parts of how you work—clarity now prevents drift later.";
   }
 
-  return "Your positioning is still forming—this reflection is a calm map of where you stand, not a verdict on your future.";
+  return "Your positioning is still forming—a calm map of where you stand, not a verdict.";
 }
 
 export function derivePositioningDimensions(
@@ -101,25 +101,25 @@ export function derivePositioningDimensions(
       id: "human",
       label: "Your human-centered strengths",
       value: humanCentered,
-      insight: capabilityInsight("human-centered capability", humanCentered),
+      insight: capabilityInsight("Human-centered capability", humanCentered),
     },
     {
       id: "strategic",
       label: "Your strategic judgment",
       value: strategicStrength,
-      insight: capabilityInsight("strategic judgment", strategicStrength),
+      insight: capabilityInsight("Strategic judgment", strategicStrength),
     },
     {
       id: "adaptability",
       label: "Your adaptability",
       value: adaptability,
-      insight: capabilityInsight("adaptability", adaptability),
+      insight: capabilityInsight("Adaptability", adaptability),
     },
     {
       id: "creative",
       label: "Your creative differentiation",
       value: creativeEdge,
-      insight: capabilityInsight("creative differentiation", creativeEdge),
+      insight: capabilityInsight("Creative differentiation", creativeEdge),
     },
   ];
 }

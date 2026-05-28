@@ -74,7 +74,7 @@ function CapabilityBar({ dimension }: { dimension: PositioningDimension }) {
           style={{ width: `${dimension.value}%` }}
         />
       </div>
-      <p className="mt-2 text-sm leading-relaxed text-muted">{dimension.insight}</p>
+      <p className="mt-2 text-sm leading-snug text-muted">{dimension.insight}</p>
     </div>
   );
 }
@@ -177,6 +177,7 @@ export function ScoreOverview({
 type ResultsHeroProps = {
   archetypeTitle: string;
   archetypeTagline: string;
+  quotableInsight: string;
   profileEssence: string;
   profileSummary: string;
   resilienceFraming: string;
@@ -185,6 +186,7 @@ type ResultsHeroProps = {
 export function ResultsHero({
   archetypeTitle,
   archetypeTagline,
+  quotableInsight,
   profileEssence,
   profileSummary,
   resilienceFraming,
@@ -211,20 +213,32 @@ export function ResultsHero({
           </p>
         </div>
 
-        <p className="body-text relative mt-6 text-center sm:text-lg">
+        <figure
+          className="relative mt-6 rounded-2xl border border-accent/12 bg-white/85 px-5 py-6 text-center sm:mt-7 sm:px-7 sm:py-7"
+          data-analytics-section="quotable_insight"
+        >
+          <figcaption className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
+            Your insight
+          </figcaption>
+          <blockquote className="mt-3 font-display text-[1.3125rem] leading-[1.32] tracking-tight text-balance text-foreground sm:text-[1.5rem] sm:leading-[1.28]">
+            {quotableInsight}
+          </blockquote>
+        </figure>
+
+        <p className="body-text relative mt-6 text-center leading-[1.7] sm:text-[1.0625rem]">
           {profileEssence}
         </p>
 
-        <div className="relative mt-6 rounded-2xl border border-black/[0.05] bg-white/75 px-5 py-5 text-center sm:px-6">
+        <div className="relative mt-5 rounded-2xl border border-black/[0.05] bg-white/75 px-5 py-4 text-center sm:px-6 sm:py-5">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
-            Your read in one line
+            In brief
           </p>
-          <p className="mt-2 font-display text-[1.125rem] leading-snug text-foreground sm:text-xl">
+          <p className="mt-2 font-display text-[1.0625rem] leading-snug text-foreground sm:text-lg">
             {profileSummary}
           </p>
         </div>
 
-        <p className="body-text relative mt-6 text-center text-muted sm:text-[1.0625rem]">
+        <p className="relative mt-5 text-center text-[0.9375rem] leading-[1.65] text-muted sm:text-base">
           {resilienceFraming}
         </p>
       </div>
@@ -244,7 +258,9 @@ export function ComparativeInsight({ narrative }: ComparativeInsightProps) {
     >
       <p className="section-label">What this means for you</p>
       <blockquote className="premium-card mt-5 border-l-2 border-l-accent/25 p-6 sm:p-7">
-        <p className="body-text sm:text-lg">{narrative}</p>
+        <p className="font-display text-[1.125rem] leading-[1.5] text-foreground sm:text-lg sm:leading-[1.55]">
+          {narrative}
+        </p>
       </blockquote>
     </section>
   );
@@ -287,7 +303,7 @@ export function NarrativeCardsSection({
             <h3 className="mt-2 font-display text-[1.375rem] leading-snug text-foreground sm:text-xl">
               {item.title}
             </h3>
-            <p className="body-text mt-3">{item.description}</p>
+            <p className="body-text mt-2.5 leading-[1.65]">{item.description}</p>
           </article>
         ))}
       </div>
@@ -302,9 +318,9 @@ type BenchmarkNarrativeProps = {
 export function BenchmarkNarrative({ narrative }: BenchmarkNarrativeProps) {
   return (
     <section className="animate-fade-in-up" data-analytics-section="benchmark">
-      <p className="section-label">What This Means</p>
-      <blockquote className="premium-card mt-5 border-l-2 border-l-accent/30 p-6 sm:p-8">
-        <p className="font-display text-[1.25rem] leading-[1.55] text-foreground sm:text-xl sm:leading-[1.6]">
+      <p className="section-label">In context</p>
+      <blockquote className="premium-card mt-5 border-l-2 border-l-accent/30 p-6 sm:p-7">
+        <p className="font-display text-[1.125rem] leading-[1.5] text-foreground sm:text-lg sm:leading-[1.55]">
           {narrative}
         </p>
       </blockquote>
@@ -324,8 +340,8 @@ export function ResultsClosing({ summary }: ResultsClosingProps) {
         aria-hidden="true"
       />
       <div className="relative">
-        <p className="section-label">Closing Reflection</p>
-        <p className="display-subhead mt-4 text-balance sm:text-2xl">
+        <p className="section-label">Closing reflection</p>
+        <p className="display-subhead mt-3 text-balance sm:text-[1.75rem]">
           {summary}
         </p>
       </div>

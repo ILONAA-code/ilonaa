@@ -30,6 +30,7 @@ export type AssessmentResult = {
     archetypeId: string;
     archetypeTitle: string;
     archetypeTagline: string;
+    quotableInsight: string;
     profileEssence: string;
     profileSummary: string;
     resilienceFraming: string;

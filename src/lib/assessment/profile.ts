@@ -4,6 +4,7 @@ export type CareerProfile = {
   archetypeId: string;
   archetypeTitle: string;
   archetypeTagline: string;
+  quotableInsight: string;
   profileEssence: string;
   profileSummary: string;
   resilienceFraming: string;
@@ -54,82 +55,142 @@ const PROFILES: Record<
   "human-centered-strategist": {
     id: "human-centered-strategist",
     archetypeTitle: "Human-Centered Strategist",
-    archetypeTagline: "Your judgment, amplified by trust",
+    archetypeTagline: "Judgment, amplified by trust",
+    quotableInsight:
+      "Your advantage grows where ambiguity still needs a person in the room.",
     profileEssence:
-      "Your working style appears strongest where relationships, nuance, and long-range thinking meet. In your current positioning, that combination is likely to become more valuable—not less—as tools accelerate routine work around you.",
+      "You appear strongest where relationships, nuance, and long-range thinking meet—capabilities that compound as routine work automates around you.",
     profileSummary:
-      "You are shaped by strategic clarity and the human judgment machines rarely replicate well.",
+      "Strategic clarity plus human judgment machines rarely replicate well.",
     resilienceFraming:
-      "Your resilience today is anchored in work that rewards empathy, credibility, and context—capabilities that compound as AI handles more of the predictable.",
+      "Your resilience is anchored in empathy, credibility, and context—the work that still decides outcomes when tools handle the predictable.",
     comparativeContext:
-      "Compared with highly automation-sensitive roles, you may find your influence grows when decisions become ambiguous and the stakes turn human.",
+      "Compared with automation-heavy roles, your influence may grow when decisions turn ambiguous and the stakes turn human.",
   },
   "strategic-integrator": {
     id: "strategic-integrator",
     archetypeTitle: "Strategic Integrator",
-    archetypeTagline: "Your ability to hold the whole picture",
+    archetypeTagline: "You hold the whole picture",
+    quotableInsight:
+      "You remain strongest where someone must integrate what others only fragment.",
     profileEssence:
-      "Your profile suggests you naturally integrate information, people, and trade-offs into decisions that hold under pressure. That habit is directly relevant to how your role may need to evolve.",
+      "You integrate information, people, and trade-offs into decisions that hold under pressure—a habit directly relevant to how your role evolves.",
     profileSummary:
-      "You bring integrated judgment where others offer fragments—an increasingly rare advantage.",
+      "Integrated judgment where others offer fragments—a rarer advantage.",
     resilienceFraming:
-      "You are likely to remain strongest where meaning, priority, and consequence still require a person—not a model—to decide.",
+      "You stay essential where meaning, priority, and consequence still require a person—not a model—to decide.",
     comparativeContext:
-      "In teams navigating transformation, people with your profile are often relied on when the path forward is unclear but the need for coherence is urgent.",
+      "In transformation, people with your profile are often relied on when the path is unclear but coherence is urgent.",
   },
   "adaptive-builder": {
     id: "adaptive-builder",
     archetypeTitle: "Adaptive Builder",
-    archetypeTagline: "Your capacity to learn into advantage",
+    archetypeTagline: "You learn into advantage",
+    quotableInsight:
+      "Your edge sharpens where learning moves faster than certainty.",
     profileEssence:
-      "Your responses indicate you treat change as workable material—not background noise. That posture affects your day-to-day positioning more than any single score.",
+      "You treat change as workable material—not background noise. That posture shapes your positioning more than any single score.",
     profileSummary:
-      "You appear oriented toward constructive adaptation rather than defensive rigidity.",
+      "Oriented toward constructive adaptation rather than defensive rigidity.",
     resilienceFraming:
-      "Your current strengths may become increasingly valuable as you pair new tools with the judgment that directs them.",
+      "Your strengths may compound as you pair new tools with the judgment that directs them.",
     comparativeContext:
-      "When industries reorder themselves, you may adapt faster than peers who wait for certainty before acting.",
+      "When industries reorder, you may adapt before peers who wait for certainty.",
   },
   "creative-synthesizer": {
     id: "creative-synthesizer",
     archetypeTitle: "Creative Synthesizer",
-    archetypeTagline: "Your edge in original connection",
+    archetypeTagline: "Original connection is your edge",
+    quotableInsight:
+      "Your value concentrates where insight still outruns execution.",
     profileEssence:
-      "You appear to create value by reframing problems and linking ideas others keep separate. That layer of your work is difficult to automate without losing quality.",
+      "You create value by reframing problems and linking ideas others keep separate—difficult to automate without losing quality.",
     profileSummary:
-      "You are strongest where the output is insight and interpretation—not repetition.",
+      "Strongest where the output is insight and interpretation—not repetition.",
     resilienceFraming:
-      "Your creative judgment may be among the capabilities that remain distinctly yours as production speeds up elsewhere.",
+      "Creative judgment may remain distinctly yours as production accelerates elsewhere.",
     comparativeContext:
-      "Compared with execution-heavy roles, you may remain indispensable where the brief is still being defined.",
+      "Compared with execution-heavy roles, you may stay indispensable while the brief is still being defined.",
   },
   "systems-oriented-thinker": {
     id: "systems-oriented-thinker",
     archetypeTitle: "Systems-Oriented Thinker",
-    archetypeTagline: "Your depth as a stabilizing force",
+    archetypeTagline: "Depth as a stabilizing force",
+    quotableInsight:
+      "You stay essential where depth still decides what the system should do.",
     profileEssence:
-      "Your profile suggests you build authority through accumulated knowledge and reliable reasoning. In your field, that depth may matter more than volume as tools proliferate.",
+      "You build authority through accumulated knowledge and reliable reasoning—depth that may matter more than volume as tools proliferate.",
     profileSummary:
-      "You are grounded in expertise and structure—quiet advantages that age well.",
+      "Grounded in expertise and structure—quiet advantages that age well.",
     resilienceFraming:
-      "You are likely to remain strongest where others need someone who understands what the system should do, and why.",
+      "You remain strongest where others need someone who understands what the system should do, and why.",
     comparativeContext:
-      "In specialized environments, your credibility may continue to flow from mastery rather than speed alone.",
+      "In specialized environments, credibility may flow from mastery rather than speed alone.",
   },
   "measured-navigator": {
     id: "measured-navigator",
     archetypeTitle: "Measured Navigator",
-    archetypeTagline: "Your balanced read of the landscape",
+    archetypeTagline: "A balanced read of the landscape",
+    quotableInsight:
+      "Your steadiness is the advantage—before urgency chooses for you.",
     profileEssence:
-      "Your profile suggests a thoughtful middle ground—enough exposure to take change seriously, enough strength to respond with intention rather than reaction.",
+      "A thoughtful middle ground—enough exposure to take change seriously, enough strength to respond with intention.",
     profileSummary:
-      "You hold a clear-eyed view of where you stand today—without alarm and without denial.",
+      "A clear-eyed view of where you stand—without alarm or denial.",
     resilienceFraming:
-      "Your next advantage may be clarity about where to invest attention as AI reshapes the work immediately around you.",
+      "Your next edge may be clarity about where to invest as AI reshapes the work around you.",
     comparativeContext:
-      "You may find momentum through small, consistent upgrades—before external pressure forces larger ones.",
+      "Momentum may come through small, consistent upgrades—before external pressure forces larger ones.",
   },
 };
+
+const QUOTABLE_ALTERNATES: Record<
+  string,
+  { when: (ctx: ProfileContext) => boolean; line: string }[]
+> = {
+  "human-centered-strategist": [
+    {
+      when: (ctx) => ctx.resilience >= 70 && ctx.aiExposure <= 45,
+      line: "You remain strongest where trust still outperforms prediction.",
+    },
+  ],
+  "strategic-integrator": [
+    {
+      when: (ctx) => ctx.judgment >= 68,
+      line: "Your value increases where context resists automation.",
+    },
+  ],
+  "adaptive-builder": [
+    {
+      when: (ctx) => ctx.aiExposure >= 58,
+      line: "You operate where tools accelerate work—but judgment still sets direction.",
+    },
+  ],
+  "creative-synthesizer": [
+    {
+      when: (ctx) => ctx.creativity >= 72,
+      line: "Your advantage grows where ambiguity still needs interpretation.",
+    },
+  ],
+  "systems-oriented-thinker": [
+    {
+      when: (ctx) => ctx.expertise >= 68,
+      line: "You remain strongest where judgment still matters more than output.",
+    },
+  ],
+  "measured-navigator": [
+    {
+      when: (ctx) => ctx.resilience >= 62 && ctx.aiExposure >= 55,
+      line: "You hold ground where capability and exposure meet at once.",
+    },
+  ],
+};
+
+function resolveQuotableInsight(id: string, ctx: ProfileContext): string {
+  const base = PROFILES[id]?.quotableInsight ?? PROFILES["measured-navigator"].quotableInsight;
+  const alternate = QUOTABLE_ALTERNATES[id]?.find((entry) => entry.when(ctx));
+  return alternate?.line ?? base;
+}
 
 function profileFit(ctx: ProfileContext, id: string): number {
   const {
@@ -177,12 +238,14 @@ export function resolveCareerProfile(
     .map((id) => ({ id, fit: profileFit(ctx, id) }))
     .sort((a, b) => b.fit - a.fit);
 
-  const winner = PROFILES[ranked[0]?.id ?? "measured-navigator"];
+  const winnerId = ranked[0]?.id ?? "measured-navigator";
+  const winner = PROFILES[winnerId];
 
   return {
     archetypeId: winner.id,
     archetypeTitle: winner.archetypeTitle,
     archetypeTagline: winner.archetypeTagline,
+    quotableInsight: resolveQuotableInsight(winnerId, ctx),
     profileEssence: winner.profileEssence,
     profileSummary: winner.profileSummary,
     resilienceFraming: winner.resilienceFraming,

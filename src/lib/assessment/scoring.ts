@@ -113,7 +113,7 @@ function generateKeyStrengths(answers: Answers): NarrativeCard[] {
       score: getAnswer(answers, "strategic-decision"),
       title: "Strategic Thinking",
       description:
-        "Your work involves meaningful direction-setting — weighing trade-offs, anticipating consequences, and shaping outcomes beyond immediate tasks.",
+        "You set direction—trade-offs, consequences, outcomes beyond the immediate task.",
     },
     {
       score:
@@ -122,31 +122,31 @@ function generateKeyStrengths(answers: Answers): NarrativeCard[] {
         2,
       title: "Human-Centered Skills",
       description:
-        "Interpersonal depth and trust-building appear central to how you create value — qualities that technology tends to amplify rather than replace.",
+        "Trust and interpersonal depth sit at the center of how you create value.",
     },
     {
       score: getAnswer(answers, "adaptability"),
       title: "Adaptability",
       description:
-        "Your openness to learning and evolving how you work suggests a capacity to integrate new tools without losing your professional identity.",
+        "You integrate new tools while keeping a coherent professional identity.",
     },
     {
       score: getAnswer(answers, "personal-judgment"),
       title: "Contextual Judgment",
       description:
-        "Nuanced decision-making under ambiguity is a recurring theme in your profile — a distinctly human capability in complex environments.",
+        "Nuanced decisions under ambiguity—a distinctly human pattern in your work.",
     },
     {
       score: getAnswer(answers, "creativity"),
       title: "Creative Problem-Solving",
       description:
-        "Original thinking and ideation play a meaningful role in your work — creating space between routine execution and full automation.",
+        "Original thinking creates space between routine execution and automation.",
     },
     {
       score: getAnswer(answers, "specialized-expertise"),
       title: "Specialized Expertise",
       description:
-        "Depth of knowledge in your domain provides a foundation that develops over years — not overnight.",
+        "Domain depth compounds over years—an advantage that does not arrive overnight.",
     },
   ];
 
@@ -162,31 +162,31 @@ function generateExposureAreas(answers: Answers): NarrativeCard[] {
       pressure: getAnswer(answers, "repetitive-tasks"),
       title: "Routine Task Patterns",
       description:
-        "Predictable workflows may gradually become candidates for automation — not as a threat, but as a signal to elevate the more variable aspects of your role.",
+        "Predictable workflows may automate gradually—a signal to elevate the variable parts of your role.",
     },
     {
       pressure: getAnswer(answers, "ai-capable-today"),
       title: "Partial Task Automation",
       description:
-        "Some elements of your work could already be assisted by AI tools today. This reflects industry momentum — not a judgment on your overall value.",
+        "Parts of your work may already be tool-assisted—industry momentum, not a verdict on your value.",
     },
     {
       pressure: getAnswer(answers, "industry-change"),
       title: "Industry Transformation Pace",
       description:
-        "Your field appears to be evolving at a noticeable pace. Awareness of this rhythm helps you stay ahead of change rather than react to it.",
+        "Your field is moving at a noticeable pace—awareness helps you stay ahead rather than react.",
     },
     {
       pressure: 100 - getAnswer(answers, "creativity"),
       title: "Limited Creative Differentiation",
       description:
-        "Roles with less emphasis on original thinking may face narrower margins over time — an invitation to cultivate more distinctive contributions.",
+        "Less original thinking can narrow margins over time—room to cultivate more distinctive contributions.",
     },
     {
       pressure: 100 - getAnswer(answers, "human-interaction"),
       title: "Reduced Interpersonal Dependency",
       description:
-        "Work that relies less on human connection may see faster tool-based substitution — making relationship skills an increasingly valuable counterbalance.",
+        "Roles with less human connection may substitute faster—relationship skill becomes a sharper counterbalance.",
     },
   ];
 
@@ -203,12 +203,12 @@ function generateExposureAreas(answers: Answers): NarrativeCard[] {
     {
       title: "Moderate Structural Shift",
       description:
-        "Your exposure profile suggests gradual rather than sudden change — space to observe, adapt, and strengthen your most durable professional qualities.",
+        "Exposure suggests gradual change—space to observe, adapt, and strengthen what lasts.",
     },
     {
       title: "Tool-Assisted Workflows",
       description:
-        "AI may increasingly support portions of your workflow. The opportunity lies in directing these tools with judgment rather than competing with them.",
+        "AI may support more of your workflow; the opportunity is directing tools with judgment.",
     },
   ];
 }
@@ -226,7 +226,7 @@ function generateResilienceRecommendations(
     recommendations.push({
       title: "Interdisciplinary Thinking",
       description:
-        "Connecting insights across domains helps you see opportunities others miss — especially valuable as boundaries between roles continue to blur.",
+        "Connect insights across domains—especially as boundaries between roles blur.",
     });
   }
 
@@ -234,13 +234,13 @@ function generateResilienceRecommendations(
     recommendations.push({
       title: "Strategic Communication",
       description:
-        "The ability to translate complexity into clarity — for colleagues, clients, or stakeholders — becomes more valuable as automated outputs proliferate.",
+        "Translate complexity into clarity for others—a skill that compounds as automated output grows.",
     });
   } else {
     recommendations.push({
       title: "Strategic Communication",
       description:
-        "Deepen your ability to articulate judgment and perspective — turning your existing relational strengths into visible leadership signals.",
+        "Articulate judgment and perspective—turn relational strength into visible leadership signal.",
     });
   }
 
@@ -248,13 +248,13 @@ function generateResilienceRecommendations(
     recommendations.push({
       title: "AI-Assisted Decision Making",
       description:
-        "Learning to collaborate with AI tools — setting intent, evaluating outputs, maintaining quality standards — is an increasingly essential professional skill.",
+        "Practice directing AI tools—intent, evaluation, quality—without surrendering judgment.",
     });
   } else {
     recommendations.push({
       title: "AI-Assisted Decision Making",
       description:
-        "Build on your adaptability by developing a deliberate practice of directing AI tools — combining speed with the judgment only you can provide.",
+        "Pair adaptability with deliberate tool direction—speed plus judgment only you provide.",
     });
   }
 
@@ -262,7 +262,7 @@ function generateResilienceRecommendations(
     recommendations.push({
       title: "Complex Problem-Solving",
       description:
-        "Focus on problems that require synthesis, empathy, and context — the kind that resist simple automation and reward human depth.",
+        "Prioritize work that needs synthesis, empathy, and context—problems that resist simple automation.",
     });
   }
 
@@ -280,18 +280,18 @@ function generateBenchmarkNarrative(
     2;
 
   if (resilience >= 70 && human >= 60) {
-    return "You may find your strengths carry particular weight in transformation-oriented settings—where empathy, judgment, and perspective still decide outcomes.";
+    return "In transformation, empathy and judgment may carry more weight than speed alone.";
   }
 
   if (resilience >= 60 && aiExposure <= 55) {
-    return "Your profile suggests you can navigate industry shifts with measured confidence—aware of change without being defined by it.";
+    return "You can navigate industry shifts with measured confidence—aware of change, not defined by it.";
   }
 
   if (getAnswer(answers, "adaptability") >= 65) {
-    return "You may be especially effective when learning curves steepen—turning uncertainty into momentum rather than anxiety.";
+    return "When learning curves steepen, you may turn uncertainty into momentum—not anxiety.";
   }
 
-  return "You may gain the most from intentional skill investment—small, consistent choices that compound into lasting professional resilience.";
+  return "Small, consistent skill choices may compound into lasting resilience.";
 }
 
 function generateSummary(
@@ -299,18 +299,18 @@ function generateSummary(
   resilience: number
 ): string {
   if (resilience >= 70 && aiExposure <= 45) {
-    return "You appear well balanced today—protect the capabilities that make your work distinctly yours.";
+    return "Well balanced today—protect what makes your work distinctly yours.";
   }
 
   if (resilience >= 70) {
-    return "Your resilience is a genuine asset in your current landscape. Paired with deliberate learning, you are positioned to move forward with confidence.";
+    return "Resilience is a genuine asset here. Deliberate learning can carry you forward with confidence.";
   }
 
   if (aiExposure >= 65 && resilience < 55) {
-    return "Change is present in how you work—not as alarm, but as a prompt. Deliberate steps toward adaptability can shift your trajectory meaningfully.";
+    return "Change is present in how you work—a prompt, not an alarm. Adaptability can shift your trajectory.";
   }
 
-  return "Understanding where you stand today is the beginning of intentional growth. Use these insights as a calm guide for the decisions ahead.";
+  return "Where you stand today is the start of intentional growth—a calm guide for what comes next.";
 }
 
 export function calculateResults(answers: Answers): AssessmentResult {
@@ -381,7 +381,11 @@ export function loadResults(): AssessmentResult | null {
 
     if (!parsed.answers) return null;
 
-    if (parsed.profile?.archetypeTitle && parsed.positioningDimensions) {
+    if (
+      parsed.profile?.archetypeTitle &&
+      parsed.positioningDimensions &&
+      parsed.profile.quotableInsight
+    ) {
       return parsed as AssessmentResult;
     }
 

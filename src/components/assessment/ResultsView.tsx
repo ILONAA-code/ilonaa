@@ -90,6 +90,7 @@ export function ResultsView() {
           <ResultsHero
             archetypeTitle={result.profile.archetypeTitle}
             archetypeTagline={result.profile.archetypeTagline}
+            quotableInsight={result.profile.quotableInsight}
             profileEssence={result.profile.profileEssence}
             profileSummary={result.profile.profileSummary}
             resilienceFraming={result.profile.resilienceFraming}
