@@ -26,7 +26,8 @@ export function Process() {
     <Section id="process" className="bg-white/40">
       <SectionHeader
         label="How It Works"
-        title="Three simple steps to clarity."
+        title="Three simple steps to career clarity."
+        description="A privacy-first AI career assessment—about ten minutes, no account required."
         align="center"
       />
 

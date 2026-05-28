@@ -1,14 +1,28 @@
 import type { Metadata } from "next";
 
-const siteName = "ILONAA";
+export const SITE_NAME = "ILONAA";
 
-const defaultTitle = "ILONAA — Structured clarity for important decisions";
-const defaultDescription =
-  "AI-assisted career risk analysis to help you understand how resilient your career may be in the age of artificial intelligence.";
+export const SITE_TAGLINE =
+  "Privacy-first AI career resilience assessment and automation risk reflection";
 
-const openGraphTitle = "ILONAA — Understand Your AI Career Risk";
+const homeTitle = "ILONAA | AI Career Resilience Assessment";
+const homeDescription =
+  "ILONAA is a privacy-first AI career resilience assessment. Understand your automation risk, professional strengths, and future-of-work positioning—in calm, executive clarity.";
+
+const openGraphTitle = "ILONAA — AI Career Risk & Resilience Reflection";
 const openGraphDescription =
-  "AI-assisted analysis designed to help you understand how resilient your career may be in the age of artificial intelligence.";
+  "A privacy-first AI career assessment for automation risk, resilience, and future-of-work clarity—without accounts, resumes, or fear-driven scoring.";
+
+const sharedKeywords = [
+  "AI career resilience assessment",
+  "AI career risk analysis",
+  "career automation risk",
+  "AI job risk assessment",
+  "future of work assessment",
+  "AI career analysis",
+  "career resilience",
+  "professional AI adaptation",
+];
 
 export function getSiteUrl(): URL {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
@@ -22,14 +36,65 @@ export function getSiteUrl(): URL {
   return new URL("http://localhost:3000");
 }
 
+function absoluteUrl(path = "/"): string {
+  return new URL(path, getSiteUrl()).toString();
+}
+
+function sharedOpenGraph(path = "/"): Metadata["openGraph"] {
+  return {
+    siteName: SITE_NAME,
+    title: openGraphTitle,
+    description: openGraphDescription,
+    type: "website",
+    locale: "en_US",
+    url: absoluteUrl(path),
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "ILONAA — AI career resilience assessment and automation risk reflection",
+      },
+    ],
+  };
+}
+
+function sharedTwitter(): Metadata["twitter"] {
+  return {
+    card: "summary_large_image",
+    title: openGraphTitle,
+    description: openGraphDescription,
+    images: ["/og-image.png"],
+  };
+}
+
 export const rootMetadata: Metadata = {
   metadataBase: getSiteUrl(),
-  applicationName: siteName,
+  applicationName: SITE_NAME,
   title: {
-    default: defaultTitle,
-    template: `%s — ${siteName}`,
+    default: homeTitle,
+    template: `%s | ${SITE_NAME}`,
   },
-  description: defaultDescription,
+  description: homeDescription,
+  keywords: sharedKeywords,
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "Career Development",
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -44,25 +109,69 @@ export const rootMetadata: Metadata = {
       },
     ],
   },
+  openGraph: sharedOpenGraph("/"),
+  twitter: sharedTwitter(),
+};
+
+export const homeMetadata: Metadata = {
+  ...rootMetadata,
+  title: {
+    absolute: homeTitle,
+  },
+  description: homeDescription,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    siteName,
+    ...sharedOpenGraph("/"),
     title: openGraphTitle,
     description: openGraphDescription,
-    type: "website",
-    locale: "en_US",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: `${siteName} — Structured clarity for important decisions`,
-      },
-    ],
+    url: absoluteUrl("/"),
+  },
+};
+
+export const assessmentMetadata: Metadata = {
+  title: "AI Career Risk Assessment",
+  description:
+    "Take ILONAA’s privacy-first AI career assessment—10 reflective questions on automation risk, resilience, and future-of-work positioning.",
+  alternates: {
+    canonical: "/assessment",
+  },
+  openGraph: {
+    ...sharedOpenGraph("/assessment"),
+    title: "ILONAA — AI Career Risk Assessment",
+    description:
+      "Ten thoughtful questions to understand your AI exposure, career resilience, and professional positioning.",
+    url: absoluteUrl("/assessment"),
   },
   twitter: {
-    card: "summary_large_image",
-    title: openGraphTitle,
-    description: openGraphDescription,
-    images: ["/og-image.png"],
+    ...sharedTwitter(),
+    title: "ILONAA — AI Career Risk Assessment",
+    description:
+      "Ten thoughtful questions to understand your AI exposure, career resilience, and professional positioning.",
+  },
+};
+
+export const resultsMetadata: Metadata = {
+  title: "Your AI Career Resilience Profile",
+  description:
+    "Your personalized ILONAA results—career archetype, automation risk positioning, strengths, and calm executive insight.",
+  alternates: {
+    canonical: "/assessment/results",
+  },
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+  openGraph: {
+    ...sharedOpenGraph("/assessment/results"),
+    title: "ILONAA — Your AI Career Resilience Profile",
+    description:
+      "Personalized career archetype, positioning, and future-of-work reflection from your assessment.",
+    url: absoluteUrl("/assessment/results"),
   },
 };

@@ -12,7 +12,10 @@ export function Navbar() {
           ILONAA
         </Link>
 
-        <nav className="hidden items-center gap-8 sm:flex">
+        <nav
+          className="hidden items-center gap-8 sm:flex"
+          aria-label="Primary"
+        >
           <Link
             href="#why"
             className="text-sm text-muted transition-colors hover:text-foreground"

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Manrope, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { rootMetadata } from "@/lib/site/metadata";
+import { globalSchemaGraph } from "@/lib/site/schema";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -29,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${manrope.variable} ${instrumentSerif.variable}`}>
       <body className="font-sans antialiased">
+        <JsonLd data={globalSchemaGraph} />
         {children}
         <Analytics />
         <SpeedInsights />

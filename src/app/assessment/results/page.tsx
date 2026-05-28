@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { ResultsView } from "@/components/assessment/ResultsView";
+import { resultsMetadata } from "@/lib/site/metadata";
 
-export const metadata: Metadata = {
-  title: "Your Results — ILONAA",
-  description:
-    "Your personalized AI career exposure and career resilience profile.",
-};
+export const metadata: Metadata = resultsMetadata;
 
 export default function ResultsPage() {
   return <ResultsView />;

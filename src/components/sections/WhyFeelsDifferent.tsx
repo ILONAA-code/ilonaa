@@ -39,7 +39,7 @@ export function WhyFeelsDifferent() {
       <SectionHeader
         label="Trust & intention"
         title="Why ILONAA feels different"
-        description="A quieter, more trustworthy way to understand your position as work evolves."
+        description="A privacy-first future-of-work assessment—calm, intentional, and built for professional reflection."
         align="center"
       />
 

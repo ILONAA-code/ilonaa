@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { AssessmentFlow } from "@/components/assessment/AssessmentFlow";
+import { assessmentMetadata } from "@/lib/site/metadata";
 
-export const metadata: Metadata = {
-  title: "Career Assessment — ILONAA",
-  description:
-    "Answer 10 thoughtful questions to understand your AI career exposure and resilience.",
-};
+export const metadata: Metadata = assessmentMetadata;
 
 export default function AssessmentPage() {
   return <AssessmentFlow />;

@@ -7,7 +7,7 @@ export function WhyItMatters() {
         <div>
           <p className="section-label mb-4">Why It Matters</p>
           <h2 className="display-subhead text-balance md:text-[2.75rem] md:leading-[1.14]">
-            Not all careers face the same future.
+            Automation risk is not the same for every career.
           </h2>
         </div>
 
@@ -28,9 +28,9 @@ export function WhyItMatters() {
       <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {[
           {
-            title: "Exposure varies",
+            title: "Automation risk varies",
             description:
-              "Automation risk differs dramatically across roles, industries, and skill sets.",
+              "AI exposure differs across roles, industries, and how your work is actually performed.",
           },
           {
             title: "Human value persists",
