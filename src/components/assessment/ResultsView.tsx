@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import {
   BenchmarkNarrative,
+  ComparativeInsight,
   NarrativeCardsSection,
   ResultsClosing,
   ResultsHero,
@@ -87,8 +88,11 @@ export function ResultsView() {
       <main className="relative z-10 mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14 lg:py-16">
         <div className="space-y-14 sm:space-y-16">
           <ResultsHero
-            headline={result.heroHeadline}
-            narrative={result.heroNarrative}
+            archetypeTitle={result.profile.archetypeTitle}
+            archetypeTagline={result.profile.archetypeTagline}
+            profileEssence={result.profile.profileEssence}
+            profileSummary={result.profile.profileSummary}
+            resilienceFraming={result.profile.resilienceFraming}
           />
 
           <div
@@ -100,6 +104,8 @@ export function ResultsView() {
               careerResilienceScore={result.careerResilienceScore}
             />
           </div>
+
+          <ComparativeInsight narrative={result.profile.comparativeContext} />
 
           <NarrativeCardsSection
             label="Key Strengths"

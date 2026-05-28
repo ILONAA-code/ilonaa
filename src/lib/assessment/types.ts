@@ -26,6 +26,15 @@ export type NarrativeCard = {
 export type AssessmentResult = {
   aiExposureScore: number;
   careerResilienceScore: number;
+  profile: {
+    archetypeId: string;
+    archetypeTitle: string;
+    archetypeTagline: string;
+    profileEssence: string;
+    profileSummary: string;
+    resilienceFraming: string;
+    comparativeContext: string;
+  };
   heroHeadline: string;
   heroNarrative: string;
   keyStrengths: NarrativeCard[];

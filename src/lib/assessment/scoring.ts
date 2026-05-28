@@ -1,5 +1,6 @@
 import type { Answers, AssessmentResult, NarrativeCard } from "./types";
 import { STORAGE_KEY } from "./types";
+import { resolveCareerProfile } from "./profile";
 
 function clamp(value: number, min = 0, max = 100): number {
   return Math.min(max, Math.max(min, Math.round(value)));
@@ -311,10 +312,16 @@ function generateSummary(
 export function calculateResults(answers: Answers): AssessmentResult {
   const aiExposureScore = calculateAiExposureScore(answers);
   const careerResilienceScore = calculateCareerResilienceScore(answers);
+  const profile = resolveCareerProfile(
+    answers,
+    aiExposureScore,
+    careerResilienceScore
+  );
 
   return {
     aiExposureScore,
     careerResilienceScore,
+    profile,
     heroHeadline: generateHeroHeadline(
       answers,
       aiExposureScore,
@@ -359,7 +366,7 @@ export function loadResults(): AssessmentResult | null {
 
     if (!parsed.answers) return null;
 
-    if (parsed.heroHeadline && parsed.keyStrengths) {
+    if (parsed.profile?.archetypeTitle && parsed.keyStrengths) {
       return parsed as AssessmentResult;
     }
 

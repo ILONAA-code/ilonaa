@@ -56,21 +56,78 @@ export function ScoreOverview({
 }
 
 type ResultsHeroProps = {
-  headline: string;
+  archetypeTitle: string;
+  archetypeTagline: string;
+  profileEssence: string;
+  profileSummary: string;
+  resilienceFraming: string;
+};
+
+export function ResultsHero({
+  archetypeTitle,
+  archetypeTagline,
+  profileEssence,
+  profileSummary,
+  resilienceFraming,
+}: ResultsHeroProps) {
+  return (
+    <header
+      className="animate-fade-in-up"
+      data-analytics-section="profile_outcome"
+    >
+      <p className="section-label">Your future-work profile</p>
+
+      <div className="premium-card relative mt-5 overflow-hidden p-6 sm:p-8">
+        <div
+          className="hero-glow pointer-events-none absolute inset-0 opacity-80"
+          aria-hidden="true"
+        />
+
+        <div className="relative text-center">
+          <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] sm:leading-[1.1]">
+            {archetypeTitle}
+          </h1>
+          <p className="mt-3 text-sm font-medium tracking-wide text-accent sm:text-[0.9375rem]">
+            {archetypeTagline}
+          </p>
+        </div>
+
+        <p className="body-text relative mt-6 text-center sm:text-lg">
+          {profileEssence}
+        </p>
+
+        <div className="relative mt-6 rounded-2xl border border-black/[0.05] bg-white/75 px-5 py-5 text-center sm:px-6">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
+            In one line
+          </p>
+          <p className="mt-2 font-display text-[1.125rem] leading-snug text-foreground sm:text-xl">
+            {profileSummary}
+          </p>
+        </div>
+
+        <p className="body-text relative mt-6 text-center text-muted sm:text-[1.0625rem]">
+          {resilienceFraming}
+        </p>
+      </div>
+    </header>
+  );
+}
+
+type ComparativeInsightProps = {
   narrative: string;
 };
 
-export function ResultsHero({ headline, narrative }: ResultsHeroProps) {
+export function ComparativeInsight({ narrative }: ComparativeInsightProps) {
   return (
-    <header className="animate-fade-in-up">
-      <p className="section-label">Your Career Resilience Profile</p>
-      <h1 className="display-subhead mt-4 text-balance md:text-[2.75rem] md:leading-[1.14]">
-        {headline}
-      </h1>
-      <p className="body-text mt-5 max-w-2xl sm:text-lg">
-        {narrative}
-      </p>
-    </header>
+    <section
+      className="animate-fade-in-up"
+      data-analytics-section="comparative_context"
+    >
+      <p className="section-label">How profiles like yours compare</p>
+      <blockquote className="premium-card mt-5 border-l-2 border-l-accent/25 p-6 sm:p-7">
+        <p className="body-text sm:text-lg">{narrative}</p>
+      </blockquote>
+    </section>
   );
 }
 
