@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/Button";
 
 function ScorePreview() {
   const scores = [
-    { label: "AI Exposure Score", value: 42, tone: "warm" },
-    { label: "Career Resilience", value: 78, tone: "calm" },
+    { label: "Your resilience", value: 78, tone: "calm" },
+    { label: "Your AI exposure", value: 42, tone: "warm" },
   ];
 
   return (
@@ -14,10 +14,13 @@ function ScorePreview() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
-              Your Profile Preview
+              Your personal profile
             </p>
             <p className="mt-1 font-display text-[1.375rem] leading-snug text-foreground sm:text-2xl">
-              Personalized Insights
+              Human-Centered Strategist
+            </p>
+            <p className="mt-1.5 text-sm font-medium tracking-wide text-accent">
+              Judgment, amplified by trust
             </p>
           </div>
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-light">
@@ -62,11 +65,13 @@ function ScorePreview() {
 
         <div className="mt-6 rounded-2xl bg-accent-light/60 p-4">
           <p className="text-xs font-medium uppercase tracking-[0.12em] text-accent">
-            Recommended Focus
+            Your insight
           </p>
-          <p className="mt-2 body-text">
-            Strategic leadership, complex problem-solving, and cross-functional
-            collaboration.
+          <p className="mt-2 font-display text-[1.0625rem] leading-snug text-foreground">
+            Your advantage grows where ambiguity still needs a person in the room.
+          </p>
+          <p className="mt-2 text-xs leading-relaxed text-muted/80">
+            Strategic judgment · Human-centered strengths · Adaptability
           </p>
         </div>
       </div>
