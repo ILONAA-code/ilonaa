@@ -1,6 +1,10 @@
 import type { Answers, AssessmentResult, NarrativeCard } from "./types";
 import { STORAGE_KEY } from "./types";
 import { resolveCareerProfile } from "./profile";
+import {
+  derivePositioningDimensions,
+  derivePositioningSummary,
+} from "./positioning";
 
 function clamp(value: number, min = 0, max = 100): number {
   return Math.min(max, Math.max(min, Math.round(value)));
@@ -276,18 +280,18 @@ function generateBenchmarkNarrative(
     2;
 
   if (resilience >= 70 && human >= 60) {
-    return "Profiles similar to yours often thrive in transformation-oriented environments — where empathy, judgment, and strategic perspective carry disproportionate value.";
+    return "You may find your strengths carry particular weight in transformation-oriented settings—where empathy, judgment, and perspective still decide outcomes.";
   }
 
   if (resilience >= 60 && aiExposure <= 55) {
-    return "Profiles similar to yours tend to navigate industry shifts with measured confidence — balancing awareness of change with grounded professional strengths.";
+    return "Your profile suggests you can navigate industry shifts with measured confidence—aware of change without being defined by it.";
   }
 
   if (getAnswer(answers, "adaptability") >= 65) {
-    return "Profiles similar to yours frequently excel when learning curves steepen — turning uncertainty into a catalyst for growth rather than a source of anxiety.";
+    return "You may be especially effective when learning curves steepen—turning uncertainty into momentum rather than anxiety.";
   }
 
-  return "Profiles similar to yours often find clarity through intentional skill development — small, consistent investments that compound into lasting professional resilience.";
+  return "You may gain the most from intentional skill investment—small, consistent choices that compound into lasting professional resilience.";
 }
 
 function generateSummary(
@@ -295,18 +299,18 @@ function generateSummary(
   resilience: number
 ): string {
   if (resilience >= 70 && aiExposure <= 45) {
-    return "You hold a thoughtful balance of human strengths and manageable exposure. Continue nurturing what makes your work distinctly yours.";
+    return "You appear well balanced today—protect the capabilities that make your work distinctly yours.";
   }
 
   if (resilience >= 70) {
-    return "Your resilience is a genuine asset in a shifting landscape. Paired with intentional learning, you are well positioned to move forward with confidence.";
+    return "Your resilience is a genuine asset in your current landscape. Paired with deliberate learning, you are positioned to move forward with confidence.";
   }
 
   if (aiExposure >= 65 && resilience < 55) {
-    return "Change is present in your professional landscape — and that is an invitation, not an alarm. Deliberate steps toward adaptability can shift your trajectory meaningfully.";
+    return "Change is present in how you work—not as alarm, but as a prompt. Deliberate steps toward adaptability can shift your trajectory meaningfully.";
   }
 
-  return "Understanding where you stand is the beginning of intentional growth. Use these insights as a calm, practical guide for the decisions ahead.";
+  return "Understanding where you stand today is the beginning of intentional growth. Use these insights as a calm guide for the decisions ahead.";
 }
 
 export function calculateResults(answers: Answers): AssessmentResult {
@@ -317,11 +321,22 @@ export function calculateResults(answers: Answers): AssessmentResult {
     aiExposureScore,
     careerResilienceScore
   );
+  const positioningSummary = derivePositioningSummary(
+    aiExposureScore,
+    careerResilienceScore
+  );
+  const positioningDimensions = derivePositioningDimensions(
+    answers,
+    aiExposureScore,
+    careerResilienceScore
+  );
 
   return {
     aiExposureScore,
     careerResilienceScore,
     profile,
+    positioningSummary,
+    positioningDimensions,
     heroHeadline: generateHeroHeadline(
       answers,
       aiExposureScore,
@@ -366,7 +381,7 @@ export function loadResults(): AssessmentResult | null {
 
     if (!parsed.answers) return null;
 
-    if (parsed.profile?.archetypeTitle && parsed.keyStrengths) {
+    if (parsed.profile?.archetypeTitle && parsed.positioningDimensions) {
       return parsed as AssessmentResult;
     }
 

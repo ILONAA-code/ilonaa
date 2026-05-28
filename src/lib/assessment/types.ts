@@ -35,6 +35,13 @@ export type AssessmentResult = {
     resilienceFraming: string;
     comparativeContext: string;
   };
+  positioningSummary: string;
+  positioningDimensions: {
+    id: string;
+    label: string;
+    value: number;
+    insight: string;
+  }[];
   heroHeadline: string;
   heroNarrative: string;
   keyStrengths: NarrativeCard[];

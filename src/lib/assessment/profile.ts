@@ -54,86 +54,94 @@ const PROFILES: Record<
   "human-centered-strategist": {
     id: "human-centered-strategist",
     archetypeTitle: "Human-Centered Strategist",
-    archetypeTagline: "Judgment amplified by trust and perspective",
+    archetypeTagline: "Your judgment, amplified by trust",
     profileEssence:
-      "You create value where relationships, nuance, and long-range thinking intersect. As knowledge work shifts, that combination tends to become more decisive—not less.",
+      "Your working style appears strongest where relationships, nuance, and long-range thinking meet. In your current positioning, that combination is likely to become more valuable—not less—as tools accelerate routine work around you.",
     profileSummary:
-      "A profile shaped by strategic clarity and the human judgment machines rarely replicate.",
+      "You are shaped by strategic clarity and the human judgment machines rarely replicate well.",
     resilienceFraming:
-      "Your resilience is anchored in work that rewards empathy, credibility, and context—qualities that compound as tools accelerate everything else.",
+      "Your resilience today is anchored in work that rewards empathy, credibility, and context—capabilities that compound as AI handles more of the predictable.",
     comparativeContext:
-      "Compared with highly automation-sensitive roles, profiles like yours often gain influence precisely when decisions become ambiguous and stakes become human.",
+      "Compared with highly automation-sensitive roles, you may find your influence grows when decisions become ambiguous and the stakes turn human.",
   },
   "strategic-integrator": {
     id: "strategic-integrator",
     archetypeTitle: "Strategic Integrator",
-    archetypeTagline: "Complexity translated into coherent direction",
+    archetypeTagline: "Your ability to hold the whole picture",
     profileEssence:
-      "You orient toward synthesis—connecting information, people, and trade-offs into decisions that hold under pressure. That orientation travels well across changing industries.",
+      "Your profile suggests you naturally integrate information, people, and trade-offs into decisions that hold under pressure. That habit is directly relevant to how your role may need to evolve.",
     profileSummary:
-      "A mind for integration in environments where fragmented answers are easy—and integrated judgment is rare.",
+      "You bring integrated judgment where others offer fragments—an increasingly rare advantage.",
     resilienceFraming:
-      "AI may absorb routine analysis, but integrating meaning, priority, and consequence remains distinctly yours.",
+      "You are likely to remain strongest where meaning, priority, and consequence still require a person—not a model—to decide.",
     comparativeContext:
-      "Profiles like yours often thrive in transformation settings—where teams need someone who can hold the whole picture while others optimize the parts.",
+      "In teams navigating transformation, people with your profile are often relied on when the path forward is unclear but the need for coherence is urgent.",
   },
   "adaptive-builder": {
     id: "adaptive-builder",
     archetypeTitle: "Adaptive Builder",
-    archetypeTagline: "Learning translated into durable capability",
+    archetypeTagline: "Your capacity to learn into advantage",
     profileEssence:
-      "You approach change as material to work with—not noise to resist. That posture turns uncertainty into professional momentum over time.",
+      "Your responses indicate you treat change as workable material—not background noise. That posture affects your day-to-day positioning more than any single score.",
     profileSummary:
-      "A future-work profile defined by constructive adaptability rather than defensive rigidity.",
+      "You appear oriented toward constructive adaptation rather than defensive rigidity.",
     resilienceFraming:
-      "Your resilience grows through deliberate evolution—using new tools while strengthening the judgment that directs them.",
+      "Your current strengths may become increasingly valuable as you pair new tools with the judgment that directs them.",
     comparativeContext:
-      "Profiles like yours frequently outperform more static skill sets when industries reorder themselves—not because change is easy, but because you metabolize it.",
+      "When industries reorder themselves, you may adapt faster than peers who wait for certainty before acting.",
   },
   "creative-synthesizer": {
     id: "creative-synthesizer",
     archetypeTitle: "Creative Synthesizer",
-    archetypeTagline: "Original thinking applied with intent",
+    archetypeTagline: "Your edge in original connection",
     profileEssence:
-      "You generate value by reframing problems and connecting ideas others treat as separate. That creative layer resists commoditization.",
+      "You appear to create value by reframing problems and linking ideas others keep separate. That layer of your work is difficult to automate without losing quality.",
     profileSummary:
-      "An orientation toward synthesis and invention—where the output is insight, not repetition.",
+      "You are strongest where the output is insight and interpretation—not repetition.",
     resilienceFraming:
-      "Automation pressures routine production; your edge lives in interpretation, imagination, and the courage to propose what is not yet obvious.",
+      "Your creative judgment may be among the capabilities that remain distinctly yours as production speeds up elsewhere.",
     comparativeContext:
-      "Compared with execution-heavy roles, profiles like yours often remain indispensable where the brief is unclear and the path is still being invented.",
+      "Compared with execution-heavy roles, you may remain indispensable where the brief is still being defined.",
   },
   "systems-oriented-thinker": {
     id: "systems-oriented-thinker",
     archetypeTitle: "Systems-Oriented Thinker",
-    archetypeTagline: "Depth, structure, and disciplined expertise",
+    archetypeTagline: "Your depth as a stabilizing force",
     profileEssence:
-      "You build authority through accumulated knowledge and reliable reasoning. In shifting markets, that depth becomes a stabilizing force others depend on.",
+      "Your profile suggests you build authority through accumulated knowledge and reliable reasoning. In your field, that depth may matter more than volume as tools proliferate.",
     profileSummary:
-      "A profile grounded in expertise and structured thinking—less flashy, increasingly valuable.",
+      "You are grounded in expertise and structure—quiet advantages that age well.",
     resilienceFraming:
-      "Tools may accelerate tasks within your domain; your resilience lies in knowing what the system should do—and why.",
+      "You are likely to remain strongest where others need someone who understands what the system should do, and why.",
     comparativeContext:
-      "Profiles like yours often sustain relevance in specialized environments—where credibility still flows from mastery, not volume.",
+      "In specialized environments, your credibility may continue to flow from mastery rather than speed alone.",
   },
   "measured-navigator": {
     id: "measured-navigator",
     archetypeTitle: "Measured Navigator",
-    archetypeTagline: "Balanced awareness in a shifting landscape",
+    archetypeTagline: "Your balanced read of the landscape",
     profileEssence:
-      "You hold a thoughtful middle ground—enough exposure to take change seriously, enough strength to move with intention rather than reaction.",
+      "Your profile suggests a thoughtful middle ground—enough exposure to take change seriously, enough strength to respond with intention rather than reaction.",
     profileSummary:
-      "A clear-eyed profile for building direction calmly—without alarm and without denial.",
+      "You hold a clear-eyed view of where you stand today—without alarm and without denial.",
     resilienceFraming:
-      "Your next advantage is not a single skill—it is clarity about where to invest attention as AI reshapes the work around you.",
+      "Your next advantage may be clarity about where to invest attention as AI reshapes the work immediately around you.",
     comparativeContext:
-      "Profiles like yours often find momentum through small, consistent upgrades—turning awareness into strategy before urgency becomes necessity.",
+      "You may find momentum through small, consistent upgrades—before external pressure forces larger ones.",
   },
 };
 
 function profileFit(ctx: ProfileContext, id: string): number {
-  const { strategic, human, creativity, adaptability, judgment, expertise, resilience, aiExposure } =
-    ctx;
+  const {
+    strategic,
+    human,
+    creativity,
+    adaptability,
+    judgment,
+    expertise,
+    resilience,
+    aiExposure,
+  } = ctx;
 
   switch (id) {
     case "human-centered-strategist":
@@ -141,7 +149,12 @@ function profileFit(ctx: ProfileContext, id: string): number {
     case "strategic-integrator":
       return strategic * 1.3 + judgment * 1.2 + expertise * 0.6 + resilience * 0.5;
     case "adaptive-builder":
-      return adaptability * 1.5 + creativity * 0.7 + (100 - aiExposure) * 0.3 + resilience * 0.4;
+      return (
+        adaptability * 1.5 +
+        creativity * 0.7 +
+        (100 - aiExposure) * 0.3 +
+        resilience * 0.4
+      );
     case "creative-synthesizer":
       return creativity * 1.4 + judgment * 1.0 + adaptability * 0.5;
     case "systems-oriented-thinker":

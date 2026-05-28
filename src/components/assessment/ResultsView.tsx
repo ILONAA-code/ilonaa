@@ -9,9 +9,9 @@ import {
   BenchmarkNarrative,
   ComparativeInsight,
   NarrativeCardsSection,
+  PositioningOverview,
   ResultsClosing,
   ResultsHero,
-  ScoreOverview,
 } from "@/components/assessment/results/ResultsSections";
 import { PremiumReportTeaser } from "@/components/trust/PremiumReportTeaser";
 import { TrustSection } from "@/components/trust/TrustSection";
@@ -95,34 +95,31 @@ export function ResultsView() {
             resilienceFraming={result.profile.resilienceFraming}
           />
 
-          <div
-            className="animate-fade-in-up-delay"
-            data-analytics-section="scores"
-          >
-            <ScoreOverview
-              aiExposureScore={result.aiExposureScore}
-              careerResilienceScore={result.careerResilienceScore}
-            />
-          </div>
+          <PositioningOverview
+            aiExposureScore={result.aiExposureScore}
+            careerResilienceScore={result.careerResilienceScore}
+            positioningSummary={result.positioningSummary}
+            dimensions={result.positioningDimensions}
+          />
 
           <ComparativeInsight narrative={result.profile.comparativeContext} />
 
           <NarrativeCardsSection
-            label="Key Strengths"
+            label="Where you are strongest today"
             items={result.keyStrengths}
             tone="strength"
             sectionId="key_strengths"
           />
 
           <NarrativeCardsSection
-            label="AI Exposure Areas"
+            label="Where AI pressure may show up for you"
             items={result.exposureAreas}
             tone="exposure"
             sectionId="exposure_areas"
           />
 
           <NarrativeCardsSection
-            label="Future Resilience Recommendations"
+            label="What to strengthen next"
             items={result.resilienceRecommendations}
             tone="recommendation"
             sectionId="recommendations"

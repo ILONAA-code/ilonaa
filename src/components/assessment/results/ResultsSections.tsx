@@ -1,4 +1,123 @@
 import type { NarrativeCard } from "@/lib/assessment/types";
+import type { PositioningDimension } from "@/lib/assessment/positioning";
+
+type PositioningOverviewProps = {
+  aiExposureScore: number;
+  careerResilienceScore: number;
+  positioningSummary: string;
+  dimensions: PositioningDimension[];
+};
+
+function BalanceSpectrum({
+  resilience,
+  exposure,
+}: {
+  resilience: number;
+  exposure: number;
+}) {
+  return (
+    <div className="relative">
+      <div className="mb-3 flex items-end justify-between gap-3 text-sm">
+        <div className="text-left">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+            Your resilience
+          </p>
+          <p className="mt-1 font-display text-2xl tabular-nums text-foreground">
+            {resilience}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+            Your AI exposure
+          </p>
+          <p className="mt-1 font-display text-2xl tabular-nums text-foreground">
+            {exposure}
+          </p>
+        </div>
+      </div>
+
+      <div className="relative h-2 overflow-hidden rounded-full bg-black/[0.06]">
+        <div
+          className="score-bar-fill absolute inset-y-0 left-0 rounded-full bg-accent/25"
+          style={{ width: `${resilience}%` }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute top-1/2 h-4 w-4 -translate-y-1/2 rounded-full border-2 border-white bg-accent shadow-sm"
+          style={{ left: `calc(${resilience}% - 8px)` }}
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="mt-2 flex justify-between text-[0.6875rem] text-muted/60">
+        <span>Higher exposure</span>
+        <span>Stronger resilience</span>
+      </div>
+    </div>
+  );
+}
+
+function CapabilityBar({ dimension }: { dimension: PositioningDimension }) {
+  const isPressure = dimension.id === "exposure";
+
+  return (
+    <div>
+      <div className="mb-1.5 flex items-baseline justify-between gap-3">
+        <p className="text-sm font-medium text-foreground">{dimension.label}</p>
+        <p className="text-xs tabular-nums text-muted/80">{dimension.value}</p>
+      </div>
+      <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.05]">
+        <div
+          className={`score-bar-fill h-full rounded-full ${
+            isPressure ? "bg-[#9CA3AF]" : "bg-accent/80"
+          }`}
+          style={{ width: `${dimension.value}%` }}
+        />
+      </div>
+      <p className="mt-2 text-sm leading-relaxed text-muted">{dimension.insight}</p>
+    </div>
+  );
+}
+
+export function PositioningOverview({
+  aiExposureScore,
+  careerResilienceScore,
+  positioningSummary,
+  dimensions,
+}: PositioningOverviewProps) {
+  const capabilityDimensions = dimensions.filter(
+    (dimension) => dimension.id !== "resilience" && dimension.id !== "exposure"
+  );
+
+  return (
+    <section
+      className="animate-fade-in-up-delay"
+      data-analytics-section="positioning"
+    >
+      <p className="section-label">Your positioning at a glance</p>
+
+      <div className="premium-card mt-5 space-y-8 p-6 sm:p-8">
+        <BalanceSpectrum
+          resilience={careerResilienceScore}
+          exposure={aiExposureScore}
+        />
+
+        <p className="body-text border-t border-black/[0.05] pt-6 text-center sm:text-lg">
+          {positioningSummary}
+        </p>
+
+        <div className="space-y-5 border-t border-black/[0.05] pt-6">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
+            Your capabilities today
+          </p>
+          {capabilityDimensions.map((dimension) => (
+            <CapabilityBar key={dimension.id} dimension={dimension} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 type ScoreOverviewProps = {
   aiExposureScore: number;
@@ -75,7 +194,7 @@ export function ResultsHero({
       className="animate-fade-in-up"
       data-analytics-section="profile_outcome"
     >
-      <p className="section-label">Your future-work profile</p>
+      <p className="section-label">Your personal profile</p>
 
       <div className="premium-card relative mt-5 overflow-hidden p-6 sm:p-8">
         <div
@@ -98,7 +217,7 @@ export function ResultsHero({
 
         <div className="relative mt-6 rounded-2xl border border-black/[0.05] bg-white/75 px-5 py-5 text-center sm:px-6">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
-            In one line
+            Your read in one line
           </p>
           <p className="mt-2 font-display text-[1.125rem] leading-snug text-foreground sm:text-xl">
             {profileSummary}
@@ -123,7 +242,7 @@ export function ComparativeInsight({ narrative }: ComparativeInsightProps) {
       className="animate-fade-in-up"
       data-analytics-section="comparative_context"
     >
-      <p className="section-label">How profiles like yours compare</p>
+      <p className="section-label">What this means for you</p>
       <blockquote className="premium-card mt-5 border-l-2 border-l-accent/25 p-6 sm:p-7">
         <p className="body-text sm:text-lg">{narrative}</p>
       </blockquote>
