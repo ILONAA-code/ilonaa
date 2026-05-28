@@ -4,11 +4,10 @@ type TrustSectionProps = {
 };
 
 const trustPoints = [
-  "No accounts required.",
-  "Designed with privacy-first architecture and European data hosting.",
-  "Assessments are intentionally separated from personal identity.",
-  "Your session stays local — nothing persists beyond this visit.",
-  "Minimal anonymous product intelligence — no identity linkage.",
+  "No account.",
+  "European infrastructure.",
+  "No personal identity stored.",
+  "No tracking of personal data.",
 ];
 
 export function TrustSection({
