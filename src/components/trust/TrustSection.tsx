@@ -33,7 +33,7 @@ export function TrustSection({
     >
       <p className="section-label">Built on trust</p>
       <h2 className="display-subhead mt-3">
-        Privacy-first by intention, not afterthought.
+        Privacy by Design
       </h2>
       <ul className="mt-6 space-y-3.5">
         {trustPoints.map((point) => (

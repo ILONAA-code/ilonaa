@@ -1,6 +1,6 @@
 {
   "name": "ilonaa",
-  "version": "9.2.6",
+  "version": "9.2.7",
   "private": true,
   "scripts": {
     "dev": "next dev",
