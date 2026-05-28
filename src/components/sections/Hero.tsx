@@ -83,17 +83,19 @@ export function Hero() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-xl">
             <p className="animate-fade-in mb-6 text-xs font-medium uppercase tracking-[0.2em] text-accent">
-              Structured clarity for important decisions
+              As knowledge work evolves
             </p>
 
             <h1 className="animate-fade-in-up display-headline">
-              Understand Your AI Career Risk
-              <span className="block text-muted/80">In Just 10 Questions.</span>
+              How resilient is your career
+              <span className="block text-muted/80">
+                as AI transforms knowledge work?
+              </span>
             </h1>
 
             <p className="animate-fade-in-up-delay body-text mt-6 sm:text-lg">
-              AI-assisted analysis designed to help you understand how resilient
-              your career may be in the age of artificial intelligence.
+              Ten thoughtful questions to reveal your exposure, strengths, and
+              where to focus next—in calm, structured clarity.
             </p>
 
             <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col items-center gap-3 text-center">
