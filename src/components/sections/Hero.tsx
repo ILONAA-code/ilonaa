@@ -5,16 +5,6 @@ function ScorePreview() {
   const profession = "Product Manager";
   const primaryType = "Enterprising";
   const secondaryType = "Social";
-  const humanAdvantageFactors = [
-    "Strategic judgment",
-    "Customer and stakeholder context",
-    "Product ownership",
-  ];
-  const riskDrivers = [
-    "AI-assisted research and analysis",
-    "Documentation and prioritization workflows",
-    "Market and user insight synthesis",
-  ];
 
   return (
     <div className="relative mx-auto w-full max-w-md lg:max-w-none">
@@ -58,38 +48,6 @@ function ScorePreview() {
           </p>
         </div>
 
-        <div className="mt-4 rounded-2xl border border-black/[0.05] bg-white/75 p-4">
-          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
-            Why this risk level?
-          </p>
-          <p className="mt-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-accent/80">
-            Human advantage factors
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {humanAdvantageFactors.map((factor) => (
-              <span
-                key={factor}
-                className="rounded-full border border-accent/20 bg-accent-light/50 px-3 py-1.5 text-xs font-medium text-foreground"
-              >
-                {factor}
-              </span>
-            ))}
-          </div>
-
-          <p className="mt-4 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted/70">
-            Risk drivers
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {riskDrivers.map((driver) => (
-              <span
-                key={driver}
-                className="rounded-full border border-black/[0.08] bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground"
-              >
-                {driver}
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
