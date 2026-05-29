@@ -1,12 +1,19 @@
 import { Button } from "@/components/ui/Button";
 
 function ScorePreview() {
-  const replacementRisk = 34;
-  const supportingFactors = [
-    "Accountability",
-    "Human judgment",
-    "Relationship depth",
-    "Adaptability",
+  const replacementRisk = 42;
+  const profession = "Product Manager";
+  const primaryType = "Enterprising";
+  const secondaryType = "Social";
+  const humanAdvantageFactors = [
+    "Strategic judgment",
+    "Customer and stakeholder context",
+    "Product ownership",
+  ];
+  const riskDrivers = [
+    "AI-assisted research and analysis",
+    "Documentation and prioritization workflows",
+    "Market and user insight synthesis",
   ];
 
   return (
@@ -14,34 +21,13 @@ function ScorePreview() {
       <div className="hero-glow absolute inset-0 rounded-3xl" />
 
       <div className="relative overflow-hidden rounded-3xl border border-black/[0.06] bg-white/70 p-6 shadow-[0_8px_40px_-12px_rgba(31,41,55,0.12)] backdrop-blur-sm sm:p-8">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
-              Your RIASEC profile
-            </p>
-            <p className="mt-1 font-display text-[1.375rem] leading-snug text-foreground sm:text-2xl">
-              Primary: Social
-            </p>
-            <p className="mt-1.5 text-sm font-medium tracking-wide text-accent">
-              Secondary: Enterprising
-            </p>
-          </div>
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-light">
-            <svg
-              className="h-4 w-4 text-accent"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
-              />
-            </svg>
-          </div>
+        <div className="mb-5 text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
+            Your Result
+          </p>
+          <p className="mt-2 font-display text-[1.7rem] leading-snug text-foreground sm:text-[2rem]">
+            {profession}
+          </p>
         </div>
 
         <div className="rounded-2xl border border-black/[0.05] bg-white/75 px-4 py-5 text-center sm:px-5 sm:py-6">
@@ -52,36 +38,54 @@ function ScorePreview() {
             {replacementRisk}
             <span className="ml-1 text-base text-muted/60">/100</span>
           </p>
-          <p className="mt-2 text-sm font-medium text-muted/90">Low</p>
-        </div>
-
-        <div className="mt-6 rounded-2xl bg-accent-light/60 p-4">
-          <p className="text-xs font-medium uppercase tracking-[0.12em] text-accent">
-            Your insight
-          </p>
-          <p className="mt-2 font-display text-[1.0625rem] leading-snug text-foreground">
-            RIASEC describes the nature of your work.
-            <br />
-            <br />
-            ILONAA estimates AI replacement risk and the factors that may
-            protect your profession over time.
-          </p>
+          <p className="mt-2 text-sm font-medium text-muted/90">Medium</p>
           <p className="mt-2 text-xs leading-relaxed text-muted/80">
             Risk is not destiny. Exposure does not automatically imply replacement.
           </p>
         </div>
 
+        <div className="mt-5 rounded-2xl border border-black/[0.05] bg-white/75 p-4">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+            Understanding your profession
+          </p>
+          <p className="mt-2 text-sm text-muted">
+            RIASEC Type:
+            <span className="ml-1 font-medium text-foreground">{primaryType}</span>
+          </p>
+          <p className="mt-1.5 text-xs tracking-wide text-muted/80">
+            Secondary Orientation:
+            <span className="ml-1 font-medium text-foreground/80">{secondaryType}</span>
+          </p>
+        </div>
+
         <div className="mt-4 rounded-2xl border border-black/[0.05] bg-white/75 p-4">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
-            Supporting factors
+            Why this risk level?
+          </p>
+          <p className="mt-3 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-accent/80">
+            Human advantage factors
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {supportingFactors.map((factor) => (
+            {humanAdvantageFactors.map((factor) => (
               <span
                 key={factor}
                 className="rounded-full border border-accent/20 bg-accent-light/50 px-3 py-1.5 text-xs font-medium text-foreground"
               >
                 {factor}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-4 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted/70">
+            Risk drivers
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {riskDrivers.map((driver) => (
+              <span
+                key={driver}
+                className="rounded-full border border-black/[0.08] bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground"
+              >
+                {driver}
               </span>
             ))}
           </div>
