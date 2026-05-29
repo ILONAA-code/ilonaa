@@ -1,0 +1,201 @@
+occupation_code,occupation_title,category,before_score,after_score,expected_benchmark,absolute_mismatch_before,absolute_mismatch_after,improvement,proposed_ai_exposure,proposed_ai_replacement_risk,proposed_career_resilience
+"ONET-00074","Radiologist","healthcare",42,36,31,11,5,6,55,29,68
+"ONET-00075","Pharmacist","healthcare",42,36,31,11,5,6,55,29,68
+"ONET-00076","Clinical Laboratory Scientist","healthcare",42,36,31,11,5,6,55,29,68
+"ONET-00077","Anesthesiologist","healthcare",42,36,31,11,5,6,55,29,68
+"ONET-00099","Electrician","skilled trades",50,44,34,16,10,6,52,38,53
+"ONET-00100","HVAC Technician","skilled trades",50,44,34,16,10,6,52,38,53
+"ONET-00101","Plumber","skilled trades",50,44,34,16,10,6,52,38,53
+"ONET-00102","Automotive Technician","skilled trades",50,44,34,16,10,6,52,38,53
+"ONET-00103","Tool and Die Maker","skilled trades",42,36,29,13,7,6,55,29,68
+"ONET-00104","Instrumentation Technician","skilled trades",42,36,29,13,7,6,55,29,68
+"ONET-00105","Maintenance Technician","skilled trades",42,36,29,13,7,6,55,29,68
+"ONET-00106","Field Service Technician","skilled trades",42,36,29,13,7,6,55,29,68
+"ONET-00112","Quality Engineer","engineering/manufacturing",42,36,35,7,1,6,55,29,68
+"ONET-00113","Reliability Engineer","engineering/manufacturing",42,36,35,7,1,6,55,29,68
+"ONET-00114","Control Systems Engineer","engineering/manufacturing",42,36,35,7,1,6,55,29,68
+"ONET-00115","Industrial Engineer","engineering/manufacturing",42,36,35,7,1,6,55,29,68
+"ONET-00116","Hardware Engineer","engineering/manufacturing",42,36,35,7,1,6,55,29,68
+"ONET-00125","Sales Development Representative","sales/customer success",50,44,44,6,0,6,53,41,58
+"ONET-00126","Inside Sales Representative","sales/customer success",50,44,44,6,0,6,53,41,58
+"ONET-00127","Sales Operations Coordinator","sales/customer success",50,44,44,6,0,6,53,41,58
+"ONET-00128","Lead Generation Specialist","sales/customer success",50,44,44,6,0,6,53,41,58
+"ONET-00001","Accounts Payable Specialist","finance/accounting",67,62,60,7,2,5,60,61,33
+"ONET-00002","Accounts Receivable Specialist","finance/accounting",67,62,60,7,2,5,60,61,33
+"ONET-00003","Bookkeeper","finance/accounting",67,62,60,7,2,5,60,61,33
+"ONET-00004","Payroll Specialist","finance/accounting",67,62,60,7,2,5,60,61,33
+"ONET-00015","Legal Secretary","legal/compliance",67,62,52,15,10,5,60,61,33
+"ONET-00016","Compliance Analyst","legal/compliance",67,62,52,15,10,5,60,61,33
+"ONET-00017","Contract Administrator","legal/compliance",67,62,52,15,10,5,60,61,33
+"ONET-00027","Junior QA Tester","software/technology",67,62,58,9,4,5,60,61,33
+"ONET-00028","Manual Test Analyst","software/technology",67,62,58,9,4,5,60,61,33
+"ONET-00029","Technical Support Specialist","software/technology",67,62,58,9,4,5,60,61,33
+"ONET-00030","Implementation Specialist","software/technology",67,62,58,9,4,5,60,61,33
+"ONET-00031","IT Helpdesk Analyst","software/technology",67,62,58,9,4,5,60,61,33
+"ONET-00065","Team Lead","management/leadership",49,44,43,6,1,5,50,39,54
+"ONET-00066","Office Manager","management/leadership",49,44,43,6,1,5,50,39,54
+"ONET-00067","Service Delivery Manager","management/leadership",49,44,43,6,1,5,50,39,54
+"ONET-00068","Practice Manager","management/leadership",49,44,43,6,1,5,50,39,54
+"ONET-00069","Registered Nurse","healthcare",37,32,29,8,3,5,51,26,76
+"ONET-00070","Primary Care Physician","healthcare",37,32,29,8,3,5,51,26,76
+"ONET-00071","Physical Therapist","healthcare",37,32,29,8,3,5,51,26,76
+"ONET-00072","Occupational Therapist","healthcare",37,32,29,8,3,5,51,26,76
+"ONET-00073","Clinical Social Worker","healthcare",37,32,29,8,3,5,51,26,76
+"ONET-00078","Medical Coder","healthcare",49,44,36,13,8,5,50,39,54
+"ONET-00079","Health Information Manager","healthcare",49,44,36,13,8,5,50,39,54
+"ONET-00080","Care Coordinator","healthcare",49,44,36,13,8,5,50,39,54
+"ONET-00081","Nurse Practitioner","healthcare",49,44,36,13,8,5,50,39,54
+"ONET-00082","Public Health Nurse","healthcare",49,44,36,13,8,5,50,39,54
+"ONET-00083","High School Teacher","education",37,32,32,5,0,5,51,26,76
+"ONET-00084","Elementary Teacher","education",37,32,32,5,0,5,51,26,76
+"ONET-00085","Special Education Teacher","education",37,32,32,5,0,5,51,26,76
+"ONET-00086","Academic Advisor","education",37,32,32,5,0,5,51,26,76
+"ONET-00091","University Lecturer","education",49,44,39,10,5,5,50,39,54
+"ONET-00092","School Principal","education",49,44,39,10,5,5,50,39,54
+"ONET-00093","Corporate Trainer","education",49,44,39,10,5,5,50,39,54
+"ONET-00094","Education Program Manager","education",49,44,39,10,5,5,50,39,54
+"ONET-00095","CNC Machinist","skilled trades",67,62,47,20,15,5,60,61,33
+"ONET-00096","Assembly Line Operator","skilled trades",67,62,47,20,15,5,60,61,33
+"ONET-00097","Warehouse Equipment Operator","skilled trades",67,62,47,20,15,5,60,61,33
+"ONET-00098","Quality Inspection Technician","skilled trades",67,62,47,20,15,5,60,61,33
+"ONET-00107","Mechanical Engineer","engineering/manufacturing",47,42,39,8,3,5,59,35,62
+"ONET-00108","Electrical Engineer","engineering/manufacturing",47,42,39,8,3,5,59,35,62
+"ONET-00109","Civil Engineer","engineering/manufacturing",47,42,39,8,3,5,59,35,62
+"ONET-00110","Process Engineer","engineering/manufacturing",47,42,39,8,3,5,59,35,62
+"ONET-00111","Manufacturing Engineer","engineering/manufacturing",47,42,39,8,3,5,59,35,62
+"ONET-00157","Logistics Coordinator","operations/logistics",67,62,61,6,1,5,60,61,33
+"ONET-00158","Supply Chain Planner","operations/logistics",67,62,61,6,1,5,60,61,33
+"ONET-00159","Dispatch Coordinator","operations/logistics",67,62,61,6,1,5,60,61,33
+"ONET-00160","Inventory Planner","operations/logistics",67,62,61,6,1,5,60,61,33
+"ONET-00161","Procurement Analyst","operations/logistics",67,62,61,6,1,5,60,61,33
+"ONET-00181","Research Engineer","science/research",47,42,42,5,0,5,59,35,62
+"ONET-00182","Laboratory Research Scientist","science/research",47,42,42,5,0,5,59,35,62
+"ONET-00183","Biostatistician","science/research",47,42,42,5,0,5,59,35,62
+"ONET-00184","Materials Scientist","science/research",47,42,42,5,0,5,59,35,62
+"ONET-00191","Social Worker","public sector/social work",43,38,33,10,5,5,50,33,64
+"ONET-00192","Case Worker","public sector/social work",43,38,33,10,5,5,50,33,64
+"ONET-00193","Community Outreach Coordinator","public sector/social work",43,38,33,10,5,5,50,33,64
+"ONET-00194","School Counselor","public sector/social work",43,38,33,10,5,5,50,33,64
+"ONET-00195","Policy Analyst","public sector/social work",49,44,36,13,8,5,50,39,54
+"ONET-00196","Public Administration Officer","public sector/social work",49,44,36,13,8,5,50,39,54
+"ONET-00197","Emergency Management Coordinator","public sector/social work",49,44,36,13,8,5,50,39,54
+"ONET-00198","City Planner","public sector/social work",33,28,26,7,2,5,52,21,82
+"ONET-00199","Public Health Program Manager","public sector/social work",33,28,26,7,2,5,52,21,82
+"ONET-00200","Nonprofit Program Director","public sector/social work",33,28,26,7,2,5,52,21,82
+"ONET-00018","Contract Paralegal","legal/compliance",53,49,44,9,5,4,58,45,53
+"ONET-00019","Litigation Paralegal","legal/compliance",53,49,44,9,5,4,58,45,53
+"ONET-00020","Regulatory Compliance Officer","legal/compliance",53,49,44,9,5,4,58,45,53
+"ONET-00021","Corporate Governance Analyst","legal/compliance",53,49,44,9,5,4,58,45,53
+"ONET-00022","Privacy Compliance Specialist","legal/compliance",53,49,44,9,5,4,58,45,53
+"ONET-00117","Automation Engineer","engineering/manufacturing",40,36,35,5,1,4,53,30,70
+"ONET-00118","Robotics Engineer","engineering/manufacturing",40,36,35,5,1,4,53,30,70
+"ONET-00119","Digital Twin Engineer","engineering/manufacturing",40,36,35,5,1,4,53,30,70
+"ONET-00120","Manufacturing Data Engineer","engineering/manufacturing",40,36,35,5,1,4,53,30,70
+"ONET-00150","HR Analyst","HR/people operations",53,49,48,5,1,4,58,45,53
+"ONET-00151","Payroll HR Specialist","HR/people operations",53,49,48,5,1,4,58,45,53
+"ONET-00152","Compensation Analyst","HR/people operations",53,49,48,5,1,4,58,45,53
+"ONET-00153","Learning and Development Specialist","HR/people operations",53,49,48,5,1,4,58,45,53
+"ONET-00023","Corporate Lawyer","legal/compliance",33,28,29,4,1,3,52,21,82
+"ONET-00024","Employment Lawyer","legal/compliance",33,28,29,4,1,3,52,21,82
+"ONET-00025","General Counsel","legal/compliance",33,28,29,4,1,3,52,21,82
+"ONET-00026","Chief Compliance Officer","legal/compliance",33,28,29,4,1,3,52,21,82
+"ONET-00087","Instructional Designer","education",35,32,29,6,3,3,44,26,69
+"ONET-00088","Curriculum Designer","education",35,32,29,6,3,3,44,26,69
+"ONET-00089","Learning Experience Designer","education",35,32,29,6,3,3,44,26,69
+"ONET-00090","Educational Content Developer","education",35,32,29,6,3,3,44,26,69
+"ONET-00171","Data Entry Clerk","administration/support",67,62,63,4,1,3,60,61,33
+"ONET-00172","Administrative Assistant","administration/support",67,62,63,4,1,3,60,61,33
+"ONET-00173","Receptionist","administration/support",67,62,63,4,1,3,60,61,33
+"ONET-00174","Scheduling Coordinator","administration/support",67,62,63,4,1,3,60,61,33
+"ONET-00188","Behavioral Scientist","science/research",42,37,38,4,1,3,52,30,65
+"ONET-00189","Policy Research Analyst","science/research",42,37,38,4,1,3,52,30,65
+"ONET-00190","UX Researcher","science/research",42,37,38,4,1,3,52,30,65
+"ONET-00185","Clinical Research Associate","science/research",42,36,38,4,2,2,55,29,68
+"ONET-00186","Research Data Manager","science/research",42,36,38,4,2,2,55,29,68
+"ONET-00187","Environmental Scientist","science/research",42,36,38,4,2,2,55,29,68
+"ONET-00038","Database Administrator","software/technology",47,42,44,3,2,1,59,35,62
+"ONET-00039","Platform Engineer","software/technology",47,42,44,3,2,1,59,35,62
+"ONET-00040","Infrastructure Engineer","software/technology",47,42,44,3,2,1,59,35,62
+"ONET-00041","Enterprise Architect","software/technology",47,42,44,3,2,1,59,35,62
+"ONET-00042","Embedded Systems Engineer","software/technology",47,42,44,3,2,1,59,35,62
+"ONET-00133","Graphic Designer","marketing/creative",35,32,33,2,1,1,44,26,69
+"ONET-00134","Marketing Copywriter","marketing/creative",35,32,33,2,1,1,44,26,69
+"ONET-00135","Content Strategist","marketing/creative",35,32,33,2,1,1,44,26,69
+"ONET-00136","Brand Designer","marketing/creative",35,32,33,2,1,1,44,26,69
+"ONET-00137","Video Producer","marketing/creative",35,32,33,2,1,1,44,26,69
+"ONET-00043","Data Annotation Specialist","AI/data",53,49,51,2,2,0,58,45,53
+"ONET-00044","BI Reporting Analyst","AI/data",53,49,51,2,2,0,58,45,53
+"ONET-00045","SQL Analyst","AI/data",53,49,51,2,2,0,58,45,53
+"ONET-00046","Data Quality Analyst","AI/data",53,49,51,2,2,0,58,45,53
+"ONET-00138","Digital Marketing Manager","marketing/creative",40,36,38,2,2,0,53,30,70
+"ONET-00139","SEO Specialist","marketing/creative",40,36,38,2,2,0,53,30,70
+"ONET-00140","Performance Marketing Analyst","marketing/creative",40,36,38,2,2,0,53,30,70
+"ONET-00141","Marketing Automation Manager","marketing/creative",40,36,38,2,2,0,53,30,70
+"ONET-00142","Social Media Strategist","marketing/creative",40,36,38,2,2,0,53,30,70
+"ONET-00005","Tax Accountant","finance/accounting",53,49,52,1,3,-2,58,45,53
+"ONET-00006","Audit Associate","finance/accounting",53,49,52,1,3,-2,58,45,53
+"ONET-00007","Budget Analyst","finance/accounting",53,49,52,1,3,-2,58,45,53
+"ONET-00008","Treasury Analyst","finance/accounting",53,49,52,1,3,-2,58,45,53
+"ONET-00009","Credit Analyst","finance/accounting",53,49,52,1,3,-2,58,45,53
+"ONET-00010","Revenue Operations Analyst","finance/accounting",53,49,52,1,3,-2,58,45,53
+"ONET-00051","AI Research Scientist","AI/data",42,37,41,1,4,-3,52,30,65
+"ONET-00052","Applied Scientist","AI/data",42,37,41,1,4,-3,52,30,65
+"ONET-00053","Quantitative Researcher","AI/data",42,37,41,1,4,-3,52,30,65
+"ONET-00054","Computer Vision Engineer","AI/data",42,37,41,1,4,-3,52,30,65
+"ONET-00055","Project Manager","management/leadership",37,32,36,1,4,-3,51,26,76
+"ONET-00056","Program Manager","management/leadership",37,32,36,1,4,-3,51,26,76
+"ONET-00057","Operations Manager","management/leadership",37,32,36,1,4,-3,51,26,76
+"ONET-00058","Customer Operations Manager","management/leadership",37,32,36,1,4,-3,51,26,76
+"ONET-00059","Retail Store Manager","management/leadership",37,32,36,1,4,-3,51,26,76
+"ONET-00121","Account Executive","sales/customer success",37,32,36,1,4,-3,51,26,76
+"ONET-00122","Customer Success Manager","sales/customer success",37,32,36,1,4,-3,51,26,76
+"ONET-00123","Enterprise Account Manager","sales/customer success",37,32,36,1,4,-3,51,26,76
+"ONET-00124","Solutions Consultant","sales/customer success",37,32,36,1,4,-3,51,26,76
+"ONET-00147","HR Generalist","HR/people operations",37,32,36,1,4,-3,51,26,76
+"ONET-00148","Talent Acquisition Partner","HR/people operations",37,32,36,1,4,-3,51,26,76
+"ONET-00149","People Operations Manager","HR/people operations",37,32,36,1,4,-3,51,26,76
+"ONET-00162","Procurement Specialist","operations/logistics",49,44,48,1,4,-3,50,39,54
+"ONET-00163","Warehouse Manager","operations/logistics",49,44,48,1,4,-3,50,39,54
+"ONET-00164","Distribution Manager","operations/logistics",49,44,48,1,4,-3,50,39,54
+"ONET-00165","Fleet Manager","operations/logistics",49,44,48,1,4,-3,50,39,54
+"ONET-00166","Operations Coordinator","operations/logistics",49,44,48,1,4,-3,50,39,54
+"ONET-00032","Senior Software Engineer","software/technology",40,36,40,0,4,-4,53,30,70
+"ONET-00033","DevOps Engineer","software/technology",40,36,40,0,4,-4,53,30,70
+"ONET-00034","Site Reliability Engineer","software/technology",40,36,40,0,4,-4,53,30,70
+"ONET-00035","Cloud Engineer","software/technology",40,36,40,0,4,-4,53,30,70
+"ONET-00036","Cybersecurity Engineer","software/technology",40,36,40,0,4,-4,53,30,70
+"ONET-00037","Solutions Architect","software/technology",40,36,40,0,4,-4,53,30,70
+"ONET-00047","Machine Learning Engineer","AI/data",40,36,41,1,5,-4,53,30,70
+"ONET-00048","Data Scientist","AI/data",40,36,41,1,5,-4,53,30,70
+"ONET-00049","AI Product Analyst","AI/data",40,36,41,1,5,-4,53,30,70
+"ONET-00050","MLOps Engineer","AI/data",40,36,41,1,5,-4,53,30,70
+"ONET-00011","Financial Controller","finance/accounting",33,28,37,4,9,-5,52,21,82
+"ONET-00012","Finance Manager","finance/accounting",33,28,37,4,9,-5,52,21,82
+"ONET-00013","FP&A Manager","finance/accounting",33,28,37,4,9,-5,52,21,82
+"ONET-00014","Risk Manager","finance/accounting",33,28,37,4,9,-5,52,21,82
+"ONET-00060","Product Manager","management/leadership",33,28,33,0,5,-5,52,21,82
+"ONET-00061","Director of Operations","management/leadership",33,28,33,0,5,-5,52,21,82
+"ONET-00062","Chief of Staff","management/leadership",33,28,33,0,5,-5,52,21,82
+"ONET-00063","Strategy Manager","management/leadership",33,28,33,0,5,-5,52,21,82
+"ONET-00064","Business Unit Director","management/leadership",33,28,33,0,5,-5,52,21,82
+"ONET-00129","Sales Manager","sales/customer success",33,28,33,0,5,-5,52,21,82
+"ONET-00130","Partnerships Manager","sales/customer success",33,28,33,0,5,-5,52,21,82
+"ONET-00131","Channel Manager","sales/customer success",33,28,33,0,5,-5,52,21,82
+"ONET-00132","Customer Success Director","sales/customer success",33,28,33,0,5,-5,52,21,82
+"ONET-00143","Creative Director","marketing/creative",33,28,33,0,5,-5,52,21,82
+"ONET-00144","Brand Manager","marketing/creative",33,28,33,0,5,-5,52,21,82
+"ONET-00145","Communications Director","marketing/creative",33,28,33,0,5,-5,52,21,82
+"ONET-00146","Product Marketing Manager","marketing/creative",33,28,33,0,5,-5,52,21,82
+"ONET-00154","HR Business Partner","HR/people operations",33,28,33,0,5,-5,52,21,82
+"ONET-00155","Head of People","HR/people operations",33,28,33,0,5,-5,52,21,82
+"ONET-00156","Organizational Development Manager","HR/people operations",33,28,33,0,5,-5,52,21,82
+"ONET-00167","Supply Chain Manager","operations/logistics",33,28,38,5,10,-5,52,21,82
+"ONET-00168","Procurement Manager","operations/logistics",33,28,38,5,10,-5,52,21,82
+"ONET-00169","Director of Logistics","operations/logistics",33,28,38,5,10,-5,52,21,82
+"ONET-00170","Fulfillment Operations Manager","operations/logistics",33,28,38,5,10,-5,52,21,82
+"ONET-00175","Executive Assistant","administration/support",37,32,43,6,11,-5,51,26,76
+"ONET-00176","Client Services Coordinator","administration/support",37,32,43,6,11,-5,51,26,76
+"ONET-00177","Office Administrator","administration/support",37,32,43,6,11,-5,51,26,76
+"ONET-00178","Case Management Assistant","administration/support",49,44,50,1,6,-5,50,39,54
+"ONET-00179","Project Coordinator","administration/support",49,44,50,1,6,-5,50,39,54
+"ONET-00180","Documentation Specialist","administration/support",49,44,50,1,6,-5,50,39,54
