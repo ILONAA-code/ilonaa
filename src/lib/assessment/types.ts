@@ -23,19 +23,39 @@ export type NarrativeCard = {
   description: string;
 };
 
+export type RiasecType =
+  | "Realistic"
+  | "Investigative"
+  | "Artistic"
+  | "Social"
+  | "Enterprising"
+  | "Conventional";
+
+export type RiasecProfile = {
+  primaryType: RiasecType;
+  secondaryType: RiasecType;
+  scores: Record<RiasecType, number>;
+  explanation: string;
+  confidenceLevel: "emerging" | "moderate" | "high";
+};
+
+export type IlonaaRiskIndex = {
+  score: number;
+  explanation: string;
+  components: {
+    aiExposure: number;
+    inverseResilience: number;
+    industryChange: number;
+    aiCapableToday: number;
+    repetitiveTasks: number;
+  };
+};
+
 export type AssessmentResult = {
+  riasecProfile: RiasecProfile;
+  ilonaaRiskIndex: IlonaaRiskIndex;
   aiExposureScore: number;
   careerResilienceScore: number;
-  profile: {
-    archetypeId: string;
-    archetypeTitle: string;
-    archetypeTagline: string;
-    quotableInsight: string;
-    profileEssence: string;
-    profileSummary: string;
-    resilienceFraming: string;
-    comparativeContext: string;
-  };
   positioningSummary: string;
   positioningDimensions: {
     id: string;
@@ -43,11 +63,10 @@ export type AssessmentResult = {
     value: number;
     insight: string;
   }[];
-  heroHeadline: string;
-  heroNarrative: string;
-  keyStrengths: NarrativeCard[];
-  exposureAreas: NarrativeCard[];
-  resilienceRecommendations: NarrativeCard[];
+  humanAdvantageFactors: NarrativeCard[];
+  keyRiskDrivers: NarrativeCard[];
+  recommendedNextMoves: NarrativeCard[];
+  modelDistinctionNarrative: string;
   benchmarkNarrative: string;
   summary: string;
   answers: Answers;

@@ -22,7 +22,7 @@ const deliverables = [
     ),
   },
   {
-    title: "Personal career archetype",
+    title: "RIASEC career type profile",
     description:
       "A concise identity signal and executive insight—memorable, reflective, and action-oriented.",
     icon: (

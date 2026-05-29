@@ -88,12 +88,13 @@ export function ResultsView() {
       <main className="relative z-10 mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14 lg:py-16">
         <div className="space-y-14 sm:space-y-16">
           <ResultsHero
-            archetypeTitle={result.profile.archetypeTitle}
-            archetypeTagline={result.profile.archetypeTagline}
-            quotableInsight={result.profile.quotableInsight}
-            profileEssence={result.profile.profileEssence}
-            profileSummary={result.profile.profileSummary}
-            resilienceFraming={result.profile.resilienceFraming}
+            primaryType={result.riasecProfile.primaryType}
+            secondaryType={result.riasecProfile.secondaryType}
+            explanation={result.riasecProfile.explanation}
+            confidenceLevel={result.riasecProfile.confidenceLevel}
+            ilonaaRiskIndexScore={result.ilonaaRiskIndex.score}
+            aiExposureScore={result.aiExposureScore}
+            careerResilienceScore={result.careerResilienceScore}
           />
 
           <PositioningOverview
@@ -103,27 +104,27 @@ export function ResultsView() {
             dimensions={result.positioningDimensions}
           />
 
-          <ComparativeInsight narrative={result.profile.comparativeContext} />
+          <ComparativeInsight narrative={result.modelDistinctionNarrative} />
 
           <NarrativeCardsSection
-            label="Where you are strongest today"
-            items={result.keyStrengths}
+            label="Human advantage factors"
+            items={result.humanAdvantageFactors}
             tone="strength"
-            sectionId="key_strengths"
+            sectionId="human_advantage_factors"
           />
 
           <NarrativeCardsSection
-            label="Where AI pressure may show up for you"
-            items={result.exposureAreas}
+            label="Key risk drivers"
+            items={result.keyRiskDrivers}
             tone="exposure"
-            sectionId="exposure_areas"
+            sectionId="key_risk_drivers"
           />
 
           <NarrativeCardsSection
-            label="What to strengthen next"
-            items={result.resilienceRecommendations}
+            label="Recommended next moves"
+            items={result.recommendedNextMoves}
             tone="recommendation"
-            sectionId="recommendations"
+            sectionId="recommended_next_moves"
           />
 
           <BenchmarkNarrative narrative={result.benchmarkNarrative} />
@@ -154,6 +155,11 @@ export function ResultsView() {
               Back to Home
             </Button>
           </div>
+          <p className="text-center text-sm text-muted">
+            <Link href="/methodology" className="transition-colors hover:text-foreground">
+              How ILONAA works
+            </Link>
+          </p>
 
           <FooterCopyright className="pb-8 sm:pb-10" />
         </div>

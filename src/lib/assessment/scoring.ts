@@ -1,6 +1,11 @@
-import type { Answers, AssessmentResult, NarrativeCard } from "./types";
+import type {
+  Answers,
+  AssessmentResult,
+  IlonaaRiskIndex,
+  NarrativeCard,
+} from "./types";
 import { STORAGE_KEY } from "./types";
-import { resolveCareerProfile } from "./profile";
+import { calculateRiasecProfile } from "./riasec";
 import {
   derivePositioningDimensions,
   derivePositioningSummary,
@@ -56,35 +61,7 @@ function calculateCareerResilienceScore(answers: Answers): number {
   return clamp(average);
 }
 
-function generateHeroHeadline(
-  answers: Answers,
-  aiExposure: number,
-  resilience: number
-): string {
-  const strategic = getAnswer(answers, "strategic-decision");
-  const human = getAnswer(answers, "human-interaction");
-  const judgment = getAnswer(answers, "personal-judgment");
-
-  if (resilience >= 70 && human >= 65) {
-    return "Your profile suggests strong resilience in strategic and relationship-driven environments.";
-  }
-
-  if (resilience >= 70 && strategic >= 65) {
-    return "Your profile reflects thoughtful strength in complexity, judgment, and long-range thinking.";
-  }
-
-  if (resilience >= 55 && aiExposure <= 50) {
-    return "Your profile suggests a balanced foundation with room to deepen your most human advantages.";
-  }
-
-  if (aiExposure >= 60 && resilience >= 55) {
-    return "Your profile sits at an active intersection of change and capability — a thoughtful place to begin.";
-  }
-
-  return "Your profile reveals a clear starting point for building clarity and intentional career direction.";
-}
-
-function generateHeroNarrative(
+function generateModelDistinctionNarrative(
   answers: Answers,
   aiExposure: number,
   resilience: number
@@ -93,18 +70,60 @@ function generateHeroNarrative(
   const expertise = getAnswer(answers, "specialized-expertise");
 
   if (resilience >= 70) {
-    return "Your responses point to durable professional qualities — the kind that tend to compound over time rather than fade with technological shifts.";
+    return "Your RIASEC type describes your work identity; ILONAA’s risk layer suggests your human strengths remain materially protective.";
   }
 
   if (adaptability >= 65 && expertise >= 55) {
-    return "You combine developing depth with openness to change — a pairing that often translates well as industries evolve.";
+    return "Your occupational orientation appears compatible with change—an important distinction between exposure and replacement risk.";
   }
 
   if (aiExposure >= 60) {
-    return "Some aspects of your work may face increasing automation pressure, but this is context for planning — not a verdict on your future.";
+    return "Your work may be significantly AI-exposed, but occupational type and resilience still indicate where durable human advantage can be reinforced.";
   }
 
-  return "These patterns are meant to inform your thinking with calm precision — offering direction without reducing your career to a single score.";
+  return "RIASEC identifies the nature of your work; ILONAA estimates how that work may shift under AI-driven change.";
+}
+
+function calculateIlonaaRiskIndex(
+  answers: Answers,
+  aiExposureScore: number,
+  careerResilienceScore: number
+): IlonaaRiskIndex {
+  const industryChange = getAnswer(answers, "industry-change");
+  const aiCapableToday = getAnswer(answers, "ai-capable-today");
+  const repetitiveTasks = getAnswer(answers, "repetitive-tasks");
+
+  /*
+   * ILONAA AI Risk Index formula (0-100):
+   * - AI Exposure Score (35%)
+   * - Inverse Career Resilience (25%)
+   * - Industry change pressure (15%)
+   * - AI-capable-today pressure (15%)
+   * - Repetitive task exposure (10%)
+   *
+   * The formula intentionally separates occupational identity (RIASEC) from
+   * risk pressure, so users can see both what their work is and how exposed it may be.
+   */
+  const score = clamp(
+    aiExposureScore * 0.35 +
+      (100 - careerResilienceScore) * 0.25 +
+      industryChange * 0.15 +
+      aiCapableToday * 0.15 +
+      repetitiveTasks * 0.1
+  );
+
+  return {
+    score,
+    explanation:
+      "Composite of AI exposure, inverse resilience, industry change pace, current AI task capability, and routine-task pressure.",
+    components: {
+      aiExposure: aiExposureScore,
+      inverseResilience: 100 - careerResilienceScore,
+      industryChange,
+      aiCapableToday,
+      repetitiveTasks,
+    },
+  };
 }
 
 function generateKeyStrengths(answers: Answers): NarrativeCard[] {
@@ -316,7 +335,8 @@ function generateSummary(
 export function calculateResults(answers: Answers): AssessmentResult {
   const aiExposureScore = calculateAiExposureScore(answers);
   const careerResilienceScore = calculateCareerResilienceScore(answers);
-  const profile = resolveCareerProfile(
+  const riasecProfile = calculateRiasecProfile(answers);
+  const ilonaaRiskIndex = calculateIlonaaRiskIndex(
     answers,
     aiExposureScore,
     careerResilienceScore
@@ -332,26 +352,22 @@ export function calculateResults(answers: Answers): AssessmentResult {
   );
 
   return {
+    riasecProfile,
+    ilonaaRiskIndex,
     aiExposureScore,
     careerResilienceScore,
-    profile,
     positioningSummary,
     positioningDimensions,
-    heroHeadline: generateHeroHeadline(
-      answers,
-      aiExposureScore,
-      careerResilienceScore
-    ),
-    heroNarrative: generateHeroNarrative(
-      answers,
-      aiExposureScore,
-      careerResilienceScore
-    ),
-    keyStrengths: generateKeyStrengths(answers),
-    exposureAreas: generateExposureAreas(answers),
-    resilienceRecommendations: generateResilienceRecommendations(
+    humanAdvantageFactors: generateKeyStrengths(answers),
+    keyRiskDrivers: generateExposureAreas(answers),
+    recommendedNextMoves: generateResilienceRecommendations(
       answers,
       aiExposureScore
+    ),
+    modelDistinctionNarrative: generateModelDistinctionNarrative(
+      answers,
+      aiExposureScore,
+      careerResilienceScore
     ),
     benchmarkNarrative: generateBenchmarkNarrative(
       answers,
@@ -382,9 +398,14 @@ export function loadResults(): AssessmentResult | null {
     if (!parsed.answers) return null;
 
     if (
-      parsed.profile?.archetypeTitle &&
+      parsed.riasecProfile?.primaryType &&
+      parsed.riasecProfile?.secondaryType &&
+      parsed.ilonaaRiskIndex?.score !== undefined &&
       parsed.positioningDimensions &&
-      parsed.profile.quotableInsight
+      parsed.keyRiskDrivers &&
+      parsed.humanAdvantageFactors &&
+      parsed.recommendedNextMoves &&
+      parsed.modelDistinctionNarrative
     ) {
       return parsed as AssessmentResult;
     }

@@ -1,4 +1,5 @@
 import { Section, SectionHeader } from "@/components/ui/Section";
+import Link from "next/link";
 
 const principles = [
   {
@@ -56,6 +57,12 @@ export function WhyFeelsDifferent() {
           </li>
         ))}
       </ul>
+
+      <p className="mt-6 text-center text-sm text-muted">
+        <Link href="/methodology" className="transition-colors hover:text-foreground">
+          How ILONAA works
+        </Link>
+      </p>
     </Section>
   );
 }

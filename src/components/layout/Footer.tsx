@@ -25,6 +25,9 @@ export function Footer() {
             <Link href="#process" className="transition-colors hover:text-foreground">
               Process
             </Link>
+            <Link href="/methodology" className="transition-colors hover:text-foreground">
+              How ILONAA works
+            </Link>
             <Link href="/assessment" className="transition-colors hover:text-foreground">
               Start
             </Link>

@@ -155,7 +155,7 @@ export const assessmentMetadata: Metadata = {
 export const resultsMetadata: Metadata = {
   title: "Your AI Career Resilience Profile",
   description:
-    "Your personalized ILONAA results—career archetype, automation risk positioning, strengths, and calm executive insight.",
+    "Your personalized ILONAA results—RIASEC career type, ILONAA AI Risk Index, automation risk positioning, and resilience insight.",
   alternates: {
     canonical: "/assessment/results",
   },
@@ -171,7 +171,29 @@ export const resultsMetadata: Metadata = {
     ...sharedOpenGraph("/assessment/results"),
     title: "ILONAA — Your AI Career Resilience Profile",
     description:
-      "Personalized career archetype, positioning, and future-of-work reflection from your assessment.",
+      "Personalized RIASEC career type, ILONAA AI Risk Index, and future-of-work reflection from your assessment.",
     url: absoluteUrl("/assessment/results"),
+  },
+};
+
+export const methodologyMetadata: Metadata = {
+  title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
+  description:
+    "Learn how ILONAA combines the established RIASEC occupational framework with a proprietary AI Risk Index to assess AI exposure, replacement risk and career resilience.",
+  alternates: {
+    canonical: "/methodology",
+  },
+  openGraph: {
+    ...sharedOpenGraph("/methodology"),
+    title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
+    description:
+      "Learn how ILONAA combines RIASEC occupational identity with a proprietary AI Risk Index for exposure, replacement risk, and career resilience.",
+    url: absoluteUrl("/methodology"),
+  },
+  twitter: {
+    ...sharedTwitter(),
+    title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
+    description:
+      "Learn how ILONAA combines RIASEC occupational identity with a proprietary AI Risk Index for exposure, replacement risk, and career resilience.",
   },
 };

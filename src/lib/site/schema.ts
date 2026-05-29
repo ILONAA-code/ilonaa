@@ -44,7 +44,7 @@ export const webApplicationSchema = {
   featureList: [
     "AI career resilience assessment",
     "Career automation risk reflection",
-    "Personal career archetype profile",
+    "RIASEC career type profile",
     "Privacy-first design without accounts",
     "European-hosted infrastructure",
   ],

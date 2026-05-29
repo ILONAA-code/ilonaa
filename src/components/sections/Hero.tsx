@@ -14,13 +14,13 @@ function ScorePreview() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted">
-              Your personal profile
+              Your RIASEC profile
             </p>
             <p className="mt-1 font-display text-[1.375rem] leading-snug text-foreground sm:text-2xl">
-              Human-Centered Strategist
+              Primary: Social
             </p>
             <p className="mt-1.5 text-sm font-medium tracking-wide text-accent">
-              Judgment, amplified by trust
+              Secondary: Enterprising
             </p>
           </div>
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-light">
@@ -68,10 +68,10 @@ function ScorePreview() {
             Your insight
           </p>
           <p className="mt-2 font-display text-[1.0625rem] leading-snug text-foreground">
-            Your advantage grows where ambiguity still needs a person in the room.
+            RIASEC describes your work style. ILONAA estimates AI risk pressure.
           </p>
           <p className="mt-2 text-xs leading-relaxed text-muted/80">
-            Strategic judgment · Human-centered strengths · Adaptability
+            ILONAA AI Risk Index · AI Exposure · Career Resilience
           </p>
         </div>
       </div>

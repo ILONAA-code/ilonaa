@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { JOB_PROFILES } from "../src/lib/assessment/jobProfiles";
 import { QUESTIONS } from "../src/lib/assessment/questions";
@@ -9,19 +9,15 @@ type AuditRow = {
   category: string;
   rationale: string;
   answers: Record<string, number>;
+  primaryRiasecType: string;
+  secondaryRiasecType: string;
+  ilonaaAiRiskIndex: number;
   aiExposureScore: number;
   careerResilienceScore: number;
-  archetypeTitle: string;
-  positioningSummary: string;
-  keyStrengths: string[];
-  exposureAreas: string[];
-  recommendations: string[];
+  keyRiskDrivers: string[];
+  humanAdvantageFactors: string[];
+  recommendedNextMoves: string[];
   summary: string;
-};
-
-type BeforeRow = {
-  title: string;
-  archetype: string;
 };
 
 const EXPECTED_PROFILE_COUNT = 200;
@@ -67,15 +63,15 @@ function rankTable(
   const tableRows = ranked
     .map(
       (row, index) =>
-        `| ${index + 1} | ${row.title} | ${row.category} | ${row.aiExposureScore} | ${row.careerResilienceScore} | ${row.archetypeTitle} |`
+        `| ${index + 1} | ${row.title} | ${row.category} | ${row.ilonaaAiRiskIndex} | ${row.aiExposureScore} | ${row.careerResilienceScore} | ${row.primaryRiasecType} | ${row.secondaryRiasecType} |`
     )
     .join("\n");
 
   return [
     `## ${sectionTitle}`,
     "",
-    "| Rank | Job | Category | AI Exposure | Career Resilience | Archetype |",
-    "| ---: | --- | --- | ---: | ---: | --- |",
+    "| Rank | Job | Category | ILONAA AI Risk Index | AI Exposure | Career Resilience | Primary RIASEC | Secondary RIASEC |",
+    "| ---: | --- | --- | ---: | ---: | ---: | --- | --- |",
     tableRows,
     "",
   ].join("\n");
@@ -88,7 +84,7 @@ function topListSection(
 ): string {
   const lines = rows.slice(0, limit).map(
     (row, index) =>
-      `${index + 1}. ${row.title} (${row.category}) — Exposure ${row.aiExposureScore}, Resilience ${row.careerResilienceScore}, Archetype ${row.archetypeTitle}`
+      `${index + 1}. ${row.title} (${row.category}) — ILONAA AI Risk Index ${row.ilonaaAiRiskIndex}, Exposure ${row.aiExposureScore}, Resilience ${row.careerResilienceScore}, Primary ${row.primaryRiasecType}, Secondary ${row.secondaryRiasecType}`
   );
 
   return [`## ${title}`, "", ...lines, ""].join("\n");
@@ -97,8 +93,8 @@ function topListSection(
 function detailedSection(rows: AuditRow[]): string {
   const sorted = [...rows].sort(
     (a, b) =>
-      b.aiExposureScore - a.aiExposureScore ||
-      b.careerResilienceScore - a.careerResilienceScore
+      b.ilonaaAiRiskIndex - a.ilonaaAiRiskIndex ||
+      b.aiExposureScore - a.aiExposureScore
   );
 
   return sorted
@@ -111,13 +107,14 @@ function detailedSection(rows: AuditRow[]): string {
         `### ${index + 1}. ${row.title}`,
         `- Category: ${row.category}`,
         `- Rationale: ${row.rationale}`,
+        `- Primary RIASEC Type: ${row.primaryRiasecType}`,
+        `- Secondary RIASEC Type: ${row.secondaryRiasecType}`,
+        `- ILONAA AI Risk Index: ${row.ilonaaAiRiskIndex}`,
         `- AI Exposure Score: ${row.aiExposureScore}`,
         `- Career Resilience Score: ${row.careerResilienceScore}`,
-        `- Archetype: ${row.archetypeTitle}`,
-        `- Positioning Summary: ${row.positioningSummary}`,
-        `- Key Strengths: ${row.keyStrengths.join(", ")}`,
-        `- Exposure Areas: ${row.exposureAreas.join(", ")}`,
-        `- Recommendations: ${row.recommendations.join(", ")}`,
+        `- Key Risk Drivers: ${row.keyRiskDrivers.join(", ")}`,
+        `- Human Advantage Factors: ${row.humanAdvantageFactors.join(", ")}`,
+        `- Recommended Next Moves: ${row.recommendedNextMoves.join(", ")}`,
         `- Summary: ${row.summary}`,
         "- Inputs:",
         ...inputLines,
@@ -125,52 +122,6 @@ function detailedSection(rows: AuditRow[]): string {
       ].join("\n");
     })
     .join("\n");
-}
-
-function parseCsv(content: string): string[][] {
-  const rows: string[][] = [];
-  let cell = "";
-  let row: string[] = [];
-  let inQuotes = false;
-
-  for (let i = 0; i < content.length; i += 1) {
-    const char = content[i];
-    const next = content[i + 1];
-
-    if (char === '"' && inQuotes && next === '"') {
-      cell += '"';
-      i += 1;
-      continue;
-    }
-
-    if (char === '"') {
-      inQuotes = !inQuotes;
-      continue;
-    }
-
-    if (char === "," && !inQuotes) {
-      row.push(cell);
-      cell = "";
-      continue;
-    }
-
-    if (char === "\n" && !inQuotes) {
-      row.push(cell);
-      rows.push(row);
-      row = [];
-      cell = "";
-      continue;
-    }
-
-    cell += char;
-  }
-
-  if (cell.length > 0 || row.length > 0) {
-    row.push(cell);
-    rows.push(row);
-  }
-
-  return rows;
 }
 
 function validateProfiles() {
@@ -222,13 +173,16 @@ function buildRows(): AuditRow[] {
       category: profile.category,
       rationale: profile.rationale,
       answers: profile.answers,
+      primaryRiasecType: result.riasecProfile.primaryType,
+      secondaryRiasecType: result.riasecProfile.secondaryType,
+      ilonaaAiRiskIndex: result.ilonaaRiskIndex.score,
       aiExposureScore: result.aiExposureScore,
       careerResilienceScore: result.careerResilienceScore,
-      archetypeTitle: result.profile.archetypeTitle,
-      positioningSummary: result.positioningSummary,
-      keyStrengths: result.keyStrengths.map((item) => item.title),
-      exposureAreas: result.exposureAreas.map((item) => item.title),
-      recommendations: result.resilienceRecommendations.map((item) => item.title),
+      keyRiskDrivers: result.keyRiskDrivers.map((item) => item.title),
+      humanAdvantageFactors: result.humanAdvantageFactors.map((item) => item.title),
+      recommendedNextMoves: result.recommendedNextMoves.map(
+        (item) => item.title
+      ),
       summary: result.summary,
     };
   });
@@ -237,149 +191,78 @@ function buildRows(): AuditRow[] {
 function buildCsv(rows: AuditRow[]): string {
   const header = [
     "job_title",
+    "category",
+    "primary_riasec_type",
+    "secondary_riasec_type",
+    "ilonaa_ai_risk_index",
     "ai_exposure_score",
     "career_resilience_score",
-    "archetype",
-    "positioning_summary",
-    "top_strengths",
-    "top_exposure_areas",
-    "recommendations",
+    "key_risk_drivers",
+    "human_advantage_factors",
+    "recommended_next_moves",
   ].join(",");
 
   const lines = [...rows]
     .sort(
       (a, b) =>
-        b.aiExposureScore - a.aiExposureScore ||
-        b.careerResilienceScore - a.careerResilienceScore
+        b.ilonaaAiRiskIndex - a.ilonaaAiRiskIndex ||
+        b.aiExposureScore - a.aiExposureScore
     )
     .map((row) =>
       [
         escapeCsv(row.title),
+        escapeCsv(row.category),
+        escapeCsv(row.primaryRiasecType),
+        escapeCsv(row.secondaryRiasecType),
+        row.ilonaaAiRiskIndex.toString(),
         row.aiExposureScore.toString(),
         row.careerResilienceScore.toString(),
-        escapeCsv(row.archetypeTitle),
-        escapeCsv(row.positioningSummary),
-        escapeCsv(joinTitles(row.keyStrengths)),
-        escapeCsv(joinTitles(row.exposureAreas)),
-        escapeCsv(joinTitles(row.recommendations)),
+        escapeCsv(joinTitles(row.keyRiskDrivers)),
+        escapeCsv(joinTitles(row.humanAdvantageFactors)),
+        escapeCsv(joinTitles(row.recommendedNextMoves)),
       ].join(",")
     );
 
   return [header, ...lines].join("\n");
 }
 
-async function buildComparisonSection(
-  reportsDir: string,
-  currentRows: AuditRow[],
-  enabled: boolean
-): Promise<string> {
-  if (!enabled) return "";
-
-  const beforeCsvPath = resolve(reportsDir, "ilonaa_200_job_profile_audit.csv");
-  const beforeCsv = await readFile(beforeCsvPath, "utf8");
-  const parsed = parseCsv(beforeCsv);
-  const beforeRows: BeforeRow[] = parsed.slice(1).map((row) => ({
-    title: row[0] ?? "",
-    archetype: row[3] ?? "",
-  }));
-
-  const beforeByTitle = new Map(beforeRows.map((row) => [row.title, row.archetype]));
-  const beforeDistribution = distribution(beforeRows.map((row) => row.archetype));
-  const afterDistribution = distribution(currentRows.map((row) => row.archetypeTitle));
-
-  const changedJobs = [...currentRows]
-    .filter((row) => beforeByTitle.get(row.title) && beforeByTitle.get(row.title) !== row.archetypeTitle)
-    .map((row) => ({
-      title: row.title,
-      before: beforeByTitle.get(row.title) ?? "unknown",
-      after: row.archetypeTitle,
-      exposure: row.aiExposureScore,
-      resilience: row.careerResilienceScore,
-    }))
-    .slice(0, 30);
-
-  const beforeLines = beforeDistribution.map(
-    ([name, count]) => `- ${name}: ${count}`
-  );
-  const afterLines = afterDistribution.map(
-    ([name, count]) => `- ${name}: ${count}`
-  );
-
-  const changedLines =
-    changedJobs.length > 0
-      ? changedJobs.map(
-          (job) =>
-            `- ${job.title}: ${job.before} → ${job.after} (Exposure ${job.exposure}, Resilience ${job.resilience})`
-        )
-      : ["- No archetype changes detected between before and after runs."];
-
-  return [
-    "## Before vs After Archetype Distribution",
-    "",
-    "### Old archetype distribution",
-    ...beforeLines,
-    "",
-    "### New archetype distribution",
-    ...afterLines,
-    "",
-    "### Examples of jobs that changed archetype",
-    ...changedLines,
-    "",
-    "### Whether the new assignments feel more intuitive",
-    "- The recalibrated mapping shifts more high-creativity roles toward Creative Synthesizer and more deep-specialist low-human roles toward Systems-Oriented Thinker.",
-    "- High-adaptability, high-change roles now appear more frequently under Adaptive Builder instead of converging into Human-Centered Strategist.",
-    "",
-    "### Any remaining weaknesses",
-    "- Some categories still cluster because the current model uses fixed answer vectors without variability ranges.",
-    "- Archetype boundaries remain threshold/weight based, so adjacent profiles can still produce close-fit outcomes.",
-    "",
-  ].join("\n");
-}
-
-async function buildMarkdown(rows: AuditRow[], afterMode: boolean): Promise<string> {
-  const byExposure = [...rows].sort(
+function buildMarkdown(rows: AuditRow[]): string {
+  const byIndex = [...rows].sort(
     (a, b) =>
-      b.aiExposureScore - a.aiExposureScore ||
-      b.careerResilienceScore - a.careerResilienceScore
+      b.ilonaaAiRiskIndex - a.ilonaaAiRiskIndex ||
+      b.aiExposureScore - a.aiExposureScore
   );
   const byResilience = [...rows].sort(
     (a, b) =>
       b.careerResilienceScore - a.careerResilienceScore ||
       a.aiExposureScore - b.aiExposureScore
   );
-  const byBalance = [...rows].sort((a, b) => {
-    const aGap = Math.abs(a.aiExposureScore - a.careerResilienceScore);
-    const bGap = Math.abs(b.aiExposureScore - b.careerResilienceScore);
-    return aGap - bGap || b.careerResilienceScore + b.aiExposureScore - (a.careerResilienceScore + a.aiExposureScore);
-  });
-
-  const surprising = [...rows]
-    .filter(
-      (row) =>
-        (row.aiExposureScore >= 60 && row.careerResilienceScore >= 60) ||
-        (row.aiExposureScore <= 40 && row.careerResilienceScore <= 40) ||
-        (Math.abs(row.aiExposureScore - row.careerResilienceScore) <= 5 &&
-          (row.aiExposureScore >= 55 || row.careerResilienceScore >= 55))
-    )
-    .sort(
-      (a, b) =>
-        b.aiExposureScore + b.careerResilienceScore - (a.aiExposureScore + a.careerResilienceScore)
-    );
-
-  const highHigh = byExposure.filter(
-    (row) => row.aiExposureScore >= 60 && row.careerResilienceScore >= 60
+  const byLowestIndex = [...rows].sort(
+    (a, b) =>
+      a.ilonaaAiRiskIndex - b.ilonaaAiRiskIndex ||
+      b.careerResilienceScore - a.careerResilienceScore
   );
-  const highLow = byExposure.filter(
-    (row) => row.aiExposureScore >= 60 && row.careerResilienceScore <= 45
-  );
-  const lowHigh = byResilience.filter(
-    (row) => row.aiExposureScore <= 40 && row.careerResilienceScore >= 60
+  const divergence = [...rows].filter(
+    (row) =>
+      (row.primaryRiasecType === "Conventional" && row.ilonaaAiRiskIndex >= 60) ||
+      (row.primaryRiasecType === "Investigative" &&
+        row.ilonaaAiRiskIndex >= 40 &&
+        row.ilonaaAiRiskIndex <= 60) ||
+      (row.primaryRiasecType === "Social" && row.ilonaaAiRiskIndex <= 45) ||
+      (row.primaryRiasecType === "Enterprising" &&
+        row.ilonaaAiRiskIndex >= 45 &&
+        row.ilonaaAiRiskIndex <= 65)
   );
 
-  const archetypeDist = distribution(rows.map((row) => row.archetypeTitle));
+  const primaryDist = distribution(rows.map((row) => row.primaryRiasecType));
+  const secondaryDist = distribution(rows.map((row) => row.secondaryRiasecType));
   const categoryDist = distribution(rows.map((row) => row.category));
 
-  const archetypeLines = archetypeDist.map(
+  const primaryLines = primaryDist.map(
+    ([name, count]) =>
+      `- ${name}: ${count} (${((count / rows.length) * 100).toFixed(1)}%)`
+  );
+  const secondaryLines = secondaryDist.map(
     ([name, count]) =>
       `- ${name}: ${count} (${((count / rows.length) * 100).toFixed(1)}%)`
   );
@@ -388,11 +271,8 @@ async function buildMarkdown(rows: AuditRow[], afterMode: boolean): Promise<stri
       `- ${name}: ${count} (${((count / rows.length) * 100).toFixed(1)}%)`
   );
 
-  const reportsDir = resolve(process.cwd(), "reports");
-  const comparison = await buildComparisonSection(reportsDir, rows, afterMode);
-
   return [
-    "# ILONAA 200 Job Profile Audit",
+    "# ILONAA 200 Job Profile Audit (RIASEC)",
     "",
     `Generated at: ${new Date().toISOString()}`,
     "",
@@ -401,9 +281,9 @@ async function buildMarkdown(rows: AuditRow[], afterMode: boolean): Promise<stri
     rankTable(
       rows,
       (a, b) =>
-        b.aiExposureScore - a.aiExposureScore ||
-        b.careerResilienceScore - a.careerResilienceScore,
-      "Ranking by AI Exposure"
+        b.ilonaaAiRiskIndex - a.ilonaaAiRiskIndex ||
+        b.aiExposureScore - a.aiExposureScore,
+      "Ranking by ILONAA AI Risk Index"
     ),
     rankTable(
       rows,
@@ -412,49 +292,44 @@ async function buildMarkdown(rows: AuditRow[], afterMode: boolean): Promise<stri
         a.aiExposureScore - b.aiExposureScore,
       "Ranking by Career Resilience"
     ),
-    "## Archetype Distribution",
+    "## Distribution by Primary RIASEC Type",
     "",
-    ...archetypeLines,
+    ...primaryLines,
+    "",
+    "## Distribution by Secondary RIASEC Type",
+    "",
+    ...secondaryLines,
     "",
     "## Category Distribution",
     "",
     ...categoryLines,
     "",
-    topListSection("Top 20 Highest Exposure Jobs", byExposure, 20),
+    topListSection("Top 20 Highest ILONAA AI Risk Index Jobs", byIndex, 20),
+    topListSection("Top 20 Lowest ILONAA AI Risk Index Jobs", byLowestIndex, 20),
+    topListSection("Top 20 Highest AI Exposure Jobs", [...rows].sort((a, b) => b.aiExposureScore - a.aiExposureScore), 20),
     topListSection("Top 20 Highest Resilience Jobs", byResilience, 20),
-    topListSection("Top 20 Most Balanced Jobs", byBalance, 20),
-    topListSection("Top 20 Surprising or Counterintuitive Results", surprising, 20),
-    topListSection("Jobs Where Exposure and Resilience Are Both High", highHigh, 20),
-    topListSection("Jobs Where Exposure Is High and Resilience Is Low", highLow, 20),
-    topListSection("Jobs Where Exposure Is Low and Resilience Is High", lowHigh, 20),
-    comparison,
+    topListSection("Examples Where RIASEC Type and AI Risk Diverge", divergence, 20),
     "## Detailed Job Results",
     "",
-    detailedSection(byExposure),
+    detailedSection(byIndex),
     "",
   ].join("\n");
 }
 
 async function main() {
-  const afterMode = process.argv.includes("--after");
-
   validateProfiles();
   const rows = buildRows();
 
   const reportsDir = resolve(process.cwd(), "reports");
   await mkdir(reportsDir, { recursive: true });
 
-  const markdownName = afterMode
-    ? "ilonaa_200_job_profile_audit_after_archetype_recalibration.md"
-    : "ilonaa_200_job_profile_audit.md";
-  const csvName = afterMode
-    ? "ilonaa_200_job_profile_audit_after_archetype_recalibration.csv"
-    : "ilonaa_200_job_profile_audit.csv";
+  const markdownName = "ilonaa_200_job_profile_audit_riasec.md";
+  const csvName = "ilonaa_200_job_profile_audit_riasec.csv";
 
   const markdownPath = resolve(reportsDir, markdownName);
   const csvPath = resolve(reportsDir, csvName);
 
-  await writeFile(markdownPath, await buildMarkdown(rows, afterMode), "utf8");
+  await writeFile(markdownPath, buildMarkdown(rows), "utf8");
   await writeFile(csvPath, buildCsv(rows), "utf8");
 
   // eslint-disable-next-line no-console

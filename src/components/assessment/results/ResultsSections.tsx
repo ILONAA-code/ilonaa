@@ -175,28 +175,37 @@ export function ScoreOverview({
 }
 
 type ResultsHeroProps = {
-  archetypeTitle: string;
-  archetypeTagline: string;
-  quotableInsight: string;
-  profileEssence: string;
-  profileSummary: string;
-  resilienceFraming: string;
+  primaryType: string;
+  secondaryType: string;
+  explanation: string;
+  confidenceLevel: "emerging" | "moderate" | "high";
+  ilonaaRiskIndexScore: number;
+  aiExposureScore: number;
+  careerResilienceScore: number;
 };
 
 export function ResultsHero({
-  archetypeTitle,
-  archetypeTagline,
-  quotableInsight,
-  profileEssence,
-  profileSummary,
-  resilienceFraming,
+  primaryType,
+  secondaryType,
+  explanation,
+  confidenceLevel,
+  ilonaaRiskIndexScore,
+  aiExposureScore,
+  careerResilienceScore,
 }: ResultsHeroProps) {
+  const confidenceLabel =
+    confidenceLevel === "high"
+      ? "High"
+      : confidenceLevel === "moderate"
+        ? "Moderate"
+        : "Emerging";
+
   return (
     <header
       className="animate-fade-in-up"
       data-analytics-section="profile_outcome"
     >
-      <p className="section-label">Your personal profile</p>
+      <p className="section-label">Your RIASEC career type</p>
 
       <div className="premium-card relative mt-5 overflow-hidden p-6 sm:p-8">
         <div
@@ -206,10 +215,10 @@ export function ResultsHero({
 
         <div className="relative text-center">
           <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] sm:leading-[1.1]">
-            {archetypeTitle}
+            Primary: {primaryType}
           </h1>
           <p className="mt-3 text-sm font-medium tracking-wide text-accent sm:text-[0.9375rem]">
-            {archetypeTagline}
+            Secondary: {secondaryType}
           </p>
         </div>
 
@@ -218,29 +227,44 @@ export function ResultsHero({
           data-analytics-section="quotable_insight"
         >
           <figcaption className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
-            Your insight
+            Why this type fits
           </figcaption>
           <blockquote className="mt-3 font-display text-[1.3125rem] leading-[1.32] tracking-tight text-balance text-foreground sm:text-[1.5rem] sm:leading-[1.28]">
-            {quotableInsight}
+            {explanation}
           </blockquote>
+          <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted/70">
+            Confidence: {confidenceLabel}
+          </p>
         </figure>
 
-        <p className="body-text relative mt-6 text-center leading-[1.7] sm:text-[1.0625rem]">
-          {profileEssence}
-        </p>
-
-        <div className="relative mt-5 rounded-2xl border border-black/[0.05] bg-white/75 px-5 py-4 text-center sm:px-6 sm:py-5">
+        <div className="relative mt-6 rounded-2xl border border-black/[0.05] bg-white/75 px-5 py-5 text-center sm:px-6 sm:py-6">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
-            In brief
+            ILONAA AI Risk Index
           </p>
-          <p className="mt-2 font-display text-[1.0625rem] leading-snug text-foreground sm:text-lg">
-            {profileSummary}
+          <p className="mt-2 font-display text-[1.875rem] tabular-nums leading-none text-foreground sm:text-[2.25rem]">
+            {ilonaaRiskIndexScore}
+            <span className="ml-1 text-base text-muted/60">/100</span>
           </p>
         </div>
 
-        <p className="relative mt-5 text-center text-[0.9375rem] leading-[1.65] text-muted sm:text-base">
-          {resilienceFraming}
-        </p>
+        <div className="relative mt-5 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl border border-black/[0.05] bg-white/70 p-4 text-center">
+            <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+              AI Exposure Score
+            </p>
+            <p className="mt-1 font-display text-2xl tabular-nums text-foreground">
+              {aiExposureScore}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-black/[0.05] bg-white/70 p-4 text-center">
+            <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+              Career Resilience Score
+            </p>
+            <p className="mt-1 font-display text-2xl tabular-nums text-foreground">
+              {careerResilienceScore}
+            </p>
+          </div>
+        </div>
       </div>
     </header>
   );
