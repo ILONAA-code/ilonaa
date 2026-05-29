@@ -25,6 +25,7 @@ export type OnetOccupation = {
   code: string;
   title: string;
   alternateTitles: string[];
+  searchTerms?: string[];
   description: string;
   riasecScores: OnetRiasecScores;
   primaryRiasecType: RiasecType;

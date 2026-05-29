@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { searchOccupations, toProfessionSelection } from "@/lib/assessment/occupations";
 import type { OnetOccupation } from "@/lib/assessment/onetTypes";
 
@@ -9,8 +9,20 @@ type ProfessionSelectProps = {
 
 export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
 
-  const matches = useMemo(() => searchOccupations(query, 12), [query]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 200);
+
+    return () => window.clearTimeout(timer);
+  }, [query]);
+
+  const matches = useMemo(() => {
+    if (debouncedQuery.trim().length < 2) return [];
+    return searchOccupations(debouncedQuery, 20);
+  }, [debouncedQuery]);
 
   return (
     <div className="space-y-5">
@@ -28,6 +40,10 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
           className="w-full rounded-xl border border-black/[0.06] bg-background px-4 py-3 text-[15px] text-foreground outline-none transition focus:border-accent/40"
         />
       </div>
+
+      {query.trim().length > 0 && query.trim().length < 2 && (
+        <p className="text-sm text-muted">Type at least 2 characters to search.</p>
+      )}
 
       <div className="max-h-[19rem] space-y-2 overflow-y-auto pr-1">
         {matches.map((occupation) => {
