@@ -87,15 +87,15 @@ export default function MethodologyPage() {
               <p>
                 ILONAA helps people interpret how AI may affect a selected
                 profession. The model combines occupational structure, role
-                identity, and user-specific context to estimate:
+                identity, and user-specific context to estimate one primary
+                user-facing outcome:
               </p>
               <ul className="list-disc space-y-2 pl-5">
-                <li>AI Exposure</li>
                 <li>AI Replacement Risk</li>
-                <li>Career Resilience</li>
-                <li>Human Advantage Factors</li>
               </ul>
               <p>
+                Supporting interpretation includes human advantage factors,
+                occupational structure signals, and contextual career insights.
                 The goal is not to predict destiny. The goal is to provide
                 structured orientation for better decisions.
               </p>
@@ -177,38 +177,40 @@ export default function MethodologyPage() {
 
             <MethodSection title="9. ILONAA Interpretation Layer">
               <p>
-                ILONAA evaluates four core outputs:
+                ILONAA uses multiple analytical dimensions internally, but
+                presents a single primary outcome to users: AI Replacement Risk.
               </p>
               <ul className="list-disc space-y-2 pl-5">
                 <li>
-                  <strong>AI Exposure:</strong> how much of the role can be
-                  affected, augmented, or automated by AI systems.
+                  <strong>AI Replacement Risk (primary):</strong> how likely
+                  core human responsibility could be substituted in practice.
                 </li>
                 <li>
-                  <strong>AI Replacement Risk:</strong> how likely core human
-                  responsibility could be substituted in practice.
+                  <strong>Occupational structure signals:</strong> routine work,
+                  process structure, and AI-capable task context.
                 </li>
                 <li>
-                  <strong>Career Resilience:</strong> how strongly human
-                  judgment, adaptability, trust, and accountability protect
-                  long-term relevance.
+                  <strong>Human advantage factors:</strong> judgment,
+                  accountability, relationship depth, adaptability, and physical
+                  presence where relevant.
                 </li>
                 <li>
-                  <strong>Human Advantage Factors:</strong> the role elements
-                  where human strengths continue to matter most.
+                  <strong>Internal analytical dimensions:</strong> AI Exposure
+                  and Career Resilience are used by the model as supporting
+                  interpretation layers.
                 </li>
               </ul>
             </MethodSection>
 
-            <MethodSection title="10. ILONAA AI Risk Index">
+            <MethodSection title="10. AI Replacement Risk (Primary Outcome)">
               <p>
-                The ILONAA AI Risk Index is ILONAA&apos;s proprietary score. It
-                combines profession baseline factors with user-specific
-                adjustment signals to estimate near-term AI disruption pressure.
+                ILONAA surfaces AI Replacement Risk as the dominant user-facing
+                result so users do not need to choose between competing scores.
               </p>
               <p>
-                The index is designed to be understandable and explainable
-                without exposing proprietary calculation details.
+                AI Exposure and Career Resilience remain internal analytical
+                dimensions used by the model to support interpretation, but they
+                are not presented as equal first-class outputs.
               </p>
             </MethodSection>
 

@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/Button";
 
 function ScorePreview() {
-  const scores = [
-    { label: "Your resilience", value: 78, tone: "calm" },
-    { label: "Your AI exposure", value: 42, tone: "warm" },
+  const replacementRisk = 34;
+  const supportingFactors = [
+    "Accountability",
+    "Human judgment",
+    "Relationship depth",
+    "Adaptability",
   ];
 
   return (
@@ -41,26 +44,15 @@ function ScorePreview() {
           </div>
         </div>
 
-        <div className="space-y-5">
-          {scores.map((score) => (
-            <div key={score.label}>
-              <div className="mb-2 flex items-baseline justify-between">
-                <span className="body-text">{score.label}</span>
-                <span className="body-text-emphasis tabular-nums">
-                  {score.value}
-                  <span className="text-muted/60">/100</span>
-                </span>
-              </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.04]">
-                <div
-                  className={`h-full rounded-full transition-all duration-1000 ${
-                    score.tone === "warm" ? "bg-[#9CA3AF]" : "bg-accent"
-                  }`}
-                  style={{ width: `${score.value}%` }}
-                />
-              </div>
-            </div>
-          ))}
+        <div className="rounded-2xl border border-black/[0.05] bg-white/75 px-4 py-5 text-center sm:px-5 sm:py-6">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
+            AI Replacement Risk
+          </p>
+          <p className="mt-2 font-display text-[2.2rem] tabular-nums leading-none text-foreground sm:text-[2.5rem]">
+            {replacementRisk}
+            <span className="ml-1 text-base text-muted/60">/100</span>
+          </p>
+          <p className="mt-2 text-sm font-medium text-muted/90">Low</p>
         </div>
 
         <div className="mt-6 rounded-2xl bg-accent-light/60 p-4">
@@ -71,12 +63,28 @@ function ScorePreview() {
             RIASEC describes the nature of your work.
             <br />
             <br />
-            ILONAA estimates AI replacement risk, career resilience, and the
-            factors that may protect your profession over time.
+            ILONAA estimates AI replacement risk and the factors that may
+            protect your profession over time.
           </p>
           <p className="mt-2 text-xs leading-relaxed text-muted/80">
-            AI Replacement Risk · AI Exposure · Career Resilience
+            Risk is not destiny. Exposure does not automatically imply replacement.
           </p>
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-black/[0.05] bg-white/75 p-4">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+            Supporting factors
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {supportingFactors.map((factor) => (
+              <span
+                key={factor}
+                className="rounded-full border border-accent/20 bg-accent-light/50 px-3 py-1.5 text-xs font-medium text-foreground"
+              >
+                {factor}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -92,7 +100,7 @@ export function Hero() {
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-xl">
             <p className="animate-fade-in mb-6 text-xs font-medium uppercase tracking-[0.2em] text-accent">
-              AI career resilience assessment
+              AI replacement risk assessment
             </p>
 
             <h1 className="animate-fade-in-up display-headline">
@@ -103,9 +111,8 @@ export function Hero() {
             </h1>
 
             <p className="animate-fade-in-up-delay body-text mt-6 sm:text-lg">
-              Profession baseline + 4 focused questions to map your AI exposure,
-              resilience, and future-of-work positioning — in calm, structured
-              clarity.
+              Understand your AI Replacement Risk and the factors that may
+              protect your profession — in calm, structured clarity.
             </p>
 
             <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col items-center gap-3 text-center">

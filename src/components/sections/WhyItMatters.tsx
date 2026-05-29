@@ -7,13 +7,13 @@ export function WhyItMatters() {
         <div>
           <p className="section-label mb-4">Why It Matters</p>
           <h2 className="display-subhead text-balance md:text-[2.75rem] md:leading-[1.14]">
-            Automation risk is not the same for every career.
+            AI replacement risk is not the same for every career.
           </h2>
         </div>
 
         <div className="space-y-5">
           <p className="body-text sm:text-lg">
-            AI will not impact all professions equally.
+            AI will not affect replacement pressure equally across professions.
           </p>
           <p className="body-text sm:text-lg">
             Some careers are highly exposed to automation. Others gain value
@@ -28,9 +28,9 @@ export function WhyItMatters() {
       <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {[
           {
-            title: "Automation risk varies",
+            title: "Replacement risk varies",
             description:
-              "AI exposure differs across roles, industries, and how your work is actually performed.",
+              "AI replacement pressure differs across roles, industries, and how work is actually performed.",
           },
           {
             title: "Human value persists",

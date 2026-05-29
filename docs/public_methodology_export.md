@@ -22,10 +22,9 @@ AI may assist. AI may automate parts of work. But accountability often remains h
 
 ILONAA helps people interpret how AI may affect a selected profession. The model combines occupational structure, role identity, and user-specific context to estimate:
 
-- AI Exposure
 - AI Replacement Risk
-- Career Resilience
-- Human Advantage Factors
+
+Supporting interpretation includes human advantage factors, occupational structure signals, and contextual career insights.
 
 The goal is not to predict destiny. The goal is to provide structured orientation for better decisions.
 
@@ -72,18 +71,18 @@ These answers adjust the profession baseline instead of trying to infer occupati
 
 ## 9. ILONAA Interpretation Layer
 
-ILONAA evaluates four core outputs:
+ILONAA uses multiple analytical dimensions internally, but presents a single primary outcome to users: AI Replacement Risk.
 
-- **AI Exposure:** how much of the role can be affected, augmented, or automated by AI systems.
-- **AI Replacement Risk:** how likely core human responsibility could be substituted in practice.
-- **Career Resilience:** how strongly human judgment, adaptability, trust, and accountability protect long-term relevance.
-- **Human Advantage Factors:** the role elements where human strengths continue to matter most.
+- **AI Replacement Risk (primary):** how likely core human responsibility could be substituted in practice.
+- **Occupational structure signals:** routine work, process structure, and AI-capable task context.
+- **Human advantage factors:** judgment, accountability, relationship depth, adaptability, and physical presence where relevant.
+- **Internal analytical dimensions:** AI Exposure and Career Resilience are used by the model as supporting interpretation layers.
 
-## 10. ILONAA AI Risk Index
+## 10. AI Replacement Risk (Primary Outcome)
 
-The ILONAA AI Risk Index is ILONAA's proprietary score. It combines profession baseline factors with user-specific adjustment signals to estimate near-term AI disruption pressure.
+ILONAA surfaces AI Replacement Risk as the dominant user-facing result so users do not need to choose between competing scores.
 
-The index is designed to be understandable and explainable without exposing proprietary calculation details.
+AI Exposure and Career Resilience remain internal analytical dimensions used by the model to support interpretation, but they are not presented as equal first-class outputs.
 
 ## 11. AI Exposure vs AI Replacement Risk
 

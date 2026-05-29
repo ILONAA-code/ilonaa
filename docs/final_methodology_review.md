@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-ILONAA is a privacy-first decision-support tool that helps people interpret AI-related career pressure. It combines profession-level occupational structure, a RIASEC identity layer, and four user calibration answers to generate interpretable outputs: AI Exposure, AI Replacement Risk, Career Resilience, and the ILONAA AI Risk Index.
+ILONAA is a privacy-first decision-support tool that helps people interpret AI-related career pressure. It combines profession-level occupational structure, a RIASEC identity layer, and four user calibration answers to produce one primary user-facing outcome: AI Replacement Risk.
 
 Methodology communication was updated to prioritize trust, emotional relevance, and clarity while keeping the underlying model unchanged.
 
@@ -36,11 +36,21 @@ Recommendations
 6. O*NET-inspired Occupational Layer
 7. Holland / RIASEC Identity Layer
 8. Four ILONAA Questions
-9. ILONAA Interpretation Layer
-10. ILONAA AI Risk Index
+9. ILONAA Interpretation Layer (single-score hierarchy)
+10. AI Replacement Risk (Primary Outcome)
 11. AI Exposure vs AI Replacement Risk
 12. Examples
 13. What ILONAA Does Not Claim
+
+## Why We Chose A Single User-Facing Score
+
+- **Reduced cognitive load:** users no longer need to decide which score matters.
+- **Clearer user experience:** one dominant result answers one dominant question.
+- **Stronger positioning:** ILONAA clearly owns the replacement-risk interpretation space.
+- **Better trust:** less dashboard clutter and fewer conflicting signals.
+- **Easier communication:** media, HR, recruiters, and investors can describe the product quickly.
+- **Easier marketing:** one headline outcome simplifies messaging across channels.
+- **Easier sharing:** users can remember and share one primary result with context.
 
 ## Profession Selection
 
@@ -100,10 +110,9 @@ What factors matter and why:
 
 How factors influence outputs:
 
-- **AI Exposure:** affected by task profile and AI-capable workflow characteristics.
-- **AI Replacement Risk:** reflects whether core accountable responsibility can realistically be substituted.
-- **Career Resilience:** reflects protective human factors and adaptation capacity.
-- **ILONAA AI Risk Index:** blended indicator intended to be closer to disruption/replacement pressure than raw exposure.
+- **AI Replacement Risk (primary):** reflects whether core accountable responsibility can realistically be substituted.
+- **AI Exposure (supporting):** internal dimension affected by task profile and AI-capable workflow characteristics.
+- **Career Resilience (supporting):** internal dimension reflecting protective human factors and adaptation capacity.
 
 Positioning language retained:
 

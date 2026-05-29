@@ -3,15 +3,15 @@ import type { Metadata } from "next";
 export const SITE_NAME = "ILONAA";
 
 export const SITE_TAGLINE =
-  "Privacy-first AI career resilience assessment and automation risk reflection";
+  "Privacy-first AI replacement risk assessment with profession-based context";
 
 const homeTitle = "ILONAA | AI Career Resilience Assessment";
 const homeDescription =
-  "ILONAA is a privacy-first AI career resilience assessment. Understand your automation risk, professional strengths, and future-of-work positioning—in calm, executive clarity.";
+  "ILONAA is a privacy-first AI replacement risk assessment. Understand how replaceable your profession may be by AI, and what factors may protect it.";
 
 const openGraphTitle = "ILONAA — AI Career Risk & Resilience Reflection";
 const openGraphDescription =
-  "A privacy-first AI career assessment for automation risk, resilience, and future-of-work clarity—without accounts, resumes, or fear-driven scoring.";
+  "A privacy-first AI replacement risk assessment with profession baseline context and focused calibration questions—without accounts or fear-driven scoring.";
 
 const sharedKeywords = [
   "AI career resilience assessment",
@@ -133,7 +133,7 @@ export const homeMetadata: Metadata = {
 export const assessmentMetadata: Metadata = {
   title: "AI Career Risk Assessment",
   description:
-    "Take ILONAA’s privacy-first profession-based AI career assessment with profession selection plus 4 reflective calibration questions.",
+    "Take ILONAA’s profession-based AI replacement risk assessment: profession selection plus 4 focused ILONAA questions.",
   alternates: {
     canonical: "/assessment",
   },
@@ -141,21 +141,21 @@ export const assessmentMetadata: Metadata = {
     ...sharedOpenGraph("/assessment"),
     title: "ILONAA — AI Career Risk Assessment",
     description:
-      "Profession-based baseline plus 4 reflective questions to estimate AI exposure, replacement risk, and career resilience.",
+      "Profession-based baseline plus 4 focused questions to estimate AI Replacement Risk and supporting career factors.",
     url: absoluteUrl("/assessment"),
   },
   twitter: {
     ...sharedTwitter(),
     title: "ILONAA — AI Career Risk Assessment",
     description:
-      "Profession-based baseline plus 4 reflective questions to estimate AI exposure, replacement risk, and career resilience.",
+      "Profession-based baseline plus 4 focused questions to estimate AI Replacement Risk and supporting career factors.",
   },
 };
 
 export const resultsMetadata: Metadata = {
-  title: "Your AI Career Resilience Profile",
+  title: "Your AI Replacement Risk Result",
   description:
-    "Your personalized ILONAA results—RIASEC career type, ILONAA AI Risk Index, automation risk positioning, and resilience insight.",
+    "Your personalized ILONAA result: AI Replacement Risk with supporting human advantage factors and profession context.",
   alternates: {
     canonical: "/assessment/results",
   },
@@ -169,31 +169,31 @@ export const resultsMetadata: Metadata = {
   },
   openGraph: {
     ...sharedOpenGraph("/assessment/results"),
-    title: "ILONAA — Your AI Career Resilience Profile",
+    title: "ILONAA — Your AI Replacement Risk Result",
     description:
-      "Personalized RIASEC career type, ILONAA AI Risk Index, and future-of-work reflection from your assessment.",
+      "AI Replacement Risk result with profession context, RIASEC orientation, and supporting risk interpretation.",
     url: absoluteUrl("/assessment/results"),
   },
 };
 
 export const methodologyMetadata: Metadata = {
-  title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
+  title: "How ILONAA Works | AI Replacement Risk Methodology",
   description:
-    "Learn how ILONAA uses O*NET-inspired occupational structures, Holland/RIASEC identity, and a proprietary interpretation layer for AI exposure, replacement risk, and career resilience.",
+    "Learn how ILONAA uses profession baseline context, O*NET-inspired structures, and RIASEC identity to estimate AI Replacement Risk.",
   alternates: {
     canonical: "/methodology",
   },
   openGraph: {
     ...sharedOpenGraph("/methodology"),
-    title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
+    title: "How ILONAA Works | AI Replacement Risk Methodology",
     description:
-      "See how ILONAA combines O*NET-inspired occupational structures and RIASEC identity with a proprietary AI Risk and Career Resilience interpretation layer.",
+      "See how ILONAA combines O*NET-inspired occupational structures and RIASEC identity to estimate AI Replacement Risk with supporting context.",
     url: absoluteUrl("/methodology"),
   },
   twitter: {
     ...sharedTwitter(),
-    title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
+    title: "How ILONAA Works | AI Replacement Risk Methodology",
     description:
-      "See how ILONAA combines O*NET-inspired occupational structures and RIASEC identity with a proprietary AI Risk and Career Resilience interpretation layer.",
+      "See how ILONAA combines O*NET-inspired occupational structures and RIASEC identity to estimate AI Replacement Risk with supporting context.",
   },
 };

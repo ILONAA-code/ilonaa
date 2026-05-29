@@ -35,15 +35,15 @@ export const webApplicationSchema = {
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web browser",
   description:
-    "A privacy-first AI career resilience assessment for automation risk analysis, professional strengths, and future-of-work reflection.",
+    "A privacy-first AI replacement risk assessment with profession-based context and future-of-work interpretation.",
   offers: {
     "@type": "Offer",
     price: "0",
     priceCurrency: "USD",
   },
   featureList: [
-    "AI career resilience assessment",
-    "Career automation risk reflection",
+    "AI replacement risk assessment",
+    "Profession-based risk interpretation",
     "RIASEC career type profile",
     "Privacy-first design without accounts",
     "European-hosted infrastructure",
@@ -60,9 +60,9 @@ export const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
   "@id": `${siteUrl}/#product`,
-  name: `${SITE_NAME} AI Career Resilience Assessment`,
+  name: `${SITE_NAME} AI Replacement Risk Assessment`,
   description:
-    "An executive-grade AI career risk and resilience reflection—mapping automation exposure, human strengths, and future-of-work positioning.",
+    "An executive-grade AI replacement risk assessment with profession context and human-factor interpretation.",
   brand: {
     "@type": "Brand",
     name: SITE_NAME,

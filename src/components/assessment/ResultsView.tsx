@@ -7,9 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import {
   BenchmarkNarrative,
-  ComparativeInsight,
   NarrativeCardsSection,
-  PositioningOverview,
+  RiskWhySection,
   ResultsClosing,
   ResultsHero,
 } from "@/components/assessment/results/ResultsSections";
@@ -92,33 +91,14 @@ export function ResultsView() {
             primaryType={result.riasecProfile.primaryType}
             secondaryType={result.riasecProfile.secondaryType}
             explanation={result.riasecProfile.explanation}
-            confidenceLevel={result.riasecProfile.confidenceLevel}
             ilonaaRiskIndexScore={result.ilonaaRiskIndex.score}
-            aiExposureScore={result.aiExposureScore}
-            careerResilienceScore={result.careerResilienceScore}
           />
 
-          <PositioningOverview
-            aiExposureScore={result.aiExposureScore}
-            careerResilienceScore={result.careerResilienceScore}
-            positioningSummary={result.positioningSummary}
-            dimensions={result.positioningDimensions}
-          />
-
-          <ComparativeInsight narrative={result.modelDistinctionNarrative} />
-
-          <NarrativeCardsSection
-            label="Human advantage factors"
-            items={result.humanAdvantageFactors}
-            tone="strength"
-            sectionId="human_advantage_factors"
-          />
-
-          <NarrativeCardsSection
-            label="Key risk drivers"
-            items={result.keyRiskDrivers}
-            tone="exposure"
-            sectionId="key_risk_drivers"
+          <RiskWhySection
+            riskScore={result.ilonaaRiskIndex.score}
+            summary={result.positioningSummary}
+            humanAdvantageFactors={result.humanAdvantageFactors}
+            riskDrivers={result.keyRiskDrivers}
           />
 
           <NarrativeCardsSection

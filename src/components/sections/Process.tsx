@@ -15,9 +15,9 @@ const steps = [
   },
   {
     number: "03",
-    title: "Receive your RIASEC + AI risk profile",
+    title: "Receive your AI Replacement Risk",
     description:
-      "Get your RIASEC type, ILONAA AI Risk Index, AI exposure, resilience, and next moves.",
+      "See your AI Replacement Risk first, plus supporting human advantage factors and risk drivers.",
   },
 ];
 
