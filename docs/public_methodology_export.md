@@ -38,7 +38,7 @@ Instead of asking users to trust an opaque black box, ILONAA is aligned with occ
 
 ## 5. Profession Selection
 
-ILONAA starts with a searchable profession selection. This selected profession provides a local occupational baseline for work structure, exposure context, and resilience context.
+ILONAA starts with a searchable profession selection. The selected profession provides the occupational baseline used by the model.
 
 If an exact title is not available, users choose the closest available match. This gives ILONAA a practical baseline before user-specific adjustments are applied.
 

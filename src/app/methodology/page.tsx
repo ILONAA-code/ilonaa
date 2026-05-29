@@ -120,9 +120,9 @@ export default function MethodologyPage() {
 
             <MethodSection title="5. Profession Selection">
               <p>
-                ILONAA starts with a searchable profession selection. This
-                selected profession provides a local occupational baseline for
-                work structure, exposure context, and resilience context.
+                ILONAA starts with a searchable profession selection. The
+                selected profession provides the occupational baseline used by
+                the model.
               </p>
               <p>
                 If an exact title is not available, users choose the closest

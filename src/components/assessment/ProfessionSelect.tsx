@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { searchOccupations, toProfessionSelection } from "@/lib/assessment/occupations";
+import { searchOccupations } from "@/lib/assessment/occupations";
 import type { OnetOccupation } from "@/lib/assessment/onetTypes";
 
 type ProfessionSelectProps = {
@@ -73,14 +73,16 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
       {value && (
         <div className="rounded-2xl border border-black/[0.05] bg-white/70 p-4">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
-            Selected profession baseline
+            Selected Profession
           </p>
           <p className="mt-2 font-medium text-foreground">{value.title}</p>
           <p className="mt-1 text-sm text-muted">
-            RIASEC: {value.primaryRiasecType} / {value.secondaryRiasecType}
+            RIASEC:
+            <br />
+            {value.primaryRiasecType} / {value.secondaryRiasecType}
           </p>
-          <p className="mt-1 text-xs text-muted/80">
-            Baseline risk index {toProfessionSelection(value).baselineRiskIndex}
+          <p className="mt-2 text-xs text-muted/80">
+            This profession provides the occupational baseline used by ILONAA.
           </p>
         </div>
       )}
