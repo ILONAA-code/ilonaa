@@ -16,7 +16,10 @@ type ProfileContext = {
   aiExposure: number;
   resilience: number;
   strategic: number;
+  humanInteraction: number;
+  trust: number;
   human: number;
+  industryChange: number;
   creativity: number;
   adaptability: number;
   judgment: number;
@@ -32,15 +35,18 @@ function buildContext(
   aiExposure: number,
   resilience: number
 ): ProfileContext {
+  const humanInteraction = getAnswer(answers, "human-interaction");
+  const trust = getAnswer(answers, "trust-relationships");
+
   return {
     answers,
     aiExposure,
     resilience,
     strategic: getAnswer(answers, "strategic-decision"),
-    human:
-      (getAnswer(answers, "human-interaction") +
-        getAnswer(answers, "trust-relationships")) /
-      2,
+    humanInteraction,
+    trust,
+    human: (humanInteraction + trust) / 2,
+    industryChange: getAnswer(answers, "industry-change"),
     creativity: getAnswer(answers, "creativity"),
     adaptability: getAnswer(answers, "adaptability"),
     judgment: getAnswer(answers, "personal-judgment"),
@@ -195,7 +201,10 @@ function resolveQuotableInsight(id: string, ctx: ProfileContext): string {
 function profileFit(ctx: ProfileContext, id: string): number {
   const {
     strategic,
+    humanInteraction,
+    trust,
     human,
+    industryChange,
     creativity,
     adaptability,
     judgment,
@@ -206,22 +215,61 @@ function profileFit(ctx: ProfileContext, id: string): number {
 
   switch (id) {
     case "human-centered-strategist":
-      return human * 1.4 + strategic * 1.1 + judgment * 0.8 + resilience * 0.5;
+      return (
+        human * 1.35 +
+        trust * 0.6 +
+        strategic * 0.65 +
+        judgment * 0.7 +
+        resilience * 0.45 -
+        aiExposure * 0.35 +
+        Math.max(0, human - 70) * 0.6
+      );
     case "strategic-integrator":
-      return strategic * 1.3 + judgment * 1.2 + expertise * 0.6 + resilience * 0.5;
+      return (
+        strategic * 1.45 +
+        judgment * 1.25 +
+        expertise * 0.9 +
+        resilience * 0.35 +
+        adaptability * 0.2 +
+        Math.max(0, strategic - 70) * 0.5
+      );
     case "adaptive-builder":
       return (
-        adaptability * 1.5 +
-        creativity * 0.7 +
-        (100 - aiExposure) * 0.3 +
-        resilience * 0.4
+        adaptability * 1.55 +
+        industryChange * 1.15 +
+        aiExposure * 0.7 +
+        creativity * 0.45 +
+        resilience * 0.2 +
+        strategic * 0.2
       );
     case "creative-synthesizer":
-      return creativity * 1.4 + judgment * 1.0 + adaptability * 0.5;
+      return (
+        creativity * 2.2 +
+        judgment * 0.8 +
+        adaptability * 0.5 +
+        strategic * 0.25 +
+        human * 0.2 +
+        Math.max(0, creativity - 70) * 1.0
+      );
     case "systems-oriented-thinker":
-      return expertise * 1.3 + strategic * 0.8 + judgment * 0.7;
+      return (
+        expertise * 1.25 +
+        judgment * 1.15 +
+        strategic * 0.9 +
+        (100 - humanInteraction) * 0.9 +
+        resilience * 0.2 +
+        Math.max(0, expertise - 70) * 0.6
+      );
     case "measured-navigator":
-      return 100 - Math.abs(resilience - 55) - Math.abs(aiExposure - 50) * 0.5;
+      return (
+        350 -
+        Math.abs(resilience - 55) * 2.2 -
+        Math.abs(aiExposure - 50) * 2.0 -
+        Math.abs(adaptability - 60) * 1.0 -
+        Math.abs(human - 55) * 0.9 -
+        Math.abs(strategic - 55) * 0.8 -
+        Math.abs(industryChange - 55) * 0.6
+      );
     default:
       return 0;
   }

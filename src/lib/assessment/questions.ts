@@ -7,7 +7,7 @@ export const QUESTIONS: Question[] = [
     subtitle: "Think about how predictable your typical work routines feel.",
     type: "slider",
     sliderLabels: { min: "Varied & dynamic", max: "Highly repetitive" },
-    sliderSteps: 5,
+    sliderSteps: 11,
   },
   {
     id: "human-interaction",
@@ -27,7 +27,7 @@ export const QUESTIONS: Question[] = [
     subtitle: "Original thinking, ideation, and novel approaches.",
     type: "slider",
     sliderLabels: { min: "Not important", max: "Critically important" },
-    sliderSteps: 5,
+    sliderSteps: 11,
   },
   {
     id: "strategic-decision",
@@ -71,7 +71,7 @@ export const QUESTIONS: Question[] = [
     subtitle: "Credibility, empathy, and sustained human connection.",
     type: "slider",
     sliderLabels: { min: "Not important", max: "Essential" },
-    sliderSteps: 5,
+    sliderSteps: 11,
   },
   {
     id: "industry-change",
@@ -103,7 +103,7 @@ export const QUESTIONS: Question[] = [
     subtitle: "Context, nuance, and decisions only you can make.",
     type: "slider",
     sliderLabels: { min: "Very little", max: "A great deal" },
-    sliderSteps: 5,
+    sliderSteps: 11,
   },
 ];
 
