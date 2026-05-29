@@ -175,6 +175,7 @@ export function ScoreOverview({
 }
 
 type ResultsHeroProps = {
+  professionTitle: string;
   primaryType: string;
   secondaryType: string;
   explanation: string;
@@ -185,6 +186,7 @@ type ResultsHeroProps = {
 };
 
 export function ResultsHero({
+  professionTitle,
   primaryType,
   secondaryType,
   explanation,
@@ -214,6 +216,10 @@ export function ResultsHero({
         />
 
         <div className="relative text-center">
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
+            Selected profession
+          </p>
+          <p className="mt-1 text-sm font-medium text-foreground/80">{professionTitle}</p>
           <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] sm:leading-[1.1]">
             Primary: {primaryType}
           </h1>

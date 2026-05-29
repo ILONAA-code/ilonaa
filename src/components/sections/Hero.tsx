@@ -114,7 +114,7 @@ export function Hero() {
                 Start
               </Button>
               <p className="body-text text-muted/80">
-                Free · 10 questions · ~10 minutes
+                Free · profession baseline + 4 questions · ~5 minutes
               </p>
             </div>
           </div>

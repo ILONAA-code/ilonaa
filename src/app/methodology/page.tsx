@@ -15,7 +15,7 @@ function MethodSection({
 }) {
   return (
     <section className="premium-card p-6 sm:p-8">
-      <h2 className="display-subhead text-[1.625rem] sm:text-[2rem]">{title}</h2>
+      <h2 className="display-subhead text-[1.5rem] sm:text-[1.85rem]">{title}</h2>
       <div className="mt-4 space-y-4 text-base leading-[1.75] text-muted sm:text-[1.0625rem]">
         {children}
       </div>
@@ -34,86 +34,105 @@ export default function MethodologyPage() {
           <div className="mx-auto max-w-4xl space-y-8">
             <header className="premium-card p-6 sm:p-8">
               <p className="section-label">Methodology</p>
-              <h1 className="display-headline mt-3 text-[2.25rem] sm:text-[3rem]">
+              <h1 className="display-headline mt-3 text-[2.2rem] sm:text-[2.9rem]">
                 How ILONAA Works
               </h1>
               <p className="body-text mt-5 sm:text-lg">
-                ILONAA helps people understand how their current work may be
-                affected by AI-driven automation and augmentation using a
-                framework that separates occupational identity from AI risk.
+                ILONAA combines a profession baseline, a RIASEC identity layer,
+                and a proprietary AI Risk Index to support better career
+                decisions in AI-driven labor market change.
               </p>
             </header>
 
-            <MethodSection title="1. What ILONAA does">
+            <MethodSection title="1. Profession-based baseline">
               <p>
-                ILONAA is a decision-support reflection for AI-era career
-                planning. It uses ten structured inputs to estimate AI exposure,
-                career resilience, and likely pressure points in evolving work.
+                ILONAA starts with a searchable profession selection. This
+                selected profession provides a local occupational baseline for
+                expected exposure, resilience, and risk context.
+              </p>
+              <p>
+                If an exact title is not available, users choose the closest
+                professional match. This baseline is then adjusted by four
+                ILONAA-specific questions.
               </p>
             </MethodSection>
 
-            <MethodSection title="2. Career type classification">
+            <MethodSection title="2. O*NET-inspired occupational data">
               <p>
-                ILONAA uses a career type layer inspired by the Holland/RIASEC
+                ILONAA uses an O*NET-inspired occupational data structure,
+                aligned with publicly established occupational frameworks and
+                normalized into a compact local dataset.
+              </p>
+              <p>
+                This design avoids live O*NET calls during assessment and avoids
+                shipping full raw occupational databases to the browser.
+              </p>
+            </MethodSection>
+
+            <MethodSection title="3. Holland/RIASEC career type">
+              <p>
+                Career identity is represented through the Holland/RIASEC
                 framework: Realistic, Investigative, Artistic, Social,
                 Enterprising, and Conventional.
               </p>
               <p>
-                Our career type layer is inspired by one of the most established
-                models in vocational psychology and aligned with occupational
-                structures commonly used in O*NET-style analysis.
+                RIASEC describes occupational identity. It does not determine AI
+                risk by itself.
               </p>
             </MethodSection>
 
-            <MethodSection title="3. O*NET reference">
+            <MethodSection title="4. Four ILONAA-specific adjustment questions">
+              <p>After profession selection, ILONAA asks four focused questions:</p>
+              <ul className="list-disc space-y-2 pl-5">
+                <li>Current AI usage in daily work</li>
+                <li>Speed of learning new digital tools</li>
+                <li>Dependence on uniquely human strengths</li>
+                <li>Consequence level if a critical decision goes wrong</li>
+              </ul>
               <p>
-                O*NET is a widely used occupational information framework that
-                describes occupations through work activities, skills,
-                knowledge, interests, work styles, and context.
-              </p>
-              <p>
-                ILONAA does not ask users to trust a black-box archetype
-                invented from scratch. Instead, the career identity layer is
-                aligned with established occupational categories and the RIASEC
-                tradition.
-              </p>
-            </MethodSection>
-
-            <MethodSection title="4. The ILONAA AI Risk Index">
-              <p>
-                The ILONAA AI Risk Index is ILONAA&apos;s proprietary layer. It
-                estimates how strongly a role may be exposed to AI-driven
-                substitution, augmentation, or workflow disruption.
-              </p>
-              <p>
-                It combines signals including repetitiveness, current AI task
-                capability, pace of industry change, human interaction, trust
-                dependency, creativity, strategic decision-making, specialized
-                expertise, personal judgment, and adaptability.
+                These answers adjust the profession baseline instead of trying to
+                infer occupational identity from scratch.
               </p>
             </MethodSection>
 
-            <MethodSection title="5. AI Exposure vs AI Replacement Risk">
+            <MethodSection title="5. ILONAA AI Risk Index">
               <p>
-                AI exposure does not mean automatic job loss. A role can be
-                highly exposed and still resilient if the human layer remains
-                valuable.
+                The ILONAA AI Risk Index is ILONAA&apos;s proprietary score. It
+                combines profession baseline factors with user-specific
+                adjustment signals to estimate near-term AI disruption pressure.
               </p>
               <p>
-                Exposure is not a verdict. Risk is not destiny. ILONAA is
-                designed as a decision-support tool, not a prediction machine.
-              </p>
-            </MethodSection>
-
-            <MethodSection title="6. Career Resilience">
-              <p>
-                Career resilience reflects the human, contextual, and adaptive
-                strengths that may make a person or role more robust in an
-                AI-transformed labor market.
+                The score is designed for interpretability by normal users and
+                data analysts. It is a structured estimate, not an outcome
+                guarantee.
               </p>
             </MethodSection>
 
-            <MethodSection title="7. What ILONAA does not claim">
+            <MethodSection title="6. AI exposure vs AI replacement risk">
+              <p>
+                AI exposure does not mean automatic replacement. A role may be
+                highly exposed while still resilient if human accountability,
+                judgment, and context remain central.
+              </p>
+              <p>
+                Exposure is not a verdict. Risk is not destiny. ILONAA is a
+                decision-support tool.
+              </p>
+            </MethodSection>
+
+            <MethodSection title="7. Decision consequence and accountability">
+              <p>
+                High-consequence roles may still use AI extensively. However,
+                organizations often retain human oversight where mistakes carry
+                legal, safety, compliance, or major financial consequences.
+              </p>
+              <p>
+                ILONAA incorporates this consequence-sensitive accountability
+                signal in its risk interpretation layer.
+              </p>
+            </MethodSection>
+
+            <MethodSection title="8. What ILONAA does not claim">
               <ul className="list-disc space-y-2 pl-5">
                 <li>ILONAA does not guarantee employment outcomes.</li>
                 <li>
@@ -121,31 +140,22 @@ export default function MethodologyPage() {
                 </li>
                 <li>ILONAA is not an official O*NET product.</li>
                 <li>
-                  ILONAA is not endorsed by O*NET, the U.S. Department of
-                  Labor, or any university.
-                </li>
-                <li>
-                  ILONAA provides structured orientation based on user input and
-                  occupational frameworks.
+                  ILONAA is not endorsed by O*NET, the U.S. Department of Labor,
+                  any university, or John Holland.
                 </li>
               </ul>
-            </MethodSection>
-
-            <MethodSection title="8. Why this matters">
               <p>
-                Many AI career tools either overpromise or remain too generic.
-                ILONAA separates established occupational identity from
-                proprietary AI risk interpretation. That separation is the core
-                product architecture.
+                ILONAA is based on publicly established occupational frameworks
+                and provides structured orientation from selected profession and
+                user input.
               </p>
               <p>
                 <Link
                   href="/assessment"
                   className="text-accent transition-colors hover:text-foreground"
                 >
-                  Start the assessment
-                </Link>{" "}
-                to see your RIASEC type and ILONAA AI Risk Index together.
+                  Start assessment
+                </Link>
               </p>
             </MethodSection>
           </div>

@@ -1,380 +1,364 @@
 import type {
   Answers,
   AssessmentResult,
-  IlonaaRiskIndex,
   NarrativeCard,
+  SelectedProfession,
 } from "./types";
 import { STORAGE_KEY } from "./types";
-import { calculateRiasecProfile } from "./riasec";
 import {
-  derivePositioningDimensions,
-  derivePositioningSummary,
-} from "./positioning";
-
-function clamp(value: number, min = 0, max = 100): number {
-  return Math.min(max, Math.max(min, Math.round(value)));
-}
+  getAllOccupations,
+  getOccupationByCode,
+  toProfessionSelection,
+} from "./occupations";
+import { calculateRiasecProfile } from "./riasec";
+import { calculateOnetAdjustedScores } from "./onetScoring";
 
 function getAnswer(answers: Answers, key: string, fallback = 50): number {
   return answers[key] ?? fallback;
 }
 
-function calculateAiExposureScore(answers: Answers): number {
-  const exposureSignals = [
-    getAnswer(answers, "repetitive-tasks"),
-    100 - getAnswer(answers, "human-interaction"),
-    100 - getAnswer(answers, "creativity"),
-    100 - getAnswer(answers, "strategic-decision"),
-    100 - getAnswer(answers, "specialized-expertise"),
-    getAnswer(answers, "ai-capable-today"),
-    100 - getAnswer(answers, "trust-relationships"),
-    getAnswer(answers, "industry-change"),
-    100 - getAnswer(answers, "adaptability"),
-    100 - getAnswer(answers, "personal-judgment"),
-  ];
-
-  const average =
-    exposureSignals.reduce((sum, value) => sum + value, 0) /
-    exposureSignals.length;
-
-  return clamp(average);
+function getPositioningSummary(
+  aiExposure: number,
+  resilience: number,
+  riskIndex: number
+): string {
+  if (riskIndex >= 65 && resilience < 55) {
+    return "Based on your selected profession and answers, this suggests meaningful AI transition pressure. It is not a verdict.";
+  }
+  if (resilience >= 70 && aiExposure <= 45) {
+    return "Your current signal suggests comparatively durable human value in your profession context.";
+  }
+  if (aiExposure >= 60 && resilience >= 60) {
+    return "This may indicate high AI exposure with meaningful resilience at once—often a sign of workflow evolution.";
+  }
+  return "Your current profile sits in a mixed zone where deliberate skill positioning may shift outcomes.";
 }
 
-function calculateCareerResilienceScore(answers: Answers): number {
-  const resilienceSignals = [
-    100 - getAnswer(answers, "repetitive-tasks"),
-    getAnswer(answers, "human-interaction"),
-    getAnswer(answers, "creativity"),
-    getAnswer(answers, "strategic-decision"),
-    getAnswer(answers, "specialized-expertise"),
-    100 - getAnswer(answers, "ai-capable-today"),
-    getAnswer(answers, "trust-relationships"),
-    100 - getAnswer(answers, "industry-change") * 0.6,
-    getAnswer(answers, "adaptability"),
-    getAnswer(answers, "personal-judgment"),
-  ];
-
-  const average =
-    resilienceSignals.reduce((sum, value) => sum + value, 0) /
-    resilienceSignals.length;
-
-  return clamp(average);
-}
-
-function generateModelDistinctionNarrative(
+function getPositioningDimensions(
   answers: Answers,
   aiExposure: number,
-  resilience: number
-): string {
-  const adaptability = getAnswer(answers, "adaptability");
-  const expertise = getAnswer(answers, "specialized-expertise");
-
-  if (resilience >= 70) {
-    return "Your RIASEC type describes your work identity; ILONAA’s risk layer suggests your human strengths remain materially protective.";
-  }
-
-  if (adaptability >= 65 && expertise >= 55) {
-    return "Your occupational orientation appears compatible with change—an important distinction between exposure and replacement risk.";
-  }
-
-  if (aiExposure >= 60) {
-    return "Your work may be significantly AI-exposed, but occupational type and resilience still indicate where durable human advantage can be reinforced.";
-  }
-
-  return "RIASEC identifies the nature of your work; ILONAA estimates how that work may shift under AI-driven change.";
+  resilience: number,
+  riskIndex: number
+) {
+  return [
+    {
+      id: "resilience",
+      label: "Career resilience",
+      value: resilience,
+      insight:
+        resilience >= 70
+          ? "Your resilience signal is currently strong."
+          : resilience >= 55
+            ? "Your resilience signal is moderate and buildable."
+            : "Your resilience signal may benefit from targeted reinforcement.",
+    },
+    {
+      id: "exposure",
+      label: "AI exposure",
+      value: aiExposure,
+      insight:
+        aiExposure >= 65
+          ? "Task-level AI exposure appears relatively high."
+          : aiExposure >= 50
+            ? "AI exposure appears moderate."
+            : "AI exposure appears comparatively contained.",
+    },
+    {
+      id: "risk-index",
+      label: "ILONAA AI Risk Index",
+      value: riskIndex,
+      insight:
+        riskIndex >= 65
+          ? "Combined risk pressure is elevated."
+          : riskIndex >= 50
+            ? "Combined risk pressure is moderate."
+            : "Combined risk pressure is currently lower.",
+    },
+    {
+      id: "human-uniqueness",
+      label: "Human uniqueness",
+      value: getAnswer(answers, "human-uniqueness", 60),
+      insight:
+        "Higher values suggest more context-dependent and relationship-rich work that may resist full automation.",
+    },
+    {
+      id: "adaptability",
+      label: "Learning adaptability",
+      value: getAnswer(answers, "tool-learning-speed", 60),
+      insight:
+        "Higher values suggest faster capability shifts as tools and workflows evolve.",
+    },
+    {
+      id: "consequence",
+      label: "Decision consequence",
+      value: getAnswer(answers, "decision-consequence", 60),
+      insight:
+        "Higher-consequence decisions may increase human oversight and accountability requirements.",
+    },
+  ];
 }
 
-function calculateIlonaaRiskIndex(
+function getHumanAdvantageFactors(
   answers: Answers,
-  aiExposureScore: number,
-  careerResilienceScore: number
-): IlonaaRiskIndex {
-  const industryChange = getAnswer(answers, "industry-change");
-  const aiCapableToday = getAnswer(answers, "ai-capable-today");
-  const repetitiveTasks = getAnswer(answers, "repetitive-tasks");
-
-  /*
-   * ILONAA AI Risk Index formula (0-100):
-   * - AI Exposure Score (35%)
-   * - Inverse Career Resilience (25%)
-   * - Industry change pressure (15%)
-   * - AI-capable-today pressure (15%)
-   * - Repetitive task exposure (10%)
-   *
-   * The formula intentionally separates occupational identity (RIASEC) from
-   * risk pressure, so users can see both what their work is and how exposed it may be.
-   */
-  const score = clamp(
-    aiExposureScore * 0.35 +
-      (100 - careerResilienceScore) * 0.25 +
-      industryChange * 0.15 +
-      aiCapableToday * 0.15 +
-      repetitiveTasks * 0.1
-  );
-
-  return {
-    score,
-    explanation:
-      "Composite of AI exposure, inverse resilience, industry change pace, current AI task capability, and routine-task pressure.",
-    components: {
-      aiExposure: aiExposureScore,
-      inverseResilience: 100 - careerResilienceScore,
-      industryChange,
-      aiCapableToday,
-      repetitiveTasks,
-    },
-  };
-}
-
-function generateKeyStrengths(answers: Answers): NarrativeCard[] {
-  const candidates: (NarrativeCard & { score: number })[] = [
+  profession: SelectedProfession
+): NarrativeCard[] {
+  const factors: (NarrativeCard & { score: number })[] = [
     {
-      score: getAnswer(answers, "strategic-decision"),
-      title: "Strategic Thinking",
+      score: getAnswer(answers, "human-uniqueness", 60),
+      title: "Uniquely human contribution",
       description:
-        "You set direction—trade-offs, consequences, outcomes beyond the immediate task.",
+        "Your answers suggest meaningful work elements that may still depend on context, empathy, and judgment.",
     },
     {
-      score:
-        (getAnswer(answers, "human-interaction") +
-          getAnswer(answers, "trust-relationships")) /
-        2,
-      title: "Human-Centered Skills",
+      score: getAnswer(answers, "tool-learning-speed", 60),
+      title: "Adaptive learning speed",
       description:
-        "Trust and interpersonal depth sit at the center of how you create value.",
+        "Your learning velocity may support faster repositioning as digital workflows change.",
     },
     {
-      score: getAnswer(answers, "adaptability"),
-      title: "Adaptability",
+      score: getAnswer(answers, "decision-consequence", 60),
+      title: "Accountability and oversight",
       description:
-        "You integrate new tools while keeping a coherent professional identity.",
+        "Higher-consequence decisions often preserve a human accountability layer even when AI assists.",
     },
     {
-      score: getAnswer(answers, "personal-judgment"),
-      title: "Contextual Judgment",
+      score: profession.keyOccupationalFactors.decisionJudgment,
+      title: "Occupational judgment demand",
       description:
-        "Nuanced decisions under ambiguity—a distinctly human pattern in your work.",
-    },
-    {
-      score: getAnswer(answers, "creativity"),
-      title: "Creative Problem-Solving",
-      description:
-        "Original thinking creates space between routine execution and automation.",
-    },
-    {
-      score: getAnswer(answers, "specialized-expertise"),
-      title: "Specialized Expertise",
-      description:
-        "Domain depth compounds over years—an advantage that does not arrive overnight.",
+        "Your selected profession baseline indicates non-trivial judgment expectations in core tasks.",
     },
   ];
 
-  return candidates
+  return factors
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
     .map(({ title, description }) => ({ title, description }));
 }
 
-function generateExposureAreas(answers: Answers): NarrativeCard[] {
-  const areas: (NarrativeCard & { pressure: number })[] = [
-    {
-      pressure: getAnswer(answers, "repetitive-tasks"),
-      title: "Routine Task Patterns",
-      description:
-        "Predictable workflows may automate gradually—a signal to elevate the variable parts of your role.",
-    },
-    {
-      pressure: getAnswer(answers, "ai-capable-today"),
-      title: "Partial Task Automation",
-      description:
-        "Parts of your work may already be tool-assisted—industry momentum, not a verdict on your value.",
-    },
-    {
-      pressure: getAnswer(answers, "industry-change"),
-      title: "Industry Transformation Pace",
-      description:
-        "Your field is moving at a noticeable pace—awareness helps you stay ahead rather than react.",
-    },
-    {
-      pressure: 100 - getAnswer(answers, "creativity"),
-      title: "Limited Creative Differentiation",
-      description:
-        "Less original thinking can narrow margins over time—room to cultivate more distinctive contributions.",
-    },
-    {
-      pressure: 100 - getAnswer(answers, "human-interaction"),
-      title: "Reduced Interpersonal Dependency",
-      description:
-        "Roles with less human connection may substitute faster—relationship skill becomes a sharper counterbalance.",
-    },
-  ];
-
-  const selected = areas
-    .filter((area) => area.pressure >= 45)
-    .sort((a, b) => b.pressure - a.pressure)
-    .slice(0, 3);
-
-  if (selected.length >= 2) {
-    return selected.map(({ title, description }) => ({ title, description }));
-  }
-
-  return [
-    {
-      title: "Moderate Structural Shift",
-      description:
-        "Exposure suggests gradual change—space to observe, adapt, and strengthen what lasts.",
-    },
-    {
-      title: "Tool-Assisted Workflows",
-      description:
-        "AI may support more of your workflow; the opportunity is directing tools with judgment.",
-    },
-  ];
-}
-
-function generateResilienceRecommendations(
+function getKeyRiskDrivers(
   answers: Answers,
-  aiExposure: number
+  profession: SelectedProfession
 ): NarrativeCard[] {
-  const recommendations: NarrativeCard[] = [];
+  const drivers: (NarrativeCard & { score: number })[] = [
+    {
+      score: profession.keyOccupationalFactors.routineRepetitive,
+      title: "Routine task concentration",
+      description:
+        "Your profession baseline includes repeatable workflows that may be easier to automate.",
+    },
+    {
+      score: getAnswer(answers, "ai-tools-usage", 50),
+      title: "Current AI usage intensity",
+      description:
+        "Higher AI usage may indicate stronger proximity to tool-mediated workflow disruption.",
+    },
+    {
+      score: profession.keyOccupationalFactors.administrativeStructure,
+      title: "Structured process dependency",
+      description:
+        "Highly structured process environments can increase substitution pressure on predictable tasks.",
+    },
+    {
+      score: profession.keyOccupationalFactors.informationProcessing,
+      title: "Information-processing load",
+      description:
+        "High processing volume may increase augmentation pressure and task redesign over time.",
+    },
+  ];
 
-  if (
-    getAnswer(answers, "strategic-decision") < 65 ||
-    aiExposure >= 55
-  ) {
-    recommendations.push({
-      title: "Interdisciplinary Thinking",
-      description:
-        "Connect insights across domains—especially as boundaries between roles blur.",
-    });
-  }
-
-  if (getAnswer(answers, "human-interaction") < 65) {
-    recommendations.push({
-      title: "Strategic Communication",
-      description:
-        "Translate complexity into clarity for others—a skill that compounds as automated output grows.",
-    });
-  } else {
-    recommendations.push({
-      title: "Strategic Communication",
-      description:
-        "Articulate judgment and perspective—turn relational strength into visible leadership signal.",
-    });
-  }
-
-  if (getAnswer(answers, "adaptability") < 60) {
-    recommendations.push({
-      title: "AI-Assisted Decision Making",
-      description:
-        "Practice directing AI tools—intent, evaluation, quality—without surrendering judgment.",
-    });
-  } else {
-    recommendations.push({
-      title: "AI-Assisted Decision Making",
-      description:
-        "Pair adaptability with deliberate tool direction—speed plus judgment only you provide.",
-    });
-  }
-
-  if (recommendations.length < 3) {
-    recommendations.push({
-      title: "Complex Problem-Solving",
-      description:
-        "Prioritize work that needs synthesis, empathy, and context—problems that resist simple automation.",
-    });
-  }
-
-  return recommendations.slice(0, 3);
+  return drivers
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ title, description }) => ({ title, description }));
 }
 
-function generateBenchmarkNarrative(
+function getRecommendedNextMoves(
   answers: Answers,
-  aiExposure: number,
-  resilience: number
-): string {
-  const human =
-    (getAnswer(answers, "human-interaction") +
-      getAnswer(answers, "trust-relationships")) /
-    2;
+  riskIndex: number
+): NarrativeCard[] {
+  const learning = getAnswer(answers, "tool-learning-speed", 60);
+  const human = getAnswer(answers, "human-uniqueness", 60);
+  const consequence = getAnswer(answers, "decision-consequence", 60);
 
-  if (resilience >= 70 && human >= 60) {
-    return "In transformation, empathy and judgment may carry more weight than speed alone.";
+  const moves: NarrativeCard[] = [];
+
+  if (learning < 60 || riskIndex >= 60) {
+    moves.push({
+      title: "Upgrade tool fluency deliberately",
+      description:
+        "Build repeatable AI-assisted workflows to reduce blind-risk and improve transition readiness.",
+    });
   }
 
-  if (resilience >= 60 && aiExposure <= 55) {
-    return "You can navigate industry shifts with measured confidence—aware of change, not defined by it.";
+  if (human < 70) {
+    moves.push({
+      title: "Increase human differentiation",
+      description:
+        "Shift more effort toward context-heavy, relational, and judgment-centric outputs.",
+    });
   }
 
-  if (getAnswer(answers, "adaptability") >= 65) {
-    return "When learning curves steepen, you may turn uncertainty into momentum—not anxiety.";
+  if (consequence >= 80) {
+    moves.push({
+      title: "Clarify human accountability boundaries",
+      description:
+        "Make explicit where AI can assist and where human sign-off remains mandatory for safety or compliance.",
+    });
+  } else {
+    moves.push({
+      title: "Define quality checkpoints",
+      description:
+        "Establish clear review standards so automation improves speed without degrading decision quality.",
+    });
   }
 
-  return "Small, consistent skill choices may compound into lasting resilience.";
+  if (moves.length < 3) {
+    moves.push({
+      title: "Reassess quarterly",
+      description:
+        "Review your profession baseline and adaptation signals regularly as market and tools evolve.",
+    });
+  }
+
+  return moves.slice(0, 3);
 }
 
-function generateSummary(
+function getModelDistinctionNarrative(
+  profession: SelectedProfession,
   aiExposure: number,
   resilience: number
 ): string {
-  if (resilience >= 70 && aiExposure <= 45) {
-    return "Well balanced today—protect what makes your work distinctly yours.";
+  if (aiExposure >= 60 && resilience >= 60) {
+    return `Your selected profession (${profession.title}) appears AI-exposed and resilient at once. Exposure is not a verdict.`;
   }
-
   if (resilience >= 70) {
-    return "Resilience is a genuine asset here. Deliberate learning can carry you forward with confidence.";
+    return `Based on your selected profession and answers, your human-strength signal may provide meaningful resilience in the current transition.`;
   }
-
-  if (aiExposure >= 65 && resilience < 55) {
-    return "Change is present in how you work—a prompt, not an alarm. Adaptability can shift your trajectory.";
-  }
-
-  return "Where you stand today is the start of intentional growth—a calm guide for what comes next.";
+  return "RIASEC describes occupational identity. ILONAA estimates AI risk pressure using profession baseline plus your four adjustment answers.";
 }
 
-export function calculateResults(answers: Answers): AssessmentResult {
-  const aiExposureScore = calculateAiExposureScore(answers);
-  const careerResilienceScore = calculateCareerResilienceScore(answers);
-  const riasecProfile = calculateRiasecProfile(answers);
-  const ilonaaRiskIndex = calculateIlonaaRiskIndex(
-    answers,
-    aiExposureScore,
-    careerResilienceScore
-  );
-  const positioningSummary = derivePositioningSummary(
-    aiExposureScore,
-    careerResilienceScore
-  );
-  const positioningDimensions = derivePositioningDimensions(
-    answers,
-    aiExposureScore,
-    careerResilienceScore
-  );
+function getBenchmarkNarrative(
+  profession: SelectedProfession,
+  aiExposure: number,
+  resilience: number
+): string {
+  if (profession.baselineAiExposure >= 65 && resilience >= 60) {
+    return "Your profession baseline appears structurally exposed, yet your current profile suggests adaptive capacity.";
+  }
+  if (profession.baselineCareerResilience >= 65 && aiExposure <= 50) {
+    return "Your selected profession and answers suggest comparatively stable near-term positioning.";
+  }
+  return "These results are decision-support signals based on profession baseline and your answers, not deterministic predictions.";
+}
+
+function getSummary(riskIndex: number, resilience: number): string {
+  if (riskIndex >= 65 && resilience < 55) {
+    return "Risk pressure may be elevated. Prioritize adaptability and human differentiation in your near-term role strategy.";
+  }
+  if (resilience >= 70 && riskIndex <= 50) {
+    return "Your current profile suggests a relatively resilient position, provided you continue active adaptation.";
+  }
+  return "Your current signal is mixed but actionable—use this as structured orientation, not a final verdict.";
+}
+
+function inferProfessionFromLegacyAnswers(
+  answers: Answers
+): SelectedProfession | null {
+  const legacyKeys = [
+    "repetitive-tasks",
+    "human-interaction",
+    "creativity",
+    "strategic-decision",
+    "specialized-expertise",
+    "industry-change",
+    "adaptability",
+    "personal-judgment",
+  ];
+
+  if (!legacyKeys.some((key) => answers[key] !== undefined)) return null;
+
+  const target = {
+    routineRepetitive: getAnswer(answers, "repetitive-tasks"),
+    humanInteraction: getAnswer(answers, "human-interaction"),
+    creativityInnovation: getAnswer(answers, "creativity"),
+    decisionJudgment: getAnswer(answers, "personal-judgment"),
+    dataAnalysis: getAnswer(answers, "specialized-expertise"),
+    adaptabilityLearning: getAnswer(answers, "adaptability"),
+  };
+
+  const nearest = getAllOccupations()
+    .map((occupation) => {
+      const f = occupation.factors;
+      const distance =
+        Math.abs(f.routineRepetitive - target.routineRepetitive) +
+        Math.abs(f.humanInteraction - target.humanInteraction) +
+        Math.abs(f.creativityInnovation - target.creativityInnovation) +
+        Math.abs(f.decisionJudgment - target.decisionJudgment) +
+        Math.abs(f.dataAnalysis - target.dataAnalysis) +
+        Math.abs(f.adaptabilityLearning - target.adaptabilityLearning);
+
+      return { occupation, distance };
+    })
+    .sort((a, b) => a.distance - b.distance)[0];
+
+  return nearest ? toProfessionSelection(nearest.occupation) : null;
+}
+
+export function calculateResults(
+  profession: SelectedProfession,
+  answers: Answers
+): AssessmentResult {
+  const riasecProfile = calculateRiasecProfile({
+    "repetitive-tasks": profession.keyOccupationalFactors.routineRepetitive,
+    "human-interaction": profession.keyOccupationalFactors.humanInteraction,
+    creativity: profession.keyOccupationalFactors.creativityInnovation,
+    "strategic-decision": profession.keyOccupationalFactors.decisionJudgment,
+    "specialized-expertise": profession.keyOccupationalFactors.dataAnalysis,
+    "ai-capable-today": profession.baselineAiExposure,
+    "trust-relationships": profession.keyOccupationalFactors.humanInteraction,
+    "industry-change": profession.keyOccupationalFactors.adaptabilityLearning,
+    adaptability: getAnswer(answers, "tool-learning-speed", 60),
+    "personal-judgment": profession.keyOccupationalFactors.decisionJudgment,
+  });
+
+  const { aiExposureScore, careerResilienceScore, ilonaaRiskIndex } =
+    calculateOnetAdjustedScores(profession, answers);
 
   return {
-    riasecProfile,
+    selectedProfession: profession,
+    riasecProfile: {
+      ...riasecProfile,
+      primaryType: profession.primaryRiasecType,
+      secondaryType: profession.secondaryRiasecType,
+    },
     ilonaaRiskIndex,
     aiExposureScore,
     careerResilienceScore,
-    positioningSummary,
-    positioningDimensions,
-    humanAdvantageFactors: generateKeyStrengths(answers),
-    keyRiskDrivers: generateExposureAreas(answers),
-    recommendedNextMoves: generateResilienceRecommendations(
-      answers,
-      aiExposureScore
+    positioningSummary: getPositioningSummary(
+      aiExposureScore,
+      careerResilienceScore,
+      ilonaaRiskIndex.score
     ),
-    modelDistinctionNarrative: generateModelDistinctionNarrative(
+    positioningDimensions: getPositioningDimensions(
       answers,
+      aiExposureScore,
+      careerResilienceScore,
+      ilonaaRiskIndex.score
+    ),
+    humanAdvantageFactors: getHumanAdvantageFactors(answers, profession),
+    keyRiskDrivers: getKeyRiskDrivers(answers, profession),
+    recommendedNextMoves: getRecommendedNextMoves(answers, ilonaaRiskIndex.score),
+    modelDistinctionNarrative: getModelDistinctionNarrative(
+      profession,
       aiExposureScore,
       careerResilienceScore
     ),
-    benchmarkNarrative: generateBenchmarkNarrative(
-      answers,
+    benchmarkNarrative: getBenchmarkNarrative(
+      profession,
       aiExposureScore,
       careerResilienceScore
     ),
-    summary: generateSummary(aiExposureScore, careerResilienceScore),
+    summary: getSummary(ilonaaRiskIndex.score, careerResilienceScore),
     answers,
     completedAt: new Date().toISOString(),
   };
@@ -393,11 +377,13 @@ export function loadResults(): AssessmentResult | null {
   try {
     const parsed = JSON.parse(raw) as Partial<AssessmentResult> & {
       answers?: Answers;
+      selectedProfession?: { code?: string };
     };
 
     if (!parsed.answers) return null;
 
     if (
+      parsed.selectedProfession?.code &&
       parsed.riasecProfile?.primaryType &&
       parsed.riasecProfile?.secondaryType &&
       parsed.ilonaaRiskIndex?.score !== undefined &&
@@ -410,7 +396,19 @@ export function loadResults(): AssessmentResult | null {
       return parsed as AssessmentResult;
     }
 
-    return calculateResults(parsed.answers);
+    if (parsed.selectedProfession?.code) {
+      const occupation = getOccupationByCode(parsed.selectedProfession.code);
+      if (occupation) {
+        return calculateResults(toProfessionSelection(occupation), parsed.answers);
+      }
+    }
+
+    const inferred = inferProfessionFromLegacyAnswers(parsed.answers);
+    if (inferred) {
+      return calculateResults(inferred, parsed.answers);
+    }
+
+    return null;
   } catch {
     return null;
   }

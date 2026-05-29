@@ -51,7 +51,30 @@ export type IlonaaRiskIndex = {
   };
 };
 
+export type SelectedProfession = {
+  code: string;
+  title: string;
+  primaryRiasecType: RiasecType;
+  secondaryRiasecType: RiasecType;
+  baselineAiExposure: number;
+  baselineCareerResilience: number;
+  baselineRiskIndex: number;
+  keyOccupationalFactors: {
+    routineRepetitive: number;
+    informationProcessing: number;
+    dataAnalysis: number;
+    administrativeStructure: number;
+    humanInteraction: number;
+    creativityInnovation: number;
+    decisionJudgment: number;
+    consequenceResponsibility: number;
+    physicalPracticality: number;
+    adaptabilityLearning: number;
+  };
+};
+
 export type AssessmentResult = {
+  selectedProfession: SelectedProfession;
   riasecProfile: RiasecProfile;
   ilonaaRiskIndex: IlonaaRiskIndex;
   aiExposureScore: number;

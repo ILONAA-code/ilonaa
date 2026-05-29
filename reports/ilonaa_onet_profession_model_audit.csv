@@ -1,0 +1,201 @@
+occupation_code,occupation_title,primary_riasec_type,secondary_riasec_type,ilonaa_ai_risk_index,ai_exposure_score,career_resilience_score,baseline_risk_index,baseline_ai_exposure,baseline_career_resilience
+"ONET-00001","Accounts Payable Specialist","Conventional","Enterprising",67,75,33,75,75,33
+"ONET-00002","Accounts Receivable Specialist","Conventional","Enterprising",67,75,33,75,75,33
+"ONET-00003","Bookkeeper","Conventional","Enterprising",67,75,33,75,75,33
+"ONET-00004","Payroll Specialist","Conventional","Enterprising",67,75,33,75,75,33
+"ONET-00015","Legal Secretary","Conventional","Investigative",67,75,33,75,75,33
+"ONET-00016","Compliance Analyst","Conventional","Investigative",67,75,33,75,75,33
+"ONET-00017","Contract Administrator","Conventional","Investigative",67,75,33,75,75,33
+"ONET-00027","Junior QA Tester","Investigative","Realistic",67,75,33,75,75,33
+"ONET-00028","Manual Test Analyst","Investigative","Realistic",67,75,33,75,75,33
+"ONET-00029","Technical Support Specialist","Investigative","Realistic",67,75,33,75,75,33
+"ONET-00030","Implementation Specialist","Investigative","Realistic",67,75,33,75,75,33
+"ONET-00031","IT Helpdesk Analyst","Investigative","Realistic",67,75,33,75,75,33
+"ONET-00095","CNC Machinist","Realistic","Conventional",67,75,33,75,75,33
+"ONET-00096","Assembly Line Operator","Realistic","Conventional",67,75,33,75,75,33
+"ONET-00097","Warehouse Equipment Operator","Realistic","Conventional",67,75,33,75,75,33
+"ONET-00098","Quality Inspection Technician","Realistic","Conventional",67,75,33,75,75,33
+"ONET-00157","Logistics Coordinator","Conventional","Realistic",67,75,33,75,75,33
+"ONET-00158","Supply Chain Planner","Conventional","Realistic",67,75,33,75,75,33
+"ONET-00159","Dispatch Coordinator","Conventional","Realistic",67,75,33,75,75,33
+"ONET-00160","Inventory Planner","Conventional","Realistic",67,75,33,75,75,33
+"ONET-00161","Procurement Analyst","Conventional","Realistic",67,75,33,75,75,33
+"ONET-00171","Data Entry Clerk","Conventional","Social",67,75,33,75,75,33
+"ONET-00172","Administrative Assistant","Conventional","Social",67,75,33,75,75,33
+"ONET-00173","Receptionist","Conventional","Social",67,75,33,75,75,33
+"ONET-00174","Scheduling Coordinator","Conventional","Social",67,75,33,75,75,33
+"ONET-00005","Tax Accountant","Conventional","Enterprising",53,57,49,58,57,49
+"ONET-00006","Audit Associate","Conventional","Enterprising",53,57,49,58,57,49
+"ONET-00007","Budget Analyst","Conventional","Enterprising",53,57,49,58,57,49
+"ONET-00008","Treasury Analyst","Conventional","Enterprising",53,57,49,58,57,49
+"ONET-00009","Credit Analyst","Conventional","Enterprising",53,57,49,58,57,49
+"ONET-00010","Revenue Operations Analyst","Conventional","Enterprising",53,57,49,58,57,49
+"ONET-00018","Contract Paralegal","Conventional","Investigative",53,57,49,58,57,49
+"ONET-00019","Litigation Paralegal","Conventional","Investigative",53,57,49,58,57,49
+"ONET-00020","Regulatory Compliance Officer","Conventional","Investigative",53,57,49,58,57,49
+"ONET-00021","Corporate Governance Analyst","Conventional","Investigative",53,57,49,58,57,49
+"ONET-00022","Privacy Compliance Specialist","Conventional","Investigative",53,57,49,58,57,49
+"ONET-00043","Data Annotation Specialist","Conventional","Social",53,57,49,58,57,49
+"ONET-00044","BI Reporting Analyst","Conventional","Social",53,57,49,58,57,49
+"ONET-00045","SQL Analyst","Conventional","Social",53,57,49,58,57,49
+"ONET-00046","Data Quality Analyst","Conventional","Social",53,57,49,58,57,49
+"ONET-00150","HR Analyst","Conventional","Realistic",53,57,49,58,57,49
+"ONET-00151","Payroll HR Specialist","Conventional","Realistic",53,57,49,58,57,49
+"ONET-00152","Compensation Analyst","Conventional","Realistic",53,57,49,58,57,49
+"ONET-00153","Learning and Development Specialist","Conventional","Realistic",53,57,49,58,57,49
+"ONET-00099","Electrician","Realistic","Conventional",50,51,50,52,51,50
+"ONET-00100","HVAC Technician","Realistic","Conventional",50,51,50,52,51,50
+"ONET-00101","Plumber","Realistic","Conventional",50,51,50,52,51,50
+"ONET-00102","Automotive Technician","Realistic","Conventional",50,51,50,52,51,50
+"ONET-00125","Sales Development Representative","Enterprising","Social",50,53,54,54,53,54
+"ONET-00126","Inside Sales Representative","Enterprising","Social",50,53,54,54,53,54
+"ONET-00127","Sales Operations Coordinator","Enterprising","Social",50,53,54,54,53,54
+"ONET-00128","Lead Generation Specialist","Enterprising","Social",50,53,54,54,53,54
+"ONET-00065","Team Lead","Enterprising","Social",49,49,51,51,49,51
+"ONET-00066","Office Manager","Enterprising","Social",49,49,51,51,49,51
+"ONET-00067","Service Delivery Manager","Enterprising","Social",49,49,51,51,49,51
+"ONET-00068","Practice Manager","Enterprising","Social",49,49,51,51,49,51
+"ONET-00078","Medical Coder","Social","Investigative",49,49,51,51,49,51
+"ONET-00079","Health Information Manager","Social","Investigative",49,49,51,51,49,51
+"ONET-00080","Care Coordinator","Social","Investigative",49,49,51,51,49,51
+"ONET-00081","Nurse Practitioner","Social","Investigative",49,49,51,51,49,51
+"ONET-00082","Public Health Nurse","Social","Investigative",49,49,51,51,49,51
+"ONET-00091","University Lecturer","Social","Artistic",49,49,51,51,49,51
+"ONET-00092","School Principal","Social","Artistic",49,49,51,51,49,51
+"ONET-00093","Corporate Trainer","Social","Artistic",49,49,51,51,49,51
+"ONET-00094","Education Program Manager","Social","Artistic",49,49,51,51,49,51
+"ONET-00162","Procurement Specialist","Conventional","Realistic",49,49,51,51,49,51
+"ONET-00163","Warehouse Manager","Conventional","Realistic",49,49,51,51,49,51
+"ONET-00164","Distribution Manager","Conventional","Realistic",49,49,51,51,49,51
+"ONET-00165","Fleet Manager","Conventional","Realistic",49,49,51,51,49,51
+"ONET-00166","Operations Coordinator","Conventional","Realistic",49,49,51,51,49,51
+"ONET-00178","Case Management Assistant","Conventional","Social",49,49,51,51,49,51
+"ONET-00179","Project Coordinator","Conventional","Social",49,49,51,51,49,51
+"ONET-00180","Documentation Specialist","Conventional","Social",49,49,51,51,49,51
+"ONET-00195","Policy Analyst","Social","Conventional",49,49,51,51,49,51
+"ONET-00196","Public Administration Officer","Social","Conventional",49,49,51,51,49,51
+"ONET-00197","Emergency Management Coordinator","Social","Conventional",49,49,51,51,49,51
+"ONET-00038","Database Administrator","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00039","Platform Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00040","Infrastructure Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00041","Enterprise Architect","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00042","Embedded Systems Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00107","Mechanical Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00108","Electrical Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00109","Civil Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00110","Process Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00111","Manufacturing Engineer","Investigative","Realistic",47,50,58,49,50,58
+"ONET-00181","Research Engineer","Investigative","Conventional",47,50,58,49,50,58
+"ONET-00182","Laboratory Research Scientist","Investigative","Conventional",47,50,58,49,50,58
+"ONET-00183","Biostatistician","Investigative","Conventional",47,50,58,49,50,58
+"ONET-00184","Materials Scientist","Investigative","Conventional",47,50,58,49,50,58
+"ONET-00191","Social Worker","Social","Conventional",43,42,58,46,42,58
+"ONET-00192","Case Worker","Social","Conventional",43,42,58,46,42,58
+"ONET-00193","Community Outreach Coordinator","Social","Conventional",43,42,58,46,42,58
+"ONET-00194","School Counselor","Social","Conventional",43,42,58,46,42,58
+"ONET-00051","AI Research Scientist","Conventional","Social",42,43,62,43,43,62
+"ONET-00052","Applied Scientist","Conventional","Social",42,43,62,43,43,62
+"ONET-00053","Quantitative Researcher","Conventional","Social",42,43,62,43,43,62
+"ONET-00054","Computer Vision Engineer","Conventional","Social",42,43,62,43,43,62
+"ONET-00074","Radiologist","Social","Investigative",42,43,64,42,43,64
+"ONET-00075","Pharmacist","Social","Investigative",42,43,64,42,43,64
+"ONET-00076","Clinical Laboratory Scientist","Social","Investigative",42,43,64,42,43,64
+"ONET-00077","Anesthesiologist","Social","Investigative",42,43,64,42,43,64
+"ONET-00103","Tool and Die Maker","Realistic","Conventional",42,43,64,42,43,64
+"ONET-00104","Instrumentation Technician","Realistic","Conventional",42,43,64,42,43,64
+"ONET-00105","Maintenance Technician","Realistic","Conventional",42,43,64,42,43,64
+"ONET-00106","Field Service Technician","Realistic","Conventional",42,43,64,42,43,64
+"ONET-00112","Quality Engineer","Investigative","Realistic",42,43,64,42,43,64
+"ONET-00113","Reliability Engineer","Investigative","Realistic",42,43,64,42,43,64
+"ONET-00114","Control Systems Engineer","Investigative","Realistic",42,43,64,42,43,64
+"ONET-00115","Industrial Engineer","Investigative","Realistic",42,43,64,42,43,64
+"ONET-00116","Hardware Engineer","Investigative","Realistic",42,43,64,42,43,64
+"ONET-00185","Clinical Research Associate","Investigative","Conventional",42,43,64,42,43,64
+"ONET-00186","Research Data Manager","Investigative","Conventional",42,43,64,42,43,64
+"ONET-00187","Environmental Scientist","Investigative","Conventional",42,43,64,42,43,64
+"ONET-00188","Behavioral Scientist","Investigative","Conventional",42,43,62,43,43,62
+"ONET-00189","Policy Research Analyst","Investigative","Conventional",42,43,62,43,43,62
+"ONET-00190","UX Researcher","Investigative","Conventional",42,43,62,43,43,62
+"ONET-00032","Senior Software Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00033","DevOps Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00034","Site Reliability Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00035","Cloud Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00036","Cybersecurity Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00037","Solutions Architect","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00047","Machine Learning Engineer","Conventional","Social",40,42,67,40,42,67
+"ONET-00048","Data Scientist","Conventional","Social",40,42,67,40,42,67
+"ONET-00049","AI Product Analyst","Conventional","Social",40,42,67,40,42,67
+"ONET-00050","MLOps Engineer","Conventional","Social",40,42,67,40,42,67
+"ONET-00117","Automation Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00118","Robotics Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00119","Digital Twin Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00120","Manufacturing Data Engineer","Investigative","Realistic",40,42,67,40,42,67
+"ONET-00138","Digital Marketing Manager","Artistic","Enterprising",40,42,67,40,42,67
+"ONET-00139","SEO Specialist","Artistic","Enterprising",40,42,67,40,42,67
+"ONET-00140","Performance Marketing Analyst","Artistic","Enterprising",40,42,67,40,42,67
+"ONET-00141","Marketing Automation Manager","Artistic","Enterprising",40,42,67,40,42,67
+"ONET-00142","Social Media Strategist","Artistic","Enterprising",40,42,67,40,42,67
+"ONET-00055","Project Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00056","Program Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00057","Operations Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00058","Customer Operations Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00059","Retail Store Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00069","Registered Nurse","Social","Investigative",37,36,69,37,36,69
+"ONET-00070","Primary Care Physician","Social","Investigative",37,36,69,37,36,69
+"ONET-00071","Physical Therapist","Social","Investigative",37,36,69,37,36,69
+"ONET-00072","Occupational Therapist","Social","Investigative",37,36,69,37,36,69
+"ONET-00073","Clinical Social Worker","Social","Investigative",37,36,69,37,36,69
+"ONET-00083","High School Teacher","Social","Artistic",37,36,69,37,36,69
+"ONET-00084","Elementary Teacher","Social","Artistic",37,36,69,37,36,69
+"ONET-00085","Special Education Teacher","Social","Artistic",37,36,69,37,36,69
+"ONET-00086","Academic Advisor","Social","Artistic",37,36,69,37,36,69
+"ONET-00121","Account Executive","Enterprising","Social",37,36,69,37,36,69
+"ONET-00122","Customer Success Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00123","Enterprise Account Manager","Enterprising","Social",37,36,69,37,36,69
+"ONET-00124","Solutions Consultant","Enterprising","Social",37,36,69,37,36,69
+"ONET-00147","HR Generalist","Conventional","Realistic",37,36,69,37,36,69
+"ONET-00148","Talent Acquisition Partner","Conventional","Realistic",37,36,69,37,36,69
+"ONET-00149","People Operations Manager","Conventional","Realistic",37,36,69,37,36,69
+"ONET-00175","Executive Assistant","Conventional","Social",37,36,69,37,36,69
+"ONET-00176","Client Services Coordinator","Conventional","Social",37,36,69,37,36,69
+"ONET-00177","Office Administrator","Conventional","Social",37,36,69,37,36,69
+"ONET-00087","Instructional Designer","Social","Artistic",35,33,70,33,33,70
+"ONET-00088","Curriculum Designer","Social","Artistic",35,33,70,33,33,70
+"ONET-00089","Learning Experience Designer","Social","Artistic",35,33,70,33,33,70
+"ONET-00090","Educational Content Developer","Social","Artistic",35,33,70,33,33,70
+"ONET-00133","Graphic Designer","Artistic","Enterprising",35,33,70,33,33,70
+"ONET-00134","Marketing Copywriter","Artistic","Enterprising",35,33,70,33,33,70
+"ONET-00135","Content Strategist","Artistic","Enterprising",35,33,70,33,33,70
+"ONET-00136","Brand Designer","Artistic","Enterprising",35,33,70,33,33,70
+"ONET-00137","Video Producer","Artistic","Enterprising",35,33,70,33,33,70
+"ONET-00011","Financial Controller","Conventional","Enterprising",33,31,74,31,31,74
+"ONET-00012","Finance Manager","Conventional","Enterprising",33,31,74,31,31,74
+"ONET-00013","FP&A Manager","Conventional","Enterprising",33,31,74,31,31,74
+"ONET-00014","Risk Manager","Conventional","Enterprising",33,31,74,31,31,74
+"ONET-00023","Corporate Lawyer","Conventional","Investigative",33,31,74,31,31,74
+"ONET-00024","Employment Lawyer","Conventional","Investigative",33,31,74,31,31,74
+"ONET-00025","General Counsel","Conventional","Investigative",33,31,74,31,31,74
+"ONET-00026","Chief Compliance Officer","Conventional","Investigative",33,31,74,31,31,74
+"ONET-00060","Product Manager","Enterprising","Social",33,31,74,31,31,74
+"ONET-00061","Director of Operations","Enterprising","Social",33,31,74,31,31,74
+"ONET-00062","Chief of Staff","Enterprising","Social",33,31,74,31,31,74
+"ONET-00063","Strategy Manager","Enterprising","Social",33,31,74,31,31,74
+"ONET-00064","Business Unit Director","Enterprising","Social",33,31,74,31,31,74
+"ONET-00129","Sales Manager","Enterprising","Social",33,31,74,31,31,74
+"ONET-00130","Partnerships Manager","Enterprising","Social",33,31,74,31,31,74
+"ONET-00131","Channel Manager","Enterprising","Social",33,31,74,31,31,74
+"ONET-00132","Customer Success Director","Enterprising","Social",33,31,74,31,31,74
+"ONET-00143","Creative Director","Artistic","Enterprising",33,31,74,31,31,74
+"ONET-00144","Brand Manager","Artistic","Enterprising",33,31,74,31,31,74
+"ONET-00145","Communications Director","Artistic","Enterprising",33,31,74,31,31,74
+"ONET-00146","Product Marketing Manager","Artistic","Enterprising",33,31,74,31,31,74
+"ONET-00154","HR Business Partner","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00155","Head of People","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00156","Organizational Development Manager","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00167","Supply Chain Manager","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00168","Procurement Manager","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00169","Director of Logistics","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00170","Fulfillment Operations Manager","Conventional","Realistic",33,31,74,31,31,74
+"ONET-00198","City Planner","Social","Conventional",33,31,74,31,31,74
+"ONET-00199","Public Health Program Manager","Social","Conventional",33,31,74,31,31,74
+"ONET-00200","Nonprofit Program Director","Social","Conventional",33,31,74,31,31,74

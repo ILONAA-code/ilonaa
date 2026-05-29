@@ -4,18 +4,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ProgressBar } from "@/components/assessment/ProgressBar";
+import { ProfessionSelect } from "@/components/assessment/ProfessionSelect";
 import { QuestionScreen } from "@/components/assessment/QuestionScreen";
 import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { analytics } from "@/lib/analytics/events";
-import { QUESTIONS, sliderValueFromStep } from "@/lib/assessment/questions";
+import { QUESTIONS } from "@/lib/assessment/questions";
 import { calculateResults, saveResults } from "@/lib/assessment/scoring";
 import type { Answers } from "@/lib/assessment/types";
+import type { OnetOccupation } from "@/lib/assessment/onetTypes";
+import { toProfessionSelection } from "@/lib/assessment/occupations";
 
 export function AssessmentFlow() {
   const router = useRouter();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(-1);
   const [answers, setAnswers] = useState<Answers>({});
+  const [selectedOccupation, setSelectedOccupation] = useState<OnetOccupation | null>(
+    null
+  );
   const [animating, setAnimating] = useState(false);
   const [completing, setCompleting] = useState(false);
   const startedTracked = useRef(false);
@@ -23,8 +29,8 @@ export function AssessmentFlow() {
   const completedRef = useRef(false);
   const abandonedSent = useRef(false);
 
-  const question = QUESTIONS[currentIndex];
-  const currentValue = answers[question.id] ?? null;
+  const question = currentIndex >= 0 ? QUESTIONS[currentIndex] : null;
+  const currentValue = question ? answers[question.id] ?? null : null;
   const isLastQuestion = currentIndex === QUESTIONS.length - 1;
 
   useEffect(() => {
@@ -34,23 +40,9 @@ export function AssessmentFlow() {
   }, []);
 
   useEffect(() => {
+    if (!question) return;
     questionShownAt.current = Date.now();
-  }, [question.id]);
-
-  useEffect(() => {
-    if (question.type !== "slider") return;
-
-    setAnswers((prev) => {
-      if (prev[question.id] !== undefined) return prev;
-
-      const defaultValue = sliderValueFromStep(
-        Math.ceil((question.sliderSteps ?? 5) / 2),
-        question.sliderSteps ?? 5
-      );
-
-      return { ...prev, [question.id]: defaultValue };
-    });
-  }, [question.id, question.type, question.sliderSteps]);
+  }, [question]);
 
   const reportAbandonment = useCallback(() => {
     if (completedRef.current || abandonedSent.current || completing) return;
@@ -73,18 +65,25 @@ export function AssessmentFlow() {
   }, []);
 
   const handleChange = (value: number) => {
+    if (!question) return;
     setAnswers((prev) => ({ ...prev, [question.id]: value }));
   };
 
   const handleBack = () => {
-    if (currentIndex > 0) {
-      analytics.backButtonUsed(currentIndex + 1);
+    if (currentIndex > -1) {
+      analytics.backButtonUsed(Math.max(currentIndex + 1, 1));
       transitionTo(currentIndex - 1);
     }
   };
 
   const handleContinue = () => {
-    if (currentValue === null) return;
+    if (currentIndex < 0) {
+      if (!selectedOccupation) return;
+      transitionTo(0);
+      return;
+    }
+
+    if (currentValue === null || !question) return;
 
     const timeSpentMs = Date.now() - questionShownAt.current;
     analytics.questionCompleted(
@@ -98,7 +97,11 @@ export function AssessmentFlow() {
       setCompleting(true);
       completedRef.current = true;
       const finalAnswers = { ...answers, [question.id]: currentValue };
-      const result = calculateResults(finalAnswers);
+      if (!selectedOccupation) return;
+      const result = calculateResults(
+        toProfessionSelection(selectedOccupation),
+        finalAnswers
+      );
 
       analytics.assessmentCompleted(
         result.aiExposureScore,
@@ -155,19 +158,26 @@ export function AssessmentFlow() {
 
           <div className="assessment-card">
             <ProgressBar
-              current={currentIndex + 1}
-              total={QUESTIONS.length}
+              current={Math.max(currentIndex + 2, 1)}
+              total={QUESTIONS.length + 1}
               className="mb-8 sm:mb-10"
             />
 
             <div className="min-h-[280px] sm:min-h-[320px]">
-              <QuestionScreen
-                key={question.id}
-                question={question}
-                value={currentValue}
-                onChange={handleChange}
-                animating={animating}
-              />
+              {currentIndex < 0 ? (
+                <ProfessionSelect
+                  value={selectedOccupation}
+                  onSelect={setSelectedOccupation}
+                />
+              ) : question ? (
+                <QuestionScreen
+                  key={question.id}
+                  question={question}
+                  value={currentValue}
+                  onChange={handleChange}
+                  animating={animating}
+                />
+              ) : null}
             </div>
 
             <div className="mt-10 flex justify-center border-t border-black/[0.05] pt-8 sm:mt-12 sm:pt-10">
@@ -175,7 +185,7 @@ export function AssessmentFlow() {
                 <Button
                   variant="secondary"
                   onClick={handleBack}
-                  disabled={currentIndex === 0}
+                  disabled={currentIndex <= -1}
                   className="w-[5.75rem] shrink-0 justify-center px-5 shadow-none hover:shadow-sm"
                 >
                   Back
@@ -183,12 +193,26 @@ export function AssessmentFlow() {
 
                 <Button
                   onClick={handleContinue}
-                  disabled={currentValue === null}
+                  disabled={
+                    currentIndex < 0
+                      ? selectedOccupation === null
+                      : currentValue === null
+                  }
                   className="w-[11.5rem] shrink-0 justify-center px-6 shadow-sm hover:shadow-sm"
-                  trackCta={isLastQuestion ? "view_results" : "continue"}
+                  trackCta={
+                    currentIndex < 0
+                      ? "continue_after_profession"
+                      : isLastQuestion
+                        ? "view_results"
+                        : "continue"
+                  }
                   trackLocation="assessment"
                 >
-                  {isLastQuestion ? "View Results" : "Continue"}
+                  {currentIndex < 0
+                    ? "Continue"
+                    : isLastQuestion
+                      ? "View Results"
+                      : "Continue"}
                 </Button>
               </div>
             </div>

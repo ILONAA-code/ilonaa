@@ -133,7 +133,7 @@ export const homeMetadata: Metadata = {
 export const assessmentMetadata: Metadata = {
   title: "AI Career Risk Assessment",
   description:
-    "Take ILONAA’s privacy-first AI career assessment—10 reflective questions on automation risk, resilience, and future-of-work positioning.",
+    "Take ILONAA’s privacy-first profession-based AI career assessment with profession selection plus 4 reflective calibration questions.",
   alternates: {
     canonical: "/assessment",
   },
@@ -141,14 +141,14 @@ export const assessmentMetadata: Metadata = {
     ...sharedOpenGraph("/assessment"),
     title: "ILONAA — AI Career Risk Assessment",
     description:
-      "Ten thoughtful questions to understand your AI exposure, career resilience, and professional positioning.",
+      "Profession-based baseline plus 4 reflective questions to estimate AI exposure, replacement risk, and career resilience.",
     url: absoluteUrl("/assessment"),
   },
   twitter: {
     ...sharedTwitter(),
     title: "ILONAA — AI Career Risk Assessment",
     description:
-      "Ten thoughtful questions to understand your AI exposure, career resilience, and professional positioning.",
+      "Profession-based baseline plus 4 reflective questions to estimate AI exposure, replacement risk, and career resilience.",
   },
 };
 
@@ -179,7 +179,7 @@ export const resultsMetadata: Metadata = {
 export const methodologyMetadata: Metadata = {
   title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
   description:
-    "Learn how ILONAA combines the established RIASEC occupational framework with a proprietary AI Risk Index to assess AI exposure, replacement risk and career resilience.",
+    "Learn how ILONAA combines the Holland/RIASEC occupational framework, O*NET-inspired occupational data and a proprietary AI Risk Index to assess AI exposure, replacement risk and career resilience.",
   alternates: {
     canonical: "/methodology",
   },

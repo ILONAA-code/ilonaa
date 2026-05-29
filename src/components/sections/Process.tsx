@@ -3,21 +3,21 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 const steps = [
   {
     number: "01",
-    title: "Answer 10 Questions",
+    title: "Select your profession",
     description:
-      "Thoughtfully designed questions about your role, skills, and professional context.",
+      "Search and choose the closest profession to set your O*NET-inspired baseline.",
   },
   {
     number: "02",
-    title: "AI analyzes your profession",
+    title: "Answer 4 ILONAA questions",
     description:
-      "Our model evaluates your responses against current labor market and automation trends.",
+      "Calibrate AI usage, learning speed, human uniqueness, and decision consequence.",
   },
   {
     number: "03",
-    title: "Receive your personalized career resilience profile",
+    title: "Receive your RIASEC + AI risk profile",
     description:
-      "Receive your scores and personalized insights — clear, calm, and thoughtfully structured.",
+      "Get your RIASEC type, ILONAA AI Risk Index, AI exposure, resilience, and next moves.",
   },
 ];
 
@@ -27,7 +27,7 @@ export function Process() {
       <SectionHeader
         label="How It Works"
         title="Three simple steps to career clarity."
-        description="A privacy-first AI career assessment—about ten minutes, no account required."
+        description="A privacy-first profession-based AI career assessment—about five minutes, no account required."
         align="center"
       />
 

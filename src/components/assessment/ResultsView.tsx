@@ -88,6 +88,7 @@ export function ResultsView() {
       <main className="relative z-10 mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14 lg:py-16">
         <div className="space-y-14 sm:space-y-16">
           <ResultsHero
+            professionTitle={result.selectedProfession.title}
             primaryType={result.riasecProfile.primaryType}
             secondaryType={result.riasecProfile.secondaryType}
             explanation={result.riasecProfile.explanation}
