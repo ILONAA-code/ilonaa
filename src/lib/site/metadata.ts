@@ -179,7 +179,7 @@ export const resultsMetadata: Metadata = {
 export const methodologyMetadata: Metadata = {
   title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
   description:
-    "Learn how ILONAA combines the Holland/RIASEC occupational framework, O*NET-inspired occupational data and a proprietary AI Risk Index to assess AI exposure, replacement risk and career resilience.",
+    "Learn how ILONAA uses O*NET-inspired occupational structures, Holland/RIASEC identity, and a proprietary interpretation layer for AI exposure, replacement risk, and career resilience.",
   alternates: {
     canonical: "/methodology",
   },
@@ -187,13 +187,13 @@ export const methodologyMetadata: Metadata = {
     ...sharedOpenGraph("/methodology"),
     title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
     description:
-      "Learn how ILONAA combines RIASEC occupational identity with a proprietary AI Risk Index for exposure, replacement risk, and career resilience.",
+      "See how ILONAA combines O*NET-inspired occupational structures and RIASEC identity with a proprietary AI Risk and Career Resilience interpretation layer.",
     url: absoluteUrl("/methodology"),
   },
   twitter: {
     ...sharedTwitter(),
     title: "How ILONAA Works | RIASEC Career Type and AI Risk Index",
     description:
-      "Learn how ILONAA combines RIASEC occupational identity with a proprietary AI Risk Index for exposure, replacement risk, and career resilience.",
+      "See how ILONAA combines O*NET-inspired occupational structures and RIASEC identity with a proprietary AI Risk and Career Resilience interpretation layer.",
   },
 };
