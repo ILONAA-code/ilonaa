@@ -27,10 +27,7 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
   return (
     <div className="space-y-5">
       <h1 className="display-subhead text-balance">Search your profession</h1>
-      <p className="body-text">
-        Choose the closest match. ILONAA uses this as a professional baseline and
-        adjusts it with your answers.
-      </p>
+      <p className="body-text">Choose the profession title that best matches your role.</p>
 
       <div className="rounded-2xl border border-black/[0.08] bg-white/80 p-3 shadow-sm">
         <input
@@ -61,14 +58,16 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
               }`}
             >
               <p className="font-medium text-foreground">{occupation.marketTitle}</p>
-              <p className="mt-1 text-sm text-muted">{occupation.occupation.description}</p>
-              <p className="mt-2 text-xs uppercase tracking-[0.12em] text-accent/80">
-                {occupation.occupation.primaryRiasecType} · {occupation.occupation.secondaryRiasecType}
-              </p>
             </button>
           );
         })}
       </div>
+
+      {debouncedQuery.trim().length >= 2 && matches.length === 0 && (
+        <p className="text-sm text-muted">
+          No strong match found. Try a clearer profession title.
+        </p>
+      )}
 
       {value && (
         <div className="rounded-2xl border border-black/[0.05] bg-white/70 p-4">
@@ -76,14 +75,6 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
             Selected Profession
           </p>
           <p className="mt-2 font-medium text-foreground">{value.marketTitle}</p>
-          <p className="mt-1 text-sm text-muted">
-            RIASEC:
-            <br />
-            {value.occupation.primaryRiasecType} / {value.occupation.secondaryRiasecType}
-          </p>
-          <p className="mt-2 text-xs text-muted/80">
-            This profession provides the occupational baseline used by ILONAA.
-          </p>
         </div>
       )}
     </div>
