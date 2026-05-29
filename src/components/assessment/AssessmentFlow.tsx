@@ -10,16 +10,16 @@ import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { analytics } from "@/lib/analytics/events";
 import { QUESTIONS } from "@/lib/assessment/questions";
+import type { ProfessionSearchHit } from "@/lib/assessment/occupations";
 import { calculateResults, saveResults } from "@/lib/assessment/scoring";
 import type { Answers } from "@/lib/assessment/types";
-import type { OnetOccupation } from "@/lib/assessment/onetTypes";
 import { toProfessionSelection } from "@/lib/assessment/occupations";
 
 export function AssessmentFlow() {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [answers, setAnswers] = useState<Answers>({});
-  const [selectedOccupation, setSelectedOccupation] = useState<OnetOccupation | null>(
+  const [selectedOccupation, setSelectedOccupation] = useState<ProfessionSearchHit | null>(
     null
   );
   const [animating, setAnimating] = useState(false);
@@ -99,7 +99,10 @@ export function AssessmentFlow() {
       const finalAnswers = { ...answers, [question.id]: currentValue };
       if (!selectedOccupation) return;
       const result = calculateResults(
-        toProfessionSelection(selectedOccupation),
+        toProfessionSelection(
+          selectedOccupation.occupation,
+          selectedOccupation.marketTitle
+        ),
         finalAnswers
       );
 

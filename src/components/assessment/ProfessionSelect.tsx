@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { searchOccupations } from "@/lib/assessment/occupations";
-import type { OnetOccupation } from "@/lib/assessment/onetTypes";
+import type { ProfessionSearchHit } from "@/lib/assessment/occupations";
 
 type ProfessionSelectProps = {
-  value: OnetOccupation | null;
-  onSelect: (occupation: OnetOccupation) => void;
+  value: ProfessionSearchHit | null;
+  onSelect: (occupation: ProfessionSearchHit) => void;
 };
 
 export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
@@ -47,11 +47,11 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
 
       <div className="max-h-[19rem] space-y-2 overflow-y-auto pr-1">
         {matches.map((occupation) => {
-          const selected = value?.code === occupation.code;
+          const selected = value?.mappedOccupationCode === occupation.mappedOccupationCode;
 
           return (
             <button
-              key={occupation.code}
+              key={`${occupation.mappedOccupationCode}-${occupation.marketTitle}`}
               type="button"
               onClick={() => onSelect(occupation)}
               className={`w-full rounded-2xl border px-4 py-3 text-left transition ${
@@ -60,10 +60,10 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
                   : "border-black/[0.06] bg-white/70 hover:border-accent/20 hover:bg-white"
               }`}
             >
-              <p className="font-medium text-foreground">{occupation.title}</p>
-              <p className="mt-1 text-sm text-muted">{occupation.description}</p>
+              <p className="font-medium text-foreground">{occupation.marketTitle}</p>
+              <p className="mt-1 text-sm text-muted">{occupation.occupation.description}</p>
               <p className="mt-2 text-xs uppercase tracking-[0.12em] text-accent/80">
-                {occupation.primaryRiasecType} · {occupation.secondaryRiasecType}
+                {occupation.occupation.primaryRiasecType} · {occupation.occupation.secondaryRiasecType}
               </p>
             </button>
           );
@@ -75,11 +75,11 @@ export function ProfessionSelect({ value, onSelect }: ProfessionSelectProps) {
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
             Selected Profession
           </p>
-          <p className="mt-2 font-medium text-foreground">{value.title}</p>
+          <p className="mt-2 font-medium text-foreground">{value.marketTitle}</p>
           <p className="mt-1 text-sm text-muted">
             RIASEC:
             <br />
-            {value.primaryRiasecType} / {value.secondaryRiasecType}
+            {value.occupation.primaryRiasecType} / {value.occupation.secondaryRiasecType}
           </p>
           <p className="mt-2 text-xs text-muted/80">
             This profession provides the occupational baseline used by ILONAA.
