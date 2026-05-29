@@ -2,17 +2,11 @@ import type { NarrativeCard } from "@/lib/assessment/types";
 
 type ResultsHeroProps = {
   professionTitle: string;
-  primaryType: string;
-  secondaryType: string;
-  explanation: string;
   ilonaaRiskIndexScore: number;
 };
 
 export function ResultsHero({
   professionTitle,
-  primaryType,
-  secondaryType,
-  explanation,
   ilonaaRiskIndexScore,
 }: ResultsHeroProps) {
   const riskLevel =
@@ -22,14 +16,14 @@ export function ResultsHero({
         ? "Medium"
         : ilonaaRiskIndexScore < 80
           ? "High"
-          : "Very high";
+          : "Very High";
 
   return (
     <header
       className="animate-fade-in-up"
       data-analytics-section="profile_outcome"
     >
-      <p className="section-label text-center">RIASEC context</p>
+      <p className="section-label text-center">Your Result</p>
 
       <div className="premium-card relative mt-5 overflow-hidden p-6 sm:p-8">
         <div
@@ -37,7 +31,13 @@ export function ResultsHero({
           aria-hidden="true"
         />
 
-        <div className="relative rounded-2xl border border-black/[0.05] bg-white/90 px-5 py-5 text-center sm:px-6 sm:py-6">
+        <div className="relative text-center">
+          <h1 className="font-display text-[1.9rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.35rem] sm:leading-[1.1]">
+            {professionTitle}
+          </h1>
+        </div>
+
+        <div className="relative mt-6 rounded-2xl border border-black/[0.05] bg-white/90 px-5 py-5 text-center sm:px-6 sm:py-6">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
             AI Replacement Risk
           </p>
@@ -50,22 +50,40 @@ export function ResultsHero({
             Risk is not destiny. Exposure does not automatically imply replacement.
           </p>
         </div>
+      </div>
+    </header>
+  );
+}
 
-        <div className="relative mt-6 text-center">
+type ProfessionUnderstandingSectionProps = {
+  primaryType: string;
+  secondaryType: string;
+  explanation: string;
+};
+
+export function ProfessionUnderstandingSection({
+  primaryType,
+  secondaryType,
+  explanation,
+}: ProfessionUnderstandingSectionProps) {
+  return (
+    <section className="animate-fade-in-up-delay" data-analytics-section="profession_profile">
+      <p className="section-label">Understanding your profession</p>
+      <div className="premium-card mt-5 space-y-5 p-6 sm:p-8">
+        <div className="rounded-2xl border border-black/[0.05] bg-white/70 px-5 py-5 text-center sm:px-6 sm:py-6">
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
-            Selected profession
+            RIASEC Type
           </p>
-          <p className="mt-1 text-sm font-medium text-foreground/80">{professionTitle}</p>
-          <h1 className="font-display text-[1.9rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.35rem] sm:leading-[1.1]">
-            RIASEC Type: {primaryType}
-          </h1>
-          <p className="mt-2 text-sm tracking-wide text-muted/90 sm:text-[0.9375rem]">
-            Secondary orientation: {secondaryType}
+          <h2 className="mt-1 font-display text-[1.8rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.15rem]">
+            {primaryType}
+          </h2>
+          <p className="mt-2 text-sm tracking-wide text-muted/80 sm:text-[0.9375rem]">
+            Secondary Orientation: {secondaryType}
           </p>
         </div>
 
         <figure
-          className="relative mt-6 rounded-2xl border border-accent/12 bg-white/85 px-5 py-6 text-center sm:mt-7 sm:px-7 sm:py-7"
+          className="rounded-2xl border border-accent/12 bg-white/85 px-5 py-6 text-center sm:px-7 sm:py-7"
           data-analytics-section="quotable_insight"
         >
           <figcaption className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted/70">
@@ -76,7 +94,7 @@ export function ResultsHero({
           </blockquote>
         </figure>
       </div>
-    </header>
+    </section>
   );
 }
 
@@ -91,7 +109,7 @@ function riskLabel(score: number): string {
   if (score < 35) return "Low";
   if (score < 60) return "Medium";
   if (score < 80) return "High";
-  return "Very high";
+  return "Very High";
 }
 
 export function RiskWhySection({

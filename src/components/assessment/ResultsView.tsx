@@ -8,6 +8,7 @@ import { LoadingState } from "@/components/ui/LoadingState";
 import {
   BenchmarkNarrative,
   NarrativeCardsSection,
+  ProfessionUnderstandingSection,
   RiskWhySection,
   ResultsClosing,
   ResultsHero,
@@ -88,10 +89,13 @@ export function ResultsView() {
         <div className="space-y-14 sm:space-y-16">
           <ResultsHero
             professionTitle={result.selectedProfession.title}
+            ilonaaRiskIndexScore={result.ilonaaRiskIndex.score}
+          />
+
+          <ProfessionUnderstandingSection
             primaryType={result.riasecProfile.primaryType}
             secondaryType={result.riasecProfile.secondaryType}
             explanation={result.riasecProfile.explanation}
-            ilonaaRiskIndexScore={result.ilonaaRiskIndex.score}
           />
 
           <RiskWhySection
