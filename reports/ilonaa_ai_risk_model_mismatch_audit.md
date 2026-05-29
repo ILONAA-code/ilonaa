@@ -1,6 +1,6 @@
 # ILONAA AI Risk Model Mismatch Audit
 
-Generated at: 2026-05-29T07:44:31.766Z
+Generated at: 2026-05-29T07:58:47.938Z
 
 ## 200-Job Validation Set
 
@@ -215,14 +215,14 @@ Generated at: 2026-05-29T07:44:31.766Z
 6. HVAC Technician (ONET-00100) — current 50, expected 34, mismatch +16. Cause: routine/process structure likely overweighted.
 7. Plumber (ONET-00101) — current 50, expected 34, mismatch +16. Cause: routine/process structure likely overweighted.
 8. Automotive Technician (ONET-00102) — current 50, expected 34, mismatch +16. Cause: routine/process structure likely overweighted.
-9. Legal Secretary (ONET-00015) — current 67, expected 52, mismatch +15. Cause: routine/process structure likely overweighted.
-10. Compliance Analyst (ONET-00016) — current 67, expected 52, mismatch +15. Cause: routine/process structure likely overweighted.
-11. Contract Administrator (ONET-00017) — current 67, expected 52, mismatch +15. Cause: routine/process structure likely overweighted.
-12. Medical Coder (ONET-00078) — current 49, expected 36, mismatch +13. Cause: human trust/relationship depth underweighted.
-13. Health Information Manager (ONET-00079) — current 49, expected 36, mismatch +13. Cause: human trust/relationship depth underweighted.
-14. Care Coordinator (ONET-00080) — current 49, expected 36, mismatch +13. Cause: human trust/relationship depth underweighted.
-15. Nurse Practitioner (ONET-00081) — current 49, expected 36, mismatch +13. Cause: human trust/relationship depth underweighted.
-16. Public Health Nurse (ONET-00082) — current 49, expected 36, mismatch +13. Cause: human trust/relationship depth underweighted.
+9. Legal Secretary (ONET-00015) — current 67, expected 52, mismatch +15. Cause: compliance/regulatory responsibility still underweighted.
+10. Compliance Analyst (ONET-00016) — current 67, expected 52, mismatch +15. Cause: compliance/regulatory responsibility still underweighted.
+11. Contract Administrator (ONET-00017) — current 67, expected 52, mismatch +15. Cause: compliance/regulatory responsibility still underweighted.
+12. Medical Coder (ONET-00078) — current 49, expected 36, mismatch +13. Cause: compliance/regulatory responsibility still underweighted.
+13. Health Information Manager (ONET-00079) — current 49, expected 36, mismatch +13. Cause: compliance/regulatory responsibility still underweighted.
+14. Care Coordinator (ONET-00080) — current 49, expected 36, mismatch +13. Cause: compliance/regulatory responsibility still underweighted.
+15. Nurse Practitioner (ONET-00081) — current 49, expected 36, mismatch +13. Cause: compliance/regulatory responsibility still underweighted.
+16. Public Health Nurse (ONET-00082) — current 49, expected 36, mismatch +13. Cause: compliance/regulatory responsibility still underweighted.
 17. Tool and Die Maker (ONET-00103) — current 42, expected 29, mismatch +13. Cause: decision consequence/accountability underweighted.
 18. Instrumentation Technician (ONET-00104) — current 42, expected 29, mismatch +13. Cause: decision consequence/accountability underweighted.
 19. Maintenance Technician (ONET-00105) — current 42, expected 29, mismatch +13. Cause: decision consequence/accountability underweighted.
@@ -261,14 +261,14 @@ Generated at: 2026-05-29T07:44:31.766Z
 6. HVAC Technician (ONET-00100) — current 50, expected 34, |mismatch| 16. HVAC Technician (skilled trades) appears overestimated by 16 points versus human-prior benchmark. Responsible factor: routine/process structure likely overweighted.
 7. Plumber (ONET-00101) — current 50, expected 34, |mismatch| 16. Plumber (skilled trades) appears overestimated by 16 points versus human-prior benchmark. Responsible factor: routine/process structure likely overweighted.
 8. Automotive Technician (ONET-00102) — current 50, expected 34, |mismatch| 16. Automotive Technician (skilled trades) appears overestimated by 16 points versus human-prior benchmark. Responsible factor: routine/process structure likely overweighted.
-9. Legal Secretary (ONET-00015) — current 67, expected 52, |mismatch| 15. Legal Secretary (legal/compliance) appears overestimated by 15 points versus human-prior benchmark. Responsible factor: routine/process structure likely overweighted.
-10. Compliance Analyst (ONET-00016) — current 67, expected 52, |mismatch| 15. Compliance Analyst (legal/compliance) appears overestimated by 15 points versus human-prior benchmark. Responsible factor: routine/process structure likely overweighted.
-11. Contract Administrator (ONET-00017) — current 67, expected 52, |mismatch| 15. Contract Administrator (legal/compliance) appears overestimated by 15 points versus human-prior benchmark. Responsible factor: routine/process structure likely overweighted.
-12. Medical Coder (ONET-00078) — current 49, expected 36, |mismatch| 13. Medical Coder (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: human trust/relationship depth underweighted.
-13. Health Information Manager (ONET-00079) — current 49, expected 36, |mismatch| 13. Health Information Manager (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: human trust/relationship depth underweighted.
-14. Care Coordinator (ONET-00080) — current 49, expected 36, |mismatch| 13. Care Coordinator (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: human trust/relationship depth underweighted.
-15. Nurse Practitioner (ONET-00081) — current 49, expected 36, |mismatch| 13. Nurse Practitioner (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: human trust/relationship depth underweighted.
-16. Public Health Nurse (ONET-00082) — current 49, expected 36, |mismatch| 13. Public Health Nurse (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: human trust/relationship depth underweighted.
+9. Legal Secretary (ONET-00015) — current 67, expected 52, |mismatch| 15. Legal Secretary (legal/compliance) appears overestimated by 15 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+10. Compliance Analyst (ONET-00016) — current 67, expected 52, |mismatch| 15. Compliance Analyst (legal/compliance) appears overestimated by 15 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+11. Contract Administrator (ONET-00017) — current 67, expected 52, |mismatch| 15. Contract Administrator (legal/compliance) appears overestimated by 15 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+12. Medical Coder (ONET-00078) — current 49, expected 36, |mismatch| 13. Medical Coder (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+13. Health Information Manager (ONET-00079) — current 49, expected 36, |mismatch| 13. Health Information Manager (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+14. Care Coordinator (ONET-00080) — current 49, expected 36, |mismatch| 13. Care Coordinator (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+15. Nurse Practitioner (ONET-00081) — current 49, expected 36, |mismatch| 13. Nurse Practitioner (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
+16. Public Health Nurse (ONET-00082) — current 49, expected 36, |mismatch| 13. Public Health Nurse (healthcare) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: compliance/regulatory responsibility still underweighted.
 17. Tool and Die Maker (ONET-00103) — current 42, expected 29, |mismatch| 13. Tool and Die Maker (skilled trades) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: decision consequence/accountability underweighted.
 18. Instrumentation Technician (ONET-00104) — current 42, expected 29, |mismatch| 13. Instrumentation Technician (skilled trades) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: decision consequence/accountability underweighted.
 19. Maintenance Technician (ONET-00105) — current 42, expected 29, |mismatch| 13. Maintenance Technician (skilled trades) appears overestimated by 13 points versus human-prior benchmark. Responsible factor: decision consequence/accountability underweighted.

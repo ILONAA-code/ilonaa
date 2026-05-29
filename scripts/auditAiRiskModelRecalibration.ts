@@ -29,6 +29,7 @@ type ValidationRow = {
   proposedAiReplacementRisk: number;
   proposedCareerResilience: number;
   proposedIlonaaRisk: number;
+  remainingMismatch: number;
   absMismatchAfter: number;
   improvement: number;
 };
@@ -97,8 +98,31 @@ function expectedBenchmark(occupation: OnetOccupation, category: string) {
   return { score, band, rationale };
 }
 
-function proposedScores(occupation: OnetOccupation) {
+function complianceRegulatoryResponsibility(
+  occupation: OnetOccupation,
+  category: string
+): number {
+  const complianceCategoryBoost =
+    category.includes("legal/compliance") ||
+    category.includes("healthcare") ||
+    category.includes("finance/accounting") ||
+    category.includes("public sector")
+      ? 18
+      : category.includes("education") || category.includes("management/leadership")
+        ? 12
+        : 8;
+
+  return clamp(
+    occupation.factors.consequenceResponsibility * 0.65 + complianceCategoryBoost
+  );
+}
+
+function proposedScores(occupation: OnetOccupation, category: string) {
   const f = occupation.factors;
+  const regulatoryResponsibility = complianceRegulatoryResponsibility(
+    occupation,
+    category
+  );
 
   const aiExposure = clamp(
     f.routineRepetitive * 0.2 +
@@ -111,38 +135,57 @@ function proposedScores(occupation: OnetOccupation) {
   );
 
   const aiReplacementRisk = clamp(
-    aiExposure * 0.35 +
+    aiExposure * 0.34 +
       f.routineRepetitive * 0.2 +
       f.administrativeStructure * 0.1 +
-      (100 - f.decisionJudgment) * 0.12 +
-      (100 - f.adaptabilityLearning) * 0.08 +
+      (100 - f.decisionJudgment) * 0.1 +
+      (100 - f.adaptabilityLearning) * 0.07 +
       (100 - f.consequenceResponsibility) * 0.05 +
-      (100 - f.physicalPracticality) * 0.05 +
-      (100 - f.humanInteraction) * 0.05 -
-      f.consequenceResponsibility * 0.1 -
-      f.physicalPracticality * 0.08 -
-      f.humanInteraction * 0.05
+      (100 - f.physicalPracticality) * 0.04 +
+      (100 - f.humanInteraction) * 0.04 -
+      f.consequenceResponsibility * 0.08 -
+      f.humanInteraction * 0.07 -
+      f.physicalPracticality * 0.06 -
+      regulatoryResponsibility * 0.07
   );
 
   const careerResilience = clamp(
-    f.decisionJudgment * 0.24 +
-      f.consequenceResponsibility * 0.22 +
-      f.humanInteraction * 0.16 +
-      f.adaptabilityLearning * 0.16 +
-      f.creativityInnovation * 0.08 +
-      f.dataAnalysis * 0.08 +
-      f.physicalPracticality * 0.06
+    f.decisionJudgment * 0.21 +
+      f.consequenceResponsibility * 0.21 +
+      f.humanInteraction * 0.18 +
+      f.adaptabilityLearning * 0.15 +
+      f.physicalPracticality * 0.08 +
+      regulatoryResponsibility * 0.07 +
+      f.creativityInnovation * 0.06 +
+      f.dataAnalysis * 0.04
   );
 
   const ilonaaRisk = clamp(
-    aiExposure * 0.25 + aiReplacementRisk * 0.5 + (100 - careerResilience) * 0.25
+    aiExposure * 0.22 + aiReplacementRisk * 0.56 + (100 - careerResilience) * 0.22
   );
 
-  return { aiExposure, aiReplacementRisk, careerResilience, ilonaaRisk };
+  return {
+    aiExposure,
+    aiReplacementRisk,
+    careerResilience,
+    ilonaaRisk,
+    regulatoryResponsibility,
+  };
 }
 
-function likelyFactor(mismatch: number, f: OnetOccupation["factors"]): string {
+function likelyFactor(
+  mismatch: number,
+  f: OnetOccupation["factors"],
+  category: string
+): string {
   if (mismatch > 0) {
+    if (
+      category.includes("legal/compliance") ||
+      category.includes("healthcare") ||
+      category.includes("finance/accounting")
+    ) {
+      return "compliance/regulatory responsibility still underweighted";
+    }
     if (f.consequenceResponsibility >= 70) return "decision consequence/accountability underweighted";
     if (f.physicalPracticality >= 70) return "physical presence/hands-on execution underweighted";
     if (f.humanInteraction >= 70) return "human trust/relationship depth underweighted";
@@ -177,9 +220,10 @@ function buildRows(): ValidationRow[] {
     const current = calculateResults(toProfessionSelection(occupation), DEFAULT_ANSWERS);
     const expected = expectedBenchmark(occupation, category);
     const mismatch = current.ilonaaRiskIndex.score - expected.score;
-    const proposed = proposedScores(occupation);
+    const proposed = proposedScores(occupation, category);
+    const remainingMismatch = proposed.ilonaaRisk - expected.score;
     const absMismatch = Math.abs(mismatch);
-    const absMismatchAfter = Math.abs(proposed.ilonaaRisk - expected.score);
+    const absMismatchAfter = Math.abs(remainingMismatch);
 
     return {
       code: occupation.code,
@@ -197,11 +241,12 @@ function buildRows(): ValidationRow[] {
       mismatch,
       absMismatch,
       mismatchExplanation: mismatchWhy(occupation.title, category, mismatch),
-      likelyResponsibleFactor: likelyFactor(mismatch, occupation.factors),
+      likelyResponsibleFactor: likelyFactor(remainingMismatch, occupation.factors, category),
       proposedAiExposure: proposed.aiExposure,
       proposedAiReplacementRisk: proposed.aiReplacementRisk,
       proposedCareerResilience: proposed.careerResilience,
       proposedIlonaaRisk: proposed.ilonaaRisk,
+      remainingMismatch,
       absMismatchAfter,
       improvement: clamp(absMismatch - absMismatchAfter, -100, 100),
     };
@@ -410,15 +455,15 @@ function buildProposalMarkdown(rows: ValidationRow[]): string {
     "",
     "### AI Replacement Risk",
     "",
-    "`AI Replacement Risk = 0.35*AI Exposure + 0.20*routine + 0.10*administrative + 0.12*(100-judgment) + 0.08*(100-adaptability) + 0.05*(100-consequence) + 0.05*(100-physicalPresence) + 0.05*(100-humanInteraction) - 0.10*consequence - 0.08*physicalPresence - 0.05*humanInteraction`",
+    "`AI Replacement Risk = 0.34*AI Exposure + 0.20*routine + 0.10*administrative + 0.10*(100-judgment) + 0.07*(100-adaptability) + 0.05*(100-consequence) + 0.04*(100-physicalPresence) + 0.04*(100-humanInteraction) - 0.08*consequence - 0.07*humanInteraction - 0.06*physicalPresence - 0.07*complianceRegulatoryResponsibility`",
     "",
     "### Career Resilience",
     "",
-    "`Career Resilience = 0.24*judgment + 0.22*consequence + 0.16*humanInteraction + 0.16*adaptability + 0.08*creativity + 0.08*dataAnalysis + 0.06*physicalPresence`",
+    "`Career Resilience = 0.21*judgment + 0.21*consequence + 0.18*humanInteraction + 0.15*adaptability + 0.08*physicalPresence + 0.07*complianceRegulatoryResponsibility + 0.06*creativity + 0.04*dataAnalysis`",
     "",
     "### ILONAA AI Risk Index",
     "",
-    "`ILONAA AI Risk Index = 0.25*AI Exposure + 0.50*AI Replacement Risk + 0.25*(100-Career Resilience)`",
+    "`ILONAA AI Risk Index = 0.22*AI Exposure + 0.56*AI Replacement Risk + 0.22*(100-Career Resilience)`",
     "",
     "This keeps the index closer to replacement/disruption risk than raw exposure while staying transparent and explainable.",
     "",
@@ -446,6 +491,131 @@ function buildProposalMarkdown(rows: ValidationRow[]): string {
     ).toFixed(2)}`,
     "",
     "See `reports/ilonaa_ai_risk_model_before_after_simulation.md` and `.csv` for per-occupation deltas, top improvements, and remaining worst mismatches.",
+  ].join("\n");
+}
+
+function disagreementExplanation(row: ValidationRow): string {
+  const direction = row.remainingMismatch > 0 ? "higher" : "lower";
+  const base = `Model stays ${Math.abs(row.remainingMismatch)} points ${direction} than benchmark`;
+
+  if (row.remainingMismatch > 0) {
+    if (row.category.includes("legal/compliance") || row.category.includes("healthcare")) {
+      return `${base} because regulatory/accountability protection is still likely undervalued for this role.`;
+    }
+    if (row.factors.physicalPracticality >= 70) {
+      return `${base} because hands-on physical execution still resists replacement more than modeled.`;
+    }
+    if (row.factors.humanInteraction >= 70) {
+      return `${base} because trust-heavy relationship work likely adds additional replacement resistance.`;
+    }
+    return `${base} because routine/cognitive automability may still be slightly overweighted relative to responsibility constraints.`;
+  }
+
+  if (row.factors.routineRepetitive >= 70 || row.factors.administrativeStructure >= 70) {
+    return `${base} because the recalibrated model still gives substantial credit to accountability and trust, while the benchmark assumes stronger routine/admin replacement pressure.`;
+  }
+  return `${base} because the recalibrated model interprets accountability, compliance, and relationship depth as stronger replacement resistance than the benchmark prior.`;
+}
+
+function buildFinalReviewCandidates(rows: ValidationRow[]): string {
+  const largestRemaining = [...rows].sort((a, b) => b.absMismatchAfter - a.absMismatchAfter).slice(0, 30);
+
+  const sectionA = largestRemaining.filter((row) => row.absMismatchAfter >= 12);
+  const sectionB = largestRemaining.filter(
+    (row) => row.absMismatchAfter >= 10 && row.absMismatchAfter < 12
+  );
+  const sectionC = largestRemaining.filter((row) => row.absMismatchAfter < 10);
+
+  const listWithExplanation = (items: ValidationRow[]) =>
+    items.map((row, i) => {
+      return `${i + 1}. ${row.title} (${row.code}) | Current Exposure ${row.currentAiExposure} | Current Resilience ${row.currentCareerResilience} | Current ILONAA Risk ${row.currentIlonaaRisk} | Benchmark ${row.expectedAiRiskScore} | Difference ${row.remainingMismatch} | RIASEC ${row.primaryRiasec}/${row.secondaryRiasec}\n   - ${disagreementExplanation(row)}`;
+    });
+
+  return [
+    "# ILONAA Final Review Candidates",
+    "",
+    `Generated at: ${new Date().toISOString()}`,
+    "",
+    "## 30 Largest Remaining Mismatches (after recalibration)",
+    "",
+    ...largestRemaining.map((row, i) => {
+      return `${i + 1}. ${row.title} (${row.code}) | Current AI Exposure ${row.currentAiExposure} | Current Career Resilience ${row.currentCareerResilience} | Current ILONAA AI Risk Index ${row.currentIlonaaRisk} | Benchmark score ${row.expectedAiRiskScore} | Difference ${row.remainingMismatch} | Primary RIASEC ${row.primaryRiasec} | Secondary RIASEC ${row.secondaryRiasec}`;
+    }),
+    "",
+    "## Section A: Likely genuine model errors",
+    "",
+    ...(sectionA.length > 0
+      ? listWithExplanation(sectionA)
+      : ["No candidates currently exceed the strict genuine-error threshold."]),
+    "",
+    "## Section B: Plausible but controversial results",
+    "",
+    ...(sectionB.length > 0
+      ? listWithExplanation(sectionB)
+      : ["No candidates currently fall in the controversial mismatch range."]),
+    "",
+    "## Section C: Potentially valuable discussion-provoking results",
+    "",
+    ...(sectionC.length > 0
+      ? listWithExplanation(sectionC)
+      : ["No candidates currently fall in this range."]),
+    "",
+  ].join("\n");
+}
+
+function buildCommitRecommendation(rows: ValidationRow[]): string {
+  const largestRemaining = [...rows].sort((a, b) => b.absMismatchAfter - a.absMismatchAfter).slice(0, 30);
+  const sectionA = largestRemaining.filter((row) => row.absMismatchAfter >= 12);
+  const sectionC = largestRemaining.filter((row) => row.absMismatchAfter < 10);
+  const discussionCandidates = largestRemaining.filter(
+    (row) =>
+      row.category.includes("healthcare") ||
+      row.category.includes("legal/compliance") ||
+      row.category.includes("public sector") ||
+      row.category.includes("skilled trades") ||
+      row.absMismatchAfter < 10
+  );
+
+  const averageMismatchAfter = mean(rows.map((row) => row.absMismatchAfter));
+  const averageMismatchBefore = mean(rows.map((row) => row.absMismatch));
+
+  const genuineErrors = sectionA.slice(0, 10).map((row) => `${row.title} (${row.code})`);
+  const valuableInsights = sectionC.slice(0, 10).map((row) => `${row.title} (${row.code})`);
+  const discussion = discussionCandidates.slice(0, 12).map((row) => `${row.title} (${row.code})`);
+
+  const shouldCommit = averageMismatchAfter < averageMismatchBefore && sectionA.length <= 8;
+
+  return [
+    "# ILONAA Commit Recommendation",
+    "",
+    `Generated at: ${new Date().toISOString()}`,
+    "",
+    "1. Should the recalibrated model be committed?",
+    shouldCommit
+      ? "- Recommendation: **Yes, conditionally**. The recalibration improves average mismatch and better encodes replacement resistance. Commit as the next proposed scoring candidate, then run targeted manual QA for remaining high-mismatch roles."
+      : "- Recommendation: **Not yet**. Remaining high-severity mismatches suggest one more focused iteration before production adoption.",
+    "",
+    "2. Which mismatches still appear to be genuine errors?",
+    ...(genuineErrors.length > 0
+      ? genuineErrors.map((item) => `- ${item}`)
+      : ["- No high-severity candidates cross the current genuine-error threshold."]),
+    "",
+    "3. Which mismatches may actually be valuable insights?",
+    ...(valuableInsights.length > 0
+      ? valuableInsights.map((item) => `- ${item}`)
+      : ["- Few low-severity divergence cases remain; most high-mismatch cases require correction first."]),
+    "",
+    "4. Which occupations would likely trigger meaningful discussion?",
+    ...(discussion.length > 0
+      ? discussion.map((item) => `- ${item}`)
+      : ["- No strong discussion cluster identified in this pass."]),
+    "",
+    "5. What is the average mismatch after this additional recalibration?",
+    `- Average absolute mismatch after recalibration: ${averageMismatchAfter.toFixed(2)}`,
+    `- Average absolute mismatch before recalibration: ${averageMismatchBefore.toFixed(2)}`,
+    `- Net improvement: ${(averageMismatchBefore - averageMismatchAfter).toFixed(2)}`,
+    "",
+    "Reference: see `reports/ilonaa_final_review_candidates.md` for the 30 largest remaining mismatches with per-role disagreement explanations.",
   ].join("\n");
 }
 
@@ -479,8 +649,20 @@ async function main() {
     buildBeforeAfterCsv(rows),
     "utf8"
   );
+  await writeFile(
+    resolve(reportsDir, "ilonaa_final_review_candidates.md"),
+    buildFinalReviewCandidates(rows),
+    "utf8"
+  );
+  await writeFile(
+    resolve(reportsDir, "ilonaa_commit_recommendation.md"),
+    buildCommitRecommendation(rows),
+    "utf8"
+  );
 
-  console.log("Generated ILONAA AI risk mismatch/proposal/simulation reports.");
+  console.log(
+    "Generated ILONAA AI risk mismatch/proposal/simulation reports plus final review recommendations."
+  );
 }
 
 void main();

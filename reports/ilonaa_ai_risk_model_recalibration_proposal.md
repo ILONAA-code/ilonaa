@@ -1,6 +1,6 @@
 # ILONAA AI Risk Model Recalibration Proposal
 
-Generated at: 2026-05-29T07:44:31.768Z
+Generated at: 2026-05-29T07:58:47.940Z
 
 ## A. Current formula
 
@@ -24,15 +24,15 @@ Generated at: 2026-05-29T07:44:31.768Z
 
 ### AI Replacement Risk
 
-`AI Replacement Risk = 0.35*AI Exposure + 0.20*routine + 0.10*administrative + 0.12*(100-judgment) + 0.08*(100-adaptability) + 0.05*(100-consequence) + 0.05*(100-physicalPresence) + 0.05*(100-humanInteraction) - 0.10*consequence - 0.08*physicalPresence - 0.05*humanInteraction`
+`AI Replacement Risk = 0.34*AI Exposure + 0.20*routine + 0.10*administrative + 0.10*(100-judgment) + 0.07*(100-adaptability) + 0.05*(100-consequence) + 0.04*(100-physicalPresence) + 0.04*(100-humanInteraction) - 0.08*consequence - 0.07*humanInteraction - 0.06*physicalPresence - 0.07*complianceRegulatoryResponsibility`
 
 ### Career Resilience
 
-`Career Resilience = 0.24*judgment + 0.22*consequence + 0.16*humanInteraction + 0.16*adaptability + 0.08*creativity + 0.08*dataAnalysis + 0.06*physicalPresence`
+`Career Resilience = 0.21*judgment + 0.21*consequence + 0.18*humanInteraction + 0.15*adaptability + 0.08*physicalPresence + 0.07*complianceRegulatoryResponsibility + 0.06*creativity + 0.04*dataAnalysis`
 
 ### ILONAA AI Risk Index
 
-`ILONAA AI Risk Index = 0.25*AI Exposure + 0.50*AI Replacement Risk + 0.25*(100-Career Resilience)`
+`ILONAA AI Risk Index = 0.22*AI Exposure + 0.56*AI Replacement Risk + 0.22*(100-Career Resilience)`
 
 This keeps the index closer to replacement/disruption risk than raw exposure while staying transparent and explainable.
 
@@ -54,7 +54,7 @@ This keeps the index closer to replacement/disruption risk than raw exposure whi
 ## F. Before/after simulation
 
 - Average absolute mismatch before: 5.46
-- Average absolute mismatch after: 4.04
-- Net average improvement: 1.42
+- Average absolute mismatch after: 5.28
+- Net average improvement: 0.18
 
 See `reports/ilonaa_ai_risk_model_before_after_simulation.md` and `.csv` for per-occupation deltas, top improvements, and remaining worst mismatches.
