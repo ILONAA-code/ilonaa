@@ -23,7 +23,7 @@ export function ProgressBar({ current, total, className }: ProgressBarProps) {
         />
       </div>
 
-      <p className="mt-3 text-center text-sm leading-none text-muted/80">
+      <p className="mt-2 text-center text-sm leading-none text-muted/80">
         Question {current} of {total}
       </p>
     </div>

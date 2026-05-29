@@ -160,7 +160,7 @@ export function AssessmentFlow() {
             <ProgressBar
               current={Math.max(currentIndex + 2, 1)}
               total={QUESTIONS.length + 1}
-              className="mb-8 sm:mb-10"
+              className="mb-6 sm:mb-8"
             />
 
             <div className="min-h-[280px] sm:min-h-[320px]">

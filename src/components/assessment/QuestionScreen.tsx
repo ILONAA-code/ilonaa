@@ -26,42 +26,44 @@ export function QuestionScreen({
         animating ? "animate-question-out" : "animate-question-in"
       }`}
     >
-      <h1 className="display-subhead text-balance">
-        {question.text}
-      </h1>
+      <div className="mx-auto max-w-2xl">
+        <h1 className="text-balance text-center text-[1.42rem] font-semibold leading-[1.32] tracking-[-0.01em] text-foreground sm:text-[1.78rem]">
+          {question.text}
+        </h1>
 
-      {question.subtitle && (
-        <p className="body-text mt-4 max-w-lg">
-          {question.subtitle}
-        </p>
-      )}
-
-      <div className="mt-8 pb-2 sm:mt-10 sm:pb-4">
-        {question.type === "slider" && question.sliderLabels && (
-          <SliderInput
-            value={value}
-            onChange={onChange}
-            minLabel={question.sliderLabels.min}
-            maxLabel={question.sliderLabels.max}
-            steps={question.sliderSteps}
-          />
+        {question.subtitle && (
+          <p className="body-text mx-auto mt-3 max-w-xl text-center">
+            {question.subtitle}
+          </p>
         )}
 
-        {question.type === "cards" && question.options && (
-          <ChoiceCards
-            options={question.options}
-            value={value}
-            onChange={onChange}
-          />
-        )}
+        <div className="mt-6 pb-2 sm:mt-8 sm:pb-4">
+          {question.type === "slider" && question.sliderLabels && (
+            <SliderInput
+              value={value}
+              onChange={onChange}
+              minLabel={question.sliderLabels.min}
+              maxLabel={question.sliderLabels.max}
+              steps={question.sliderSteps}
+            />
+          )}
 
-        {question.type === "buttons" && question.options && (
-          <ButtonChoices
-            options={question.options}
-            value={value}
-            onChange={onChange}
-          />
-        )}
+          {question.type === "cards" && question.options && (
+            <ChoiceCards
+              options={question.options}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+
+          {question.type === "buttons" && question.options && (
+            <ButtonChoices
+              options={question.options}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

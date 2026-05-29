@@ -68,10 +68,14 @@ function ScorePreview() {
             Your insight
           </p>
           <p className="mt-2 font-display text-[1.0625rem] leading-snug text-foreground">
-            RIASEC describes your work style. ILONAA estimates AI risk pressure.
+            RIASEC describes the nature of your work.
+            <br />
+            <br />
+            ILONAA estimates AI replacement risk, career resilience, and the
+            factors that may protect your profession over time.
           </p>
           <p className="mt-2 text-xs leading-relaxed text-muted/80">
-            ILONAA AI Risk Index · AI Exposure · Career Resilience
+            AI Replacement Risk · AI Exposure · Career Resilience
           </p>
         </div>
       </div>
@@ -92,15 +96,16 @@ export function Hero() {
             </p>
 
             <h1 className="animate-fade-in-up display-headline">
-              How resilient is your career
+              AI can automate tasks.
               <span className="block text-muted/80">
-                in the age of AI and automation risk?
+                Can it replace your profession?
               </span>
             </h1>
 
             <p className="animate-fade-in-up-delay body-text mt-6 sm:text-lg">
-              Ten thoughtful questions to map your automation risk, resilience,
-              and future-of-work positioning—in calm, structured clarity.
+              Profession baseline + 4 focused questions to map your AI exposure,
+              resilience, and future-of-work positioning — in calm, structured
+              clarity.
             </p>
 
             <div className="animate-fade-in-up-delay-2 mt-8 flex flex-col items-center gap-3 text-center">
@@ -113,8 +118,14 @@ export function Hero() {
               >
                 Start
               </Button>
-              <p className="body-text text-muted/80">
-                Free · profession baseline + 4 questions · ~5 minutes
+              <p className="body-text flex flex-wrap items-center justify-center gap-x-1.5 text-muted/80">
+                <span className="whitespace-nowrap">Free assessment</span>
+                <span aria-hidden="true">·</span>
+                <span className="whitespace-nowrap">
+                  Profession baseline + 4 questions
+                </span>
+                <span aria-hidden="true">·</span>
+                <span className="whitespace-nowrap">~5 min</span>
               </p>
             </div>
           </div>
