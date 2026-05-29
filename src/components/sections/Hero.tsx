@@ -3,8 +3,6 @@ import { Button } from "@/components/ui/Button";
 function ScorePreview() {
   const replacementRisk = 42;
   const profession = "Product Manager";
-  const primaryType = "Enterprising";
-  const secondaryType = "Social";
 
   return (
     <div className="relative mx-auto w-full max-w-md lg:max-w-none">
@@ -31,20 +29,6 @@ function ScorePreview() {
           <p className="mt-2 text-sm font-medium text-muted/90">Medium</p>
           <p className="mt-2 text-xs leading-relaxed text-muted/80">
             Risk is not destiny. Exposure does not automatically imply replacement.
-          </p>
-        </div>
-
-        <div className="mt-5 rounded-2xl border border-black/[0.05] bg-white/75 p-4">
-          <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted/70">
-            Understanding your profession
-          </p>
-          <p className="mt-2 text-sm text-muted">
-            RIASEC Type:
-            <span className="ml-1 font-medium text-foreground">{primaryType}</span>
-          </p>
-          <p className="mt-1.5 text-xs tracking-wide text-muted/80">
-            Secondary Orientation:
-            <span className="ml-1 font-medium text-foreground/80">{secondaryType}</span>
           </p>
         </div>
 
