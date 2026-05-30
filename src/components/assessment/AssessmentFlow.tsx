@@ -77,12 +77,6 @@ export function AssessmentFlow() {
   };
 
   const handleContinue = () => {
-    if (currentIndex < 0) {
-      if (!selectedOccupation) return;
-      transitionTo(0);
-      return;
-    }
-
     if (currentValue === null || !question) return;
 
     const timeSpentMs = Date.now() - questionShownAt.current;
@@ -94,10 +88,10 @@ export function AssessmentFlow() {
     );
 
     if (isLastQuestion) {
+      if (!selectedOccupation) return;
       setCompleting(true);
       completedRef.current = true;
       const finalAnswers = { ...answers, [question.id]: currentValue };
-      if (!selectedOccupation) return;
       const result = calculateResults(
         toProfessionSelection(
           selectedOccupation.occupation,
@@ -169,8 +163,10 @@ export function AssessmentFlow() {
             <div className="min-h-[280px] sm:min-h-[320px]">
               {currentIndex < 0 ? (
                 <ProfessionSelect
-                  value={selectedOccupation}
-                  onSelect={setSelectedOccupation}
+                  onResolved={(occupation) => {
+                    setSelectedOccupation(occupation);
+                    transitionTo(0);
+                  }}
                 />
               ) : question ? (
                 <QuestionScreen
@@ -183,42 +179,30 @@ export function AssessmentFlow() {
               ) : null}
             </div>
 
-            <div className="mt-10 flex justify-center border-t border-black/[0.05] pt-8 sm:mt-12 sm:pt-10">
-              <div className="flex items-center justify-center gap-3">
-                <Button
-                  variant="secondary"
-                  onClick={handleBack}
-                  disabled={currentIndex <= -1}
-                  className="w-[5.75rem] shrink-0 justify-center px-5 shadow-none hover:shadow-sm"
-                >
-                  Back
-                </Button>
+            {currentIndex >= 0 && (
+              <div className="mt-10 flex justify-center border-t border-black/[0.05] pt-8 sm:mt-12 sm:pt-10">
+                <div className="flex items-center justify-center gap-3">
+                  <Button
+                    variant="secondary"
+                    onClick={handleBack}
+                    disabled={currentIndex <= -1}
+                    className="w-[5.75rem] shrink-0 justify-center px-5 shadow-none hover:shadow-sm"
+                  >
+                    Back
+                  </Button>
 
-                <Button
-                  onClick={handleContinue}
-                  disabled={
-                    currentIndex < 0
-                      ? selectedOccupation === null
-                      : currentValue === null
-                  }
-                  className="w-[11.5rem] shrink-0 justify-center px-6 shadow-sm hover:shadow-sm"
-                  trackCta={
-                    currentIndex < 0
-                      ? "continue_after_profession"
-                      : isLastQuestion
-                        ? "view_results"
-                        : "continue"
-                  }
-                  trackLocation="assessment"
-                >
-                  {currentIndex < 0
-                    ? "Continue"
-                    : isLastQuestion
-                      ? "View Results"
-                      : "Continue"}
-                </Button>
+                  <Button
+                    onClick={handleContinue}
+                    disabled={currentValue === null}
+                    className="w-[11.5rem] shrink-0 justify-center px-6 shadow-sm hover:shadow-sm"
+                    trackCta={isLastQuestion ? "view_results" : "continue"}
+                    trackLocation="assessment"
+                  >
+                    {isLastQuestion ? "View Results" : "Continue"}
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </main>

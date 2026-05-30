@@ -61,6 +61,14 @@ type RankedOccupation = {
   confidence: number;
 };
 
+type CorrectionCandidate = {
+  occupationCode: string;
+  term: string;
+  normalizedTerm: string;
+  source: SearchEntry["source"];
+  alias?: string;
+};
+
 const OCCUPATIONS = occupationsData as OnetOccupation[];
 const OCCUPATION_BY_CODE = new Map(OCCUPATIONS.map((occupation) => [occupation.code, occupation]));
 const ILONAA_ALIASES = ilonaaAliasesData as Array<{ alias: string; onetCode: string }>;
@@ -156,6 +164,46 @@ function clamp(value: number, min = 0, max = 1): number {
   return Math.max(min, Math.min(max, value));
 }
 
+function matchTypePriority(matchType: RankedOccupation["matchType"]): number {
+  if (matchType === "canonical_title") return 3;
+  if (matchType === "ilonaa_alias") return 2;
+  return 1;
+}
+
+function damerauLevenshtein(a: string, b: string): number {
+  if (a === b) return 0;
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+
+  const rows = a.length + 1;
+  const cols = b.length + 1;
+  const matrix: number[][] = Array.from({ length: rows }, (_, i) =>
+    Array.from({ length: cols }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+  );
+
+  for (let i = 1; i < rows; i += 1) {
+    for (let j = 1; j < cols; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,
+        matrix[i][j - 1] + 1,
+        matrix[i - 1][j - 1] + cost
+      );
+
+      if (
+        i > 1 &&
+        j > 1 &&
+        a[i - 1] === b[j - 2] &&
+        a[i - 2] === b[j - 1]
+      ) {
+        matrix[i][j] = Math.min(matrix[i][j], matrix[i - 2][j - 2] + 1);
+      }
+    }
+  }
+
+  return matrix[a.length][b.length];
+}
+
 function rankEntry(queryNormalized: string, queryTokens: string[], entry: SearchEntry): RankedOccupation | null {
   const occupation = OCCUPATION_BY_CODE.get(entry.occupationCode);
   if (!occupation) return null;
@@ -234,9 +282,38 @@ function rankOccupations(query: string): RankedOccupation[] {
     (a, b) =>
       b.confidence - a.confidence ||
       b.score - a.score ||
+      matchTypePriority(b.matchType) - matchTypePriority(a.matchType) ||
       a.occupation.title.localeCompare(b.occupation.title)
   );
 }
+
+const CORRECTION_CANDIDATES: CorrectionCandidate[] = (() => {
+  const seen = new Set<string>();
+  const candidates: CorrectionCandidate[] = [];
+
+  for (const entry of SEARCH_ENTRIES) {
+    if (entry.normalizedTerm.length < 4) continue;
+    const occupation = OCCUPATION_BY_CODE.get(entry.occupationCode);
+    if (!occupation) continue;
+
+    const term = entry.alias?.trim() || occupation.title.trim();
+    if (!term) continue;
+
+    const key = `${entry.occupationCode}::${entry.normalizedTerm}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    candidates.push({
+      occupationCode: entry.occupationCode,
+      term,
+      normalizedTerm: entry.normalizedTerm,
+      source: entry.source,
+      alias: entry.alias,
+    });
+  }
+
+  return candidates;
+})();
 
 function toSelectedProfession(occupation: OnetOccupation, displayTitle?: string): SelectedProfession {
   return {
@@ -270,6 +347,71 @@ export function searchOccupations(query: string, limit = 20): ProfessionSearchHi
       rankingScore: Math.round(ranked.confidence * 10000),
       matchedAlias: ranked.matchedAlias,
     }));
+}
+
+export function suggestProfessionCorrection(query: string): ProfessionSearchHit | null {
+  const normalizedQuery = normalizeSearchString(query);
+  if (normalizedQuery.length < 4) return null;
+
+  const currentTop = searchOccupations(query, 1)[0];
+  if (currentTop && currentTop.matchConfidence >= 0.85) return null;
+
+  const queryTokenCount = tokenize(normalizedQuery).length;
+
+  const scored = CORRECTION_CANDIDATES.map((candidate) => {
+    const distance = damerauLevenshtein(normalizedQuery, candidate.normalizedTerm);
+    const maxLength = Math.max(normalizedQuery.length, candidate.normalizedTerm.length);
+    const similarity = maxLength === 0 ? 0 : 1 - distance / maxLength;
+    const tokenDelta = Math.abs(tokenize(candidate.normalizedTerm).length - queryTokenCount);
+    return { candidate, distance, similarity, tokenDelta };
+  })
+    .filter((row) => row.distance <= 2 && row.similarity >= 0.82 && row.tokenDelta <= 1)
+    .sort(
+      (a, b) =>
+        b.similarity - a.similarity ||
+        a.distance - b.distance ||
+        (a.candidate.alias ? -1 : 1) - (b.candidate.alias ? -1 : 1)
+    );
+
+  if (scored.length === 0) return null;
+  const best = scored[0];
+  const runnerUp = scored[1];
+  if (best.similarity < 0.86) return null;
+  if (runnerUp && best.similarity - runnerUp.similarity < 0.05) return null;
+
+  const resolved =
+    searchOccupations(best.candidate.term, 5).find(
+      (result) => result.mappedOccupationCode === best.candidate.occupationCode
+    ) ?? null;
+
+  if (resolved) {
+    return {
+      ...resolved,
+      marketTitle: best.candidate.term,
+      matchedAlias: best.candidate.alias ?? resolved.matchedAlias,
+    };
+  }
+
+  const occupation = OCCUPATION_BY_CODE.get(best.candidate.occupationCode);
+  if (!occupation) return null;
+
+  return {
+    marketTitle: best.candidate.term,
+    mappedOccupationCode: occupation.code,
+    mappingConfidence: Number(best.similarity.toFixed(2)),
+    source: best.candidate.source,
+    searchPriority: Math.round(best.similarity * 100),
+    occupation,
+    matchConfidence: Number(best.similarity.toFixed(3)),
+    matchType:
+      best.candidate.source === "original_onet_title"
+        ? "canonical_title"
+        : best.candidate.source === "ilonaa_alias"
+          ? "ilonaa_alias"
+          : "onet_alias",
+    rankingScore: Math.round(best.similarity * 10000),
+    matchedAlias: best.candidate.alias,
+  };
 }
 
 export function debugProfessionSearch(query: string): ProfessionSearchDebugResult {
